@@ -1,7 +1,9 @@
 
 const Purchase = () =>{
     return(
-        <div>This is the purchase page</div>
+        <div>
+            <h1>This is the purchase page</h1>
+        </div>
     );
 }
 

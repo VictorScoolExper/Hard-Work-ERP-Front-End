@@ -1,4 +1,4 @@
-const DashboardAccounting = () => {
+const Dashboard = () => {
   return (
     <div>
       <h1>DashboardAccounting</h1>
@@ -6,4 +6,4 @@ const DashboardAccounting = () => {
   );
 };
 
-export default DashboardAccounting;
+export default Dashboard;
