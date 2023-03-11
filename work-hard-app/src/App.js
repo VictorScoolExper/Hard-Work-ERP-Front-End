@@ -18,21 +18,33 @@ import TransactionDashAcct from "./pages/accounting/transactions/Dashboard";
 import ExpenseAccounting from "./pages/accounting/transactions/Expense";
 import PurchaseAccounting from "./pages/accounting/transactions/Purchase";
 import SaleAccounting from "./pages/accounting/transactions/Sale";
+import Reimbursement from "./pages/accounting/transactions/reimbursement";
+import Service from "./pages/accounting/services/service";
+import BankAccount from "./pages/accounting/setting/Bank_Account";
+import ChartAccount from "./pages/accounting/setting/Chart_Account";
+import TaxRate from "./pages/accounting/setting/Tax_Rate";
+import TaxPayment from "./pages/accounting/setting/Tax_Payment";
 import MainReports from "./pages/accounting/reports/main";
-import GeneralSettingsAcct from "./pages/accounting/settings/General_Settings";
 
 import LayoutCRM from "./pages/crm/Layout";
 import DashboardCRM from "./pages/crm/Dashboard";
 import HelpCRM from "./pages/crm/Help";
 import ContactCRM from "./pages/crm/Contact";
 
-import CRM from "./pages/crm/CRM";
-import Crew from "./pages/hr/crew/Crew";
-import Fleet from "./pages/Fleet";
-import Inventory from "./pages/Inventory";
-import Job from "./pages/Job";
-import Project from "./pages/Project";
-import Settings from "./pages/Settings";
+import LayoutServ from "./pages/service/Layout";
+import DashboardMainServ from "./pages/service/Dasboard";
+import ServiceServ from "./pages/service/service/Service";
+import JobServ from "./pages/service/job/job";
+import ProjectServ from "./pages/service/project/project";
+import ReportServ from "./pages/service/report/Report";
+
+import DashboardInv from "./pages/inventory/Dashboard";
+import Equipment from "./pages/inventory/Equipment";
+import Fleet from "./pages/inventory/Fleet";
+import LayoutInv from "./pages/inventory/Layout";
+import Lease from "./pages/inventory/Lease";
+import ReportInv from "./pages/inventory/Report";
+
 import "./App.css";
 
 import {
@@ -55,10 +67,12 @@ function App() {
   const { collapseSidebar } = useProSidebar();
   return (
     <Router>
-      <div className="row" style={{ height: "100vh" }}>
-        <div className="col-2 p-0">
+      <div style={{ height: "100vh", display: "flex", flexDirection: "row" }}>
+        <div className="p-0">
           <Sidebar width="100%" rootStyles={{ height: "100%" }}>
-            <h1 style={{ textAlign: "center" }}>Hard Work ERP</h1>
+            <h1 className="m-3" style={{ textAlign: "center" }}>
+              Hard Work ERP
+            </h1>
             <Menu
               menuItemStyles={{
                 button: ({ level, active, disabled }) => {
@@ -78,11 +92,7 @@ function App() {
                 Dashboard
               </MenuItem>
               {/* HR */}
-              <SubMenu
-                label="HR"
-                component={<Link to="/hr" />}
-                icon={<i className="bi bi-people-fill"></i>}
-              >
+              <SubMenu label="HR" icon={<i className="bi bi-people-fill"></i>}>
                 <MenuItem component={<Link to="/hr" />}>Dashboard</MenuItem>
                 <MenuItem component={<Link to="/hr/employee" />}>
                   Employee
@@ -90,7 +100,7 @@ function App() {
 
                 <MenuItem component={<Link to="hr/crew" />}>Crew</MenuItem>
 
-                <SubMenu label="Payroll" component={<Link to="/hr/payroll" />}>
+                <SubMenu label="Payroll">
                   <MenuItem component={<Link to="hr/payroll" />}>
                     Payroll
                   </MenuItem>
@@ -99,7 +109,7 @@ function App() {
                   </MenuItem>
                 </SubMenu>
 
-                <SubMenu label="Attendance" component={<Link to="hr/attend" />}>
+                <SubMenu label="Attendance">
                   <MenuItem component={<Link to="hr/attend" />}>
                     Attendance
                   </MenuItem>
@@ -109,7 +119,6 @@ function App() {
               {/* CRM */}
               <SubMenu
                 label="CRM"
-                component={<Link to="/crm" />}
                 icon={<i className="bi bi-person-bounding-box"></i>}
               >
                 <MenuItem component={<Link to="crm/" />}>Dashboard</MenuItem>
@@ -121,14 +130,13 @@ function App() {
               {/* Accouting */}
               <SubMenu
                 label="Accounting"
-                component={<Link to="/accounting" />}
                 icon={<i className="bi bi-calculator"></i>}
               >
+                <MenuItem component={<Link to="/accounting" />}>
+                  Dashboard
+                </MenuItem>
                 {/* This is the users section to accounting */}
-                <SubMenu
-                  label="Users"
-                  component={<Link to="/accounting/user/customer" />}
-                >
+                <SubMenu label="Users">
                   <MenuItem component={<Link to="/accounting/user/customer" />}>
                     Customer
                   </MenuItem>
@@ -140,10 +148,10 @@ function App() {
                   </MenuItem>
                 </SubMenu>
                 {/* This is the Transcation to the Users Section */}
-                <SubMenu
-                  label="Transaction"
-                  component={<Link to="/accounting/trans/dash" />}
-                >
+                <SubMenu label="Transaction">
+                  <MenuItem component={<Link to="/accounting/trans/dash" />}>
+                    Dashboard
+                  </MenuItem>
                   <MenuItem component={<Link to="accounting/trans/expense" />}>
                     Expense
                   </MenuItem>
@@ -153,14 +161,81 @@ function App() {
                   <MenuItem component={<Link to="accounting/trans/purchase" />}>
                     Purchase
                   </MenuItem>
+                  <MenuItem
+                    component={<Link to="accounting/trans/reimbursement" />}
+                  >
+                    Reimbursement
+                  </MenuItem>
                 </SubMenu>
+
                 {/* Report section */}
                 <MenuItem component={<Link to="/accounting/report" />}>
                   Report
                 </MenuItem>
-                {/* Settings Section */}
-                <MenuItem component={<Link to="/accounting/setting" />}>
-                  Settings
+                {/* This is the Setting section */}
+                <SubMenu
+                  label="Setting"
+                  // component={<Link to="/accounting/setting/chartacct" />}
+                >
+                  <MenuItem
+                    component={<Link to="accounting/setting/chartacct" />}
+                  >
+                    Chart Account
+                  </MenuItem>
+                  <MenuItem
+                    component={<Link to="accounting/setting/bankacct" />}
+                  >
+                    Bank Account
+                  </MenuItem>
+                  <MenuItem
+                    component={<Link to="accounting/setting/taxrate" />}
+                  >
+                    Tax Rate
+                  </MenuItem>
+                  <MenuItem component={<Link to="accounting/setting/taxpay" />}>
+                    Tax Payment
+                  </MenuItem>
+                </SubMenu>
+              </SubMenu>
+              {/* Service */}
+              <SubMenu
+                label="Service"
+                // component={<Link to="/serv" />}
+                icon={<i className="bi bi-hammer"></i>}
+              >
+                <MenuItem component={<Link to="serv" />}>Dashboard</MenuItem>
+                <MenuItem component={<Link to="serv/service" />}>
+                  Service
+                </MenuItem>
+                <MenuItem component={<Link to="serv/job" />}>Job</MenuItem>
+                <MenuItem component={<Link to="serv/project" />}>
+                  Project
+                </MenuItem>
+                <MenuItem component={<Link to="serv/report" />}>
+                  Report
+                </MenuItem>
+              </SubMenu>
+
+              {/* Inventory */}
+              <SubMenu
+                label="Inventory"
+                // component={<Link to="/inventory" />}
+                icon={<i className="bi bi-card-checklist"></i>}
+              >
+                <MenuItem component={<Link to="/inventory" />}>
+                  Dashboard
+                </MenuItem>
+                <MenuItem component={<Link to="/inventory/equipment" />}>
+                  Equipment
+                </MenuItem>
+                <MenuItem component={<Link to="/inventory/lease" />}>
+                  Lease
+                </MenuItem>
+                <MenuItem component={<Link to="/inventory/fleet" />}>
+                  Fleet
+                </MenuItem>
+                <MenuItem component={<Link to="/inventory/report" />}>
+                  Report
                 </MenuItem>
               </SubMenu>
             </Menu>
@@ -169,7 +244,7 @@ function App() {
             </main>
           </Sidebar>
         </div>
-        <div className="col-10 p-0">
+        <div className="p-0" style={{flex: "1"}}>
           <Routes>
             <Route exact path="/" element={<MainDash />} />
             <Route path="/hr" element={<LayoutHR />}>
@@ -192,17 +267,36 @@ function App() {
               <Route path="trans/sale" element={<SaleAccounting />} />
               <Route path="trans/expense" element={<ExpenseAccounting />} />
               <Route path="trans/purchase" element={<PurchaseAccounting />} />
+              <Route path="trans/reimbursement" element={<Reimbursement />} />
+              {/* This is the service section */}
+              <Route path="service" element={<Service />} />
               {/* This is the report section */}
               <Route path="report" element={<MainReports />} />
-              {/* This is the setting */}
-              <Route path="setting" element={<GeneralSettingsAcct />} />
+              {/* Settings Section */}
+              <Route path="setting/bankacct" element={<BankAccount />} />
+              <Route path="setting/chartacct" element={<ChartAccount />} />
+              <Route path="setting/taxrate" element={<TaxRate />} />
+              <Route path="setting/taxpay" element={<TaxPayment />} />
             </Route>
             <Route path="/crm" element={<LayoutCRM />}>
               <Route index element={<DashboardCRM />} />
               <Route path="contact" element={<ContactCRM />} />
               <Route path="help" element={<HelpCRM />} />
             </Route>
-            <Route path="crew" element={<Crew />}></Route>
+            <Route path="/serv" element={<LayoutServ />}>
+              <Route index element={<DashboardMainServ />} />
+              <Route path="service" element={<ServiceServ />} />
+              <Route path="job" element={<JobServ />} />
+              <Route path="project" element={<ProjectServ />} />
+              <Route path="Report" element={<ReportServ />} />
+            </Route>
+            <Route path="/inventory" element={<LayoutInv />}>
+              <Route index element={<DashboardInv />} />
+              <Route path="equipment" element={<Equipment />} />
+              <Route path="fleet" element={<Fleet />} />
+              <Route path="lease" element={<Lease />} />
+              <Route path="report" element={<ReportInv />} />
+            </Route>
           </Routes>
         </div>
       </div>

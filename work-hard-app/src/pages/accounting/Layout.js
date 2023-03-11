@@ -1,9 +1,8 @@
 import { Outlet, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Button from "react-bootstrap/Button";
+
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -36,25 +35,39 @@ const Layout = () => {
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Transactions" id="navbarScrollingDropdown">
-                <NavDropdown.Item as={Link} to="/accounting/trans/dash">
+                <NavDropdown.Item as={Link} to="trans/dash">
                   Dashboard
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/accounting/trans/sale">
+                <NavDropdown.Item as={Link} to="trans/sale">
                   Sale
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/accounting/trans/expense">
+                <NavDropdown.Item as={Link} to="trans/expense">
                   Expense
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/accounting/trans/purchase">
+                <NavDropdown.Item as={Link} to="trans/purchase">
                   Purchase
                 </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="trans/reimbursement">
+                  Reimbursement
+                </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link as={Link} to="/accounting/report">
+              <Nav.Link as={Link} to="report">
                 Report
               </Nav.Link>
-              <Nav.Link as={Link} to="/accounting/setting">
-                Settings
-              </Nav.Link>
+              <NavDropdown title="Setting" id="navbarScrollingDropdown">
+                <NavDropdown.Item as={Link} to="setting/chartacct">
+                  Chart Accounts
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="setting/bankacct">
+                  Bank Accounts
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="setting/taxrate">
+                  Tax Rate
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="setting/taxpay">
+                  Tax Payment 
+                </NavDropdown.Item>
+              </NavDropdown>
             </Nav>
             
           </Navbar.Collapse>
