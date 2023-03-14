@@ -1,49 +1,50 @@
-import MainDash from "./pages/MainDash";
+import MainDash from "./sections/MainDash";
 
-import LayoutHR from "./pages/hr/Layout";
-import DashboardHR from "./pages/hr/Dashboard";
-import EmployeeHR from "./pages/hr/employee/Employee";
-import CrewHR from "./pages/hr/crew/Crew";
-import AttendanceHR from "./pages/hr/attendance/Attendance";
-import ShiftHR from "./pages/hr/attendance/Shift";
-import PayrollHR from "./pages/hr/payroll/Payroll";
-import ReportHR from "./pages/hr/payroll/Report";
+import LayoutHR from "./sections/hr/Layout";
+import DashboardHR from "./sections/hr/Dashboard";
+import EmployeeHR from "./sections/hr/employee/Employee";
+import CrewHR from "./sections/hr/crew/Crew";
+import AttendanceHR from "./sections/hr/attendance/Attendance";
+import ShiftHR from "./sections/hr/attendance/Shift";
+import PayrollHR from "./sections/hr/payroll/Payroll";
+import ReportHR from "./sections/hr/payroll/Report";
+import AddEditEmployee from "./sections/hr/employee/pages/AddEditEmployee";
 
-import LayoutAccounting from "./pages/accounting/Layout";
-import DashboardAccounting from "./pages/accounting/Dashboard";
-import CustomerAccounting from "./pages/accounting/users/Customer";
-import EmployeeAccounting from "./pages/accounting/users/Employee";
-import VendorAccounting from "./pages/accounting/users/Vendor";
-import TransactionDashAcct from "./pages/accounting/transactions/Dashboard";
-import ExpenseAccounting from "./pages/accounting/transactions/Expense";
-import PurchaseAccounting from "./pages/accounting/transactions/Purchase";
-import SaleAccounting from "./pages/accounting/transactions/Sale";
-import Reimbursement from "./pages/accounting/transactions/reimbursement";
-import Service from "./pages/accounting/services/service";
-import BankAccount from "./pages/accounting/setting/Bank_Account";
-import ChartAccount from "./pages/accounting/setting/Chart_Account";
-import TaxRate from "./pages/accounting/setting/Tax_Rate";
-import TaxPayment from "./pages/accounting/setting/Tax_Payment";
-import MainReports from "./pages/accounting/reports/main";
+import LayoutAccounting from "./sections/accounting/Layout";
+import DashboardAccounting from "./sections/accounting/Dashboard";
+import CustomerAccounting from "./sections/accounting/users/Customer";
+import EmployeeAccounting from "./sections/accounting/users/Employee";
+import VendorAccounting from "./sections/accounting/users/Vendor";
+import TransactionDashAcct from "./sections/accounting/transactions/Dashboard";
+import ExpenseAccounting from "./sections/accounting/transactions/Expense";
+import PurchaseAccounting from "./sections/accounting/transactions/Purchase";
+import SaleAccounting from "./sections/accounting/transactions/Sale";
+import Reimbursement from "./sections/accounting/transactions/reimbursement";
+import Service from "./sections/accounting/services/service";
+import BankAccount from "./sections/accounting/setting/Bank_Account";
+import ChartAccount from "./sections/accounting/setting/Chart_Account";
+import TaxRate from "./sections/accounting/setting/Tax_Rate";
+import TaxPayment from "./sections/accounting/setting/Tax_Payment";
+import MainReports from "./sections/accounting/reports/main";
 
-import LayoutCRM from "./pages/crm/Layout";
-import DashboardCRM from "./pages/crm/Dashboard";
-import HelpCRM from "./pages/crm/Help";
-import ContactCRM from "./pages/crm/Contact";
+import LayoutCRM from "./sections/crm/Layout";
+import DashboardCRM from "./sections/crm/Dashboard";
+import HelpCRM from "./sections/crm/Help";
+import ContactCRM from "./sections/crm/Contact";
 
-import LayoutServ from "./pages/service/Layout";
-import DashboardMainServ from "./pages/service/Dasboard";
-import ServiceServ from "./pages/service/service/Service";
-import JobServ from "./pages/service/job/job";
-import ProjectServ from "./pages/service/project/project";
-import ReportServ from "./pages/service/report/Report";
+import LayoutServ from "./sections/service/Layout";
+import DashboardMainServ from "./sections/service/Dasboard";
+import ServiceServ from "./sections/service/service/Service";
+import JobServ from "./sections/service/job/job";
+import ProjectServ from "./sections/service/project/project";
+import ReportServ from "./sections/service/report/Report";
 
-import DashboardInv from "./pages/inventory/Dashboard";
-import Equipment from "./pages/inventory/Equipment";
-import Fleet from "./pages/inventory/Fleet";
-import LayoutInv from "./pages/inventory/Layout";
-import Lease from "./pages/inventory/Lease";
-import ReportInv from "./pages/inventory/Report";
+import DashboardInv from "./sections/inventory/Dashboard";
+import Equipment from "./sections/inventory/Equipment";
+import Fleet from "./sections/inventory/Fleet";
+import LayoutInv from "./sections/inventory/Layout";
+import Lease from "./sections/inventory/Lease";
+import ReportInv from "./sections/inventory/Report";
 
 import {
     BrowserRouter as Router,
@@ -60,6 +61,8 @@ const RoutesAll = () => {
         <Route path="attend" element={<AttendanceHR />} />
         <Route path="shift" element={<ShiftHR />} />
         <Route path="employee" element={<EmployeeHR />} />
+        <Route path="employee/add" element={<AddEditEmployee />} />
+        <Route path="employee/edit/:id" element={<AddEditEmployee />} />
         <Route path="crew" element={<CrewHR />} />
         <Route path="payroll" element={<PayrollHR />} />
         <Route path="payroll/report" element={<ReportHR />} />

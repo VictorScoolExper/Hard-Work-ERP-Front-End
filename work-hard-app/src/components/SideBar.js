@@ -25,7 +25,7 @@ const SidebarMenu = () => {
         }}
       >
         <MenuItem
-          icon={<i class="bi bi-list"></i>}
+          icon={<i className="bi bi-list"></i>}
           onClick={() => collapseSidebar()}
           style={{  textAlign: "center" }}
         > 
