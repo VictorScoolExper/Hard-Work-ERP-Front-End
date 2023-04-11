@@ -27,7 +27,7 @@ const Employee = () => {
       </div>
       <div className="mt-4">
         <h6>Employee Table</h6>
-        <DynamicTable header={headers} data={employees} link={'/hr/employee/edit'} />
+        <DynamicTable header={headers} data={employees} link={`/hr/employee/`} />
       </div>
 
      

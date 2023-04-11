@@ -37,7 +37,7 @@ const DynamicTable = (props) => {
                   <td key={item}>{data[item.toLowerCase()]}</td>
                 ))}
               <td>
-                <Link to={props.link + '/' + data.id}>
+                <Link to={props.link + data.id + '/edit'}>
                   <Button variant="info">
                     <i className="bi bi-pencil-square"></i>
                   </Button>

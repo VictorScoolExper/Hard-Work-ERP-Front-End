@@ -27,10 +27,10 @@ const SidebarMenu = () => {
         <MenuItem
           icon={<i className="bi bi-list"></i>}
           onClick={() => collapseSidebar()}
-          style={{  textAlign: "center" }}
-        > 
+          style={{ textAlign: "center" }}
+        >
           {" "}
-          <h2 style={{margin: "2px"}}>Work Hard ERP</h2> 
+          <h2 style={{ margin: "2px" }}>Work Hard ERP</h2>
         </MenuItem>
         <MenuItem
           component={<Link to="/" />}
@@ -40,22 +40,11 @@ const SidebarMenu = () => {
         </MenuItem>
         {/* HR */}
         <SubMenu label="HR" icon={<i className="bi bi-people-fill"></i>}>
-          <MenuItem component={<Link to="/hr" />}>Dashboard</MenuItem>
           <MenuItem component={<Link to="/hr/employee" />}>Employee</MenuItem>
 
-          <MenuItem component={<Link to="hr/crew" />}>Crew</MenuItem>
+          <MenuItem component={<Link to="/hr/attend" />}>Attendance</MenuItem>
 
-          <SubMenu label="Payroll">
-            <MenuItem component={<Link to="hr/payroll" />}>Payroll</MenuItem>
-            <MenuItem component={<Link to="hr/payroll/report" />}>
-              Report
-            </MenuItem>
-          </SubMenu>
-
-          <SubMenu label="Attendance">
-            <MenuItem component={<Link to="hr/attend" />}>Attendance</MenuItem>
-            <MenuItem component={<Link to="hr/shift" />}>Shift</MenuItem>
-          </SubMenu>
+          <MenuItem component={<Link to="hr/payroll" />}>Payroll</MenuItem>
         </SubMenu>
         {/* CRM */}
         <SubMenu
