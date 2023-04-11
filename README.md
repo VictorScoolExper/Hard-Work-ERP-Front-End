@@ -1,5 +1,6 @@
-# Work-Hard-ERP-Front-End
- This is the react front-end to Work hard Plugin
+# Hard-Work-ERP-Front-End
+This is the ReactJS app that uses the Hard Work ERP API
 
 ## General Info
-The project is found inside the work-hard-app
+The link to the Hard Work ERP API is 
+- https://github.com/VictorScoolExper/Hard-Work-API
