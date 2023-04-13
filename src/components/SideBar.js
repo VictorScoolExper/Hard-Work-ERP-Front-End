@@ -44,16 +44,15 @@ const SidebarMenu = () => {
 
           <MenuItem component={<Link to="/hr/attend" />}>Attendance</MenuItem>
 
-          <MenuItem component={<Link to="hr/payroll" />}>Payroll</MenuItem>
+          <MenuItem component={<Link to="/hr/payroll" />}>Payroll</MenuItem>
         </SubMenu>
         {/* CRM */}
         <SubMenu
           label="CRM"
           icon={<i className="bi bi-person-bounding-box"></i>}
         >
-          <MenuItem component={<Link to="crm/" />}>Dashboard</MenuItem>
-          <MenuItem component={<Link to="crm/contact" />}>Contacts</MenuItem>
-          <MenuItem component={<Link to="crm/help" />}>Help</MenuItem>
+          <MenuItem component={<Link to="crm/client" />}>Clients</MenuItem>
+          <MenuItem component={<Link to="crm/vendor" />}>Vendors</MenuItem>
         </SubMenu>
         {/* Accouting */}
         <SubMenu label="Accounting" icon={<i className="bi bi-calculator"></i>}>

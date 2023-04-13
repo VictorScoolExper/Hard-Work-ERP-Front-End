@@ -39,14 +39,11 @@ const Layout = () => {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link as={Link} to="/crm">
-                Dashboard
+              <Nav.Link as={Link} to="/crm/client">
+                Clients
               </Nav.Link>
-              <Nav.Link as={Link} to="/crm/contact">
-                Contact
-              </Nav.Link>
-              <Nav.Link as={Link} to="/crm/help">
-                Help
+              <Nav.Link as={Link} to="/crm/vendor">
+                Vendor 
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

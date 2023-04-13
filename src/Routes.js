@@ -28,8 +28,6 @@ import TaxPayment from "./pages/accounting/setting/Tax_Payment";
 import MainReports from "./pages/accounting/reports/main";
 
 import LayoutCRM from "./pages/crm/Layout";
-import DashboardCRM from "./pages/crm/Dashboard";
-import HelpCRM from "./pages/crm/Help";
 import ContactCRM from "./pages/crm/Contact";
 
 import LayoutServ from "./pages/service/Layout";
@@ -120,6 +118,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <MainDash /> },
+      // HR section
       {
         path: "hr",
         element: <LayoutHR />,
@@ -138,28 +137,132 @@ const router = createBrowserRouter([
                   {
                     index: true,
                     // This should be details
-                    element: <DetailEmployee />
+                    element: <DetailEmployee />,
                   },
                   {
-                    path: 'edit',
-                    element: <AddEditEmployee />
-                  }
+                    path: "edit",
+                    element: <AddEditEmployee />,
+                  },
                 ],
               },
             ],
           },
           {
             path: "attend",
-            element: <AttendanceHR />,
             children: [
+              {
+                index: true,
+                element: <AttendanceHR />,
+              },
               {
                 path: "add",
                 element: <DetailAttendance />,
+              },
+              {
+                path: ":attendId",
+                children: [
+                  {
+                    index: true,
+                    element: <h1>Hello from attend id</h1>,
+                  },
+                  {
+                    path: "edit",
+                    element: <h1>Hello from edit attend</h1>,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: "payroll",
+            children: [
+              {
+                index: true,
+                element: <PayrollHR />,
+              },
+              {
+                path: "add",
+                element: <h1>Add new payroll trans</h1>,
+              },
+              {
+                path: ":payId",
+                children: [
+                  {
+                    index: true,
+                    element: <h1>This is the id detail payroll</h1>,
+                  },
+                  {
+                    path: 'edit',
+                    element: <h1>This is the edit payroll</h1>
+                  }
+                ],
               },
             ],
           },
         ],
       },
+      // CRM section
+      {
+        path: 'crm',
+        element: <LayoutCRM /> ,
+        children: [
+          {
+            path: 'client',
+            children: [
+              {
+                index: true, 
+                element: <h1>Client list</h1>
+              },
+              {
+                path: 'add',
+                element: <h1>Add Client</h1>
+              },
+              {
+                path: ':clientId',
+                children: [
+                  {
+                    index: true,
+                    element: <h1>Client ID detail section</h1>
+                  },
+                  {
+                    path: 'edit',
+                    element: <h1>Client Edit</h1>
+                  }
+                ]
+                
+              }
+            ]
+          },
+          {
+            path: 'vendor',
+            children: [
+              {
+                index: true,
+                element: <h1>This is the vendor list</h1>
+              },
+              {
+                path: 'add',
+                element: <h1>Add vendor</h1>
+              },
+              {
+                path:':vendorId',
+                children: [
+                  {
+                    index: true,
+                    element: <h1>This is detail vendor id</h1>
+                  },
+                  {
+                    path: 'edit',
+                    element: <h1>This is edit vendor by id</h1>
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+      
+
     ],
   },
 ]);
