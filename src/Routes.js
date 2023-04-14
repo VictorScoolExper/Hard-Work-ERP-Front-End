@@ -260,8 +260,18 @@ const router = createBrowserRouter([
             ]
           }
         ]
+      },
+      // Accounting section
+      {
+        path: 'accounting',
+        element: <LayoutAccounting />,
+        children: [
+          {
+            index: true,
+            element: <DashboardAccounting />
+          }
+        ]
       }
-      
 
     ],
   },
