@@ -263,12 +263,89 @@ const router = createBrowserRouter([
       },
       // Accounting section
       {
-        path: 'accounting',
+        path: 'acct',
         element: <LayoutAccounting />,
         children: [
           {
             index: true,
             element: <DashboardAccounting />
+          },
+          // Banking Section
+          {
+            path: 'banking',
+            children: [
+              {
+                index: true,
+                element: <h1>Banking All Accounts</h1>
+              },
+              {
+                path: 'receipt',
+                children: [
+                  {
+                    index: true, 
+                    element: <h1>This is to view all reciept</h1>
+                  },
+                  {
+                    path: 'add',
+                    element: <h1>Add reciept</h1>
+                  },
+                  {
+                    path: ':recieptId',
+                    children: [
+                      {
+                        index: true,
+                        element: <h1>Receipt Detail Id</h1> 
+                      },
+                      {
+                        path: 'edit',
+                        element: <h1>Edit Receipt by Id</h1>
+                      }
+                    ]
+                    
+                  }
+                ]
+                
+              },
+              {
+                path: ':bankId',
+                children: [
+                  {
+                    index: true,
+                    element: <h1>This bank Account details</h1>
+                  },
+                  {
+                    path: 'edit',
+                    element: <h1>This edits bank accounts details</h1>
+                  },
+                  {
+                    path: 'trans/:transId',
+                    children: [
+                      {
+                        index: true,
+                        element: <h1>This is a single bank transaction detail</h1>
+                      },
+                      {
+                        path: 'edit',
+                        element: <h1>Banking transaction edit by id</h1>
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          // Sales Section
+          {
+            path: 'sale',
+            children: [
+              {
+                index: true,
+                element: <h1>This is the list of sales services</h1>
+              },
+              {
+
+              }
+            ]
           }
         ]
       }

@@ -122,11 +122,11 @@ const SidebarMenu = () => {
         </SubMenu>
         {/* Accouting */}
         <SubMenu label="Accounting" icon={<i className="bi bi-calculator"></i>}>
-          <MenuItem component={<Link to="/accounting" />}>Dashboard</MenuItem>
+          <MenuItem component={<Link to="/acct" />}>Dashboard</MenuItem>
           {/* This is the users section to accounting */}
           <SubMenu label="Banking">
-            <MenuItem component={<Link to="" />}>Banking</MenuItem>
-            <MenuItem component={<Link to="" />}>Receipts</MenuItem>
+            <MenuItem component={<Link to="/acct/banking" />}>Banking</MenuItem>
+            <MenuItem component={<Link to="/acct/banking/receipt" />}>Receipts</MenuItem>
           </SubMenu>
           {/* This is the Transcation to the Users Section */}
           <SubMenu label="Sale">
