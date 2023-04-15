@@ -97,7 +97,8 @@ const SidebarMenu = () => {
           </SubMenu>
         </SubMenu>
 
-
+        <div style={{height: '30px'}}></div>
+      
         <MenuItem
           component={<Link to="/" />}
           icon={<i className="bi bi-speedometer2"></i>}
@@ -130,17 +131,17 @@ const SidebarMenu = () => {
           </SubMenu>
           {/* This is the Transcation to the Users Section */}
           <SubMenu label="Sale">
-            <MenuItem component={<Link to="" />}>Overview</MenuItem>
-            <MenuItem component={<Link to="" />}>All Sales</MenuItem>
-            <MenuItem component={<Link to="" />}>Invoices</MenuItem>
-            <MenuItem component={<Link to="" />}>Estimates</MenuItem>
-            <MenuItem component={<Link to="" />}>Customers</MenuItem>
-            <MenuItem component={<Link to="" />}>Services</MenuItem>
+            <MenuItem component={<Link to="/acct/sale/overview" />}>Overview</MenuItem>
+            <MenuItem component={<Link to="/acct/sale" />}>All Sales</MenuItem>
+            <MenuItem component={<Link to="/acct/invoice" />}>Invoices</MenuItem>
+            <MenuItem component={<Link to="/acct/estimate" />}>Estimates</MenuItem>
+            <MenuItem component={<Link to="/acct/customers" />}>Customers</MenuItem>
+            <MenuItem component={<Link to="/acct/service" />}>Services</MenuItem>
           </SubMenu>
           {/* Expense section */}
           <SubMenu label="Expenses">
-            <MenuItem component={<Link to="" />}>Expenses</MenuItem>
-            <MenuItem component={<Link to="" />}>Bills</MenuItem>
+            <MenuItem component={<Link to="/acct/expense" />}>Expenses</MenuItem>
+            <MenuItem component={<Link to="bill" />}>Bills</MenuItem>
             <MenuItem component={<Link to="" />}>Vendors</MenuItem>
           </SubMenu>
           {/* Report section */}
