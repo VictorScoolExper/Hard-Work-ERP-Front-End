@@ -141,17 +141,17 @@ const SidebarMenu = () => {
           {/* Expense section */}
           <SubMenu label="Expenses">
             <MenuItem component={<Link to="/acct/expense" />}>Expenses</MenuItem>
-            <MenuItem component={<Link to="bill" />}>Bills</MenuItem>
-            <MenuItem component={<Link to="" />}>Vendors</MenuItem>
+            <MenuItem component={<Link to="/acct/bill" />}>Bills</MenuItem>
+            <MenuItem component={<Link to="/acct/vendor" />}>Vendors</MenuItem>
           </SubMenu>
           {/* Report section */}
-          <MenuItem component={<Link to="/accounting/report" />}>
+          <MenuItem component={<Link to="/acct/report" />}>
             Report
           </MenuItem>
           {/* This is the Setting section */}
           <SubMenu label="Taxes">
-            <MenuItem component={<Link to="" />}>Sales Tax</MenuItem>
-            <MenuItem component={<Link to="" />}>1099 filing</MenuItem>
+            <MenuItem component={<Link to="saletax" />}>Sales Tax</MenuItem>
+            <MenuItem component={<Link to="file1099" />}>1099 filing</MenuItem>
           </SubMenu>
           {/* Payroll */}
           <MenuItem component={<Link to="" />}>

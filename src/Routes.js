@@ -503,8 +503,80 @@ const router = createBrowserRouter([
                 index: true,
                 element: <h1>List bill section for accounting</h1>
               },
+              {
+                path: 'add',
+                element: <h1>Add Bill</h1>
+              },
+              {
+                path: ':billId',
+                children: [
+                  {
+                    index: true,
+                    element: <h1>Bill Detail By id</h1>
+                  },
+                  {
+                    path: 'edit',
+                    element: <h1>This is the bill edit detail by id</h1>
+                  }
+                ]
+              }
             ]
-            
+          }, 
+          // Accounting Vendor section
+          {
+            path: 'vendor',
+            children: [
+              {
+                index: true,
+                element: <h1>Vendor table</h1>
+              },
+              {
+                path: ':vendorId',
+                children: [
+                  {
+                    index: true,
+                    element: <h1>List of transaction by vendor id</h1>
+                  },
+                  {
+                    path: ':transId',
+                    children: [
+                      {
+                        index: true,
+                        element: <h1>The transaction detail id</h1>
+                      },
+                      {
+                        path: 'edit',
+                        element: <h1>The transaction edit detail by id</h1>
+                      }
+                    ] 
+                  }
+                ]
+              }
+            ]
+          },
+          // Accounting Report Section
+          {
+            path: 'report', 
+            children: [
+              {
+                  index: true,
+                  element: <h1>this is to create the accounting reports</h1>
+              }
+            ]
+          },
+          // Accounting Sales Tax Section
+          {
+            path: 'saletax',
+            children: [
+              {
+                index: true,
+                element: <h1>This is the sale tax section</h1>
+              }
+            ]
+          },
+          {
+            path: 'file1099',
+            element: <h1>1099 filing</h1>
           }
         ]
       }
