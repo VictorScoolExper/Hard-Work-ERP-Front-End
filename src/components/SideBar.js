@@ -150,25 +150,25 @@ const SidebarMenu = () => {
           </MenuItem>
           {/* This is the Setting section */}
           <SubMenu label="Taxes">
-            <MenuItem component={<Link to="saletax" />}>Sales Tax</MenuItem>
-            <MenuItem component={<Link to="file1099" />}>1099 filing</MenuItem>
+            <MenuItem component={<Link to="/acct/saletax" />}>Sales Tax</MenuItem>
+            <MenuItem component={<Link to="/acct/file1099" />}>1099 filing</MenuItem>
           </SubMenu>
           {/* Payroll */}
-          <MenuItem component={<Link to="" />}>
+          <MenuItem component={<Link to="/acct/payroll" />}>
             Payroll
           </MenuItem>
-          <MenuItem component={<Link to="" />}>
+          <MenuItem component={<Link to="/acct/mileage" />}>
             Mileage
           </MenuItem>
         </SubMenu>
         {/* Service */}
         <SubMenu
-          label="Management"
+          label="Services"
           icon={<i className="bi bi-hammer"></i>}
         >
-          <MenuItem component={<Link to="serv" />}>Dashboard</MenuItem>
-          <MenuItem component={<Link to="serv/service" />}>Service</MenuItem>
-          <MenuItem component={<Link to="serv/project" />}>Project</MenuItem>
+          <MenuItem component={<Link to="service" />}>Dashboard</MenuItem>
+          <MenuItem component={<Link to="service/maintenance" />}>Service</MenuItem>
+          <MenuItem component={<Link to="service/landscaping" />}>Project</MenuItem>
         </SubMenu>
 
         {/* Inventory */}
@@ -182,6 +182,7 @@ const SidebarMenu = () => {
             Equipment
           </MenuItem>
           <MenuItem component={<Link to="/inventory/fleet" />}>Fleet</MenuItem>
+          <MenuItem component={<Link to="/inventory/supply" />}>Supplies</MenuItem>
         </SubMenu>
       </Menu>
     </Sidebar>

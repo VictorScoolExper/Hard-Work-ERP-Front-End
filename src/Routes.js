@@ -192,9 +192,9 @@ const router = createBrowserRouter([
                     element: <h1>This is the id detail payroll</h1>,
                   },
                   {
-                    path: 'edit',
-                    element: <h1>This is the edit payroll</h1>
-                  }
+                    path: "edit",
+                    element: <h1>This is the edit payroll</h1>,
+                  },
                 ],
               },
             ],
@@ -203,384 +203,459 @@ const router = createBrowserRouter([
       },
       // CRM section
       {
-        path: 'crm',
-        element: <LayoutCRM /> ,
+        path: "crm",
+        element: <LayoutCRM />,
         children: [
           {
-            path: 'client',
-            children: [
-              {
-                index: true, 
-                element: <h1>Client list</h1>
-              },
-              {
-                path: 'add',
-                element: <h1>Add Client</h1>
-              },
-              {
-                path: ':clientId',
-                children: [
-                  {
-                    index: true,
-                    element: <h1>Client ID detail section</h1>
-                  },
-                  {
-                    path: 'edit',
-                    element: <h1>Client Edit</h1>
-                  }
-                ]
-                
-              }
-            ]
-          },
-          {
-            path: 'vendor',
+            path: "client",
             children: [
               {
                 index: true,
-                element: <h1>This is the vendor list</h1>
+                element: <h1>Client list</h1>,
               },
               {
-                path: 'add',
-                element: <h1>Add vendor</h1>
+                path: "add",
+                element: <h1>Add Client</h1>,
               },
               {
-                path:':vendorId',
+                path: ":clientId",
                 children: [
                   {
                     index: true,
-                    element: <h1>This is detail vendor id</h1>
+                    element: <h1>Client ID detail section</h1>,
                   },
                   {
-                    path: 'edit',
-                    element: <h1>This is edit vendor by id</h1>
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+                    path: "edit",
+                    element: <h1>Client Edit</h1>,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: "vendor",
+            children: [
+              {
+                index: true,
+                element: <h1>This is the vendor list</h1>,
+              },
+              {
+                path: "add",
+                element: <h1>Add vendor</h1>,
+              },
+              {
+                path: ":vendorId",
+                children: [
+                  {
+                    index: true,
+                    element: <h1>This is detail vendor id</h1>,
+                  },
+                  {
+                    path: "edit",
+                    element: <h1>This is edit vendor by id</h1>,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       },
       // Accounting section
       {
-        path: 'acct',
+        path: "acct",
         element: <LayoutAccounting />,
         children: [
           {
             index: true,
-            element: <DashboardAccounting />
+            element: <DashboardAccounting />,
           },
           // Accounting  Banking Section
           {
-            path: 'banking',
+            path: "banking",
             children: [
               {
                 index: true,
-                element: <h1>Banking All Accounts</h1>
+                element: <h1>Banking All Accounts</h1>,
               },
               {
-                path: 'receipt',
-                children: [
-                  {
-                    index: true, 
-                    element: <h1>This is to view all reciept</h1>
-                  },
-                  {
-                    path: 'add',
-                    element: <h1>Add reciept</h1>
-                  },
-                  {
-                    path: ':recieptId',
-                    children: [
-                      {
-                        index: true,
-                        element: <h1>Receipt Detail Id</h1> 
-                      },
-                      {
-                        path: 'edit',
-                        element: <h1>Edit Receipt by Id</h1>
-                      }
-                    ]
-                    
-                  }
-                ]
-                
-              },
-              {
-                path: ':bankId',
+                path: "receipt",
                 children: [
                   {
                     index: true,
-                    element: <h1>This bank Account details</h1>
+                    element: <h1>This is to view all reciept</h1>,
                   },
                   {
-                    path: 'edit',
-                    element: <h1>This edits bank accounts details</h1>
+                    path: "add",
+                    element: <h1>Add reciept</h1>,
                   },
                   {
-                    path: 'trans/:transId',
+                    path: ":recieptId",
                     children: [
                       {
                         index: true,
-                        element: <h1>This is a single bank transaction detail</h1>
+                        element: <h1>Receipt Detail Id</h1>,
                       },
                       {
-                        path: 'edit',
-                        element: <h1>Banking transaction edit by id</h1>
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
+                        path: "edit",
+                        element: <h1>Edit Receipt by Id</h1>,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                path: ":bankId",
+                children: [
+                  {
+                    index: true,
+                    element: <h1>This bank Account details</h1>,
+                  },
+                  {
+                    path: "edit",
+                    element: <h1>This edits bank accounts details</h1>,
+                  },
+                  {
+                    path: "trans/:transId",
+                    children: [
+                      {
+                        index: true,
+                        element: (
+                          <h1>This is a single bank transaction detail</h1>
+                        ),
+                      },
+                      {
+                        path: "edit",
+                        element: <h1>Banking transaction edit by id</h1>,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
           // Accounting Sales Section
           {
-            path: 'sale',
+            path: "sale",
             children: [
               {
                 index: true,
-                element: <h1>This is the list of sales</h1>
+                element: <h1>This is the list of sales</h1>,
               },
               {
-                path: 'overview',
-                element: <h1>This is the overview section</h1>
+                path: "overview",
+                element: <h1>This is the overview section</h1>,
               },
               {
-                path: 'add',
-                element: <h1>Add Sale</h1>
+                path: "add",
+                element: <h1>Add Sale</h1>,
               },
               {
-                path: ':saleId',
+                path: ":saleId",
                 children: [
                   {
                     index: true,
-                    element: <h1>This is the sale id details</h1>
+                    element: <h1>This is the sale id details</h1>,
                   },
                   {
-                    path: 'edit',
-                    element: <h1>This is the sale id edit page</h1>
-                  }
-                ]
-              }
-            ]
+                    path: "edit",
+                    element: <h1>This is the sale id edit page</h1>,
+                  },
+                ],
+              },
+            ],
           },
           {
-            path: 'invoice',
+            path: "invoice",
             children: [
               {
                 index: true,
-                element: <h1>List of invoices</h1>
+                element: <h1>List of invoices</h1>,
               },
               {
-                path: 'add',
-                element: <h1>This is to add invoices</h1>
+                path: "add",
+                element: <h1>This is to add invoices</h1>,
               },
               {
-                path: ':invoiceId',
+                path: ":invoiceId",
                 children: [
                   {
                     index: true,
-                    element: <h1>This is invoice Details</h1>
+                    element: <h1>This is invoice Details</h1>,
                   },
                   {
-                    path: 'edit',
-                    element: <h1>This is the edit invoice by id</h1>
-                  }
-                ]
-              }
-            ]
+                    path: "edit",
+                    element: <h1>This is the edit invoice by id</h1>,
+                  },
+                ],
+              },
+            ],
           },
           // Accounting estimate section
           {
-            path: 'estimate',
+            path: "estimate",
             children: [
               {
                 index: true,
-                element: <h1>List of Estimates created</h1>
+                element: <h1>List of Estimates created</h1>,
               },
               {
-                path: 'add',
-                element: <h1>Add estimate</h1>
+                path: "add",
+                element: <h1>Add estimate</h1>,
               },
               {
-                path: ':estimateId',
+                path: ":estimateId",
                 children: [
                   {
                     index: true,
-                    element: <h1>This is the estimate id details</h1>
+                    element: <h1>This is the estimate id details</h1>,
                   },
                   {
-                    path: 'edit',
-                    element: <h1>This is the estimate edit page</h1>
-                  }
-                ]
-              }
-            ]
+                    path: "edit",
+                    element: <h1>This is the estimate edit page</h1>,
+                  },
+                ],
+              },
+            ],
           },
           // Accounting Customer section
           {
-            path: 'customers',
+            path: "customers",
             children: [
               {
                 index: true,
-                element: <h1>List of Customers</h1>
+                element: <h1>List of Customers</h1>,
               },
               {
-                path: ':customerId',
+                path: ":customerId",
                 children: [
                   {
                     index: true,
-                    element: <h1>Customer details</h1>
+                    element: <h1>Customer details</h1>,
                   },
                   {
-                    path: 'trans',
-                    element: <h1>The list of transactons</h1>
-                  }
-                ]
-              }
-            ]
+                    path: "trans",
+                    element: <h1>The list of transactons</h1>,
+                  },
+                ],
+              },
+            ],
           },
           // Accounting Service section
           {
-            path: 'service',
+            path: "service",
             children: [
               {
                 index: true,
-                element: <h1>Service Page in accounting</h1>
+                element: <h1>Service Page in accounting</h1>,
               },
               {
-                path: 'add',
-                element: <h1>Add a Service section</h1>
+                path: "add",
+                element: <h1>Add a Service section</h1>,
               },
               {
-                path: ':serviceId',
+                path: ":serviceId",
                 children: [
                   {
                     index: true,
-                    element: <h1>Service Details by id</h1>
+                    element: <h1>Service Details by id</h1>,
                   },
                   {
-                    path: 'edit',
-                    element: <h1>Edit the service by id</h1>
-                  }
-                ]
-              }
-            ]
+                    path: "edit",
+                    element: <h1>Edit the service by id</h1>,
+                  },
+                ],
+              },
+            ],
           },
           // Accounting Expense Section
           {
-            path: 'expense',
+            path: "expense",
             children: [
               {
                 index: true,
-                element: <h1>The list of expenses</h1>
+                element: <h1>The list of expenses</h1>,
               },
               {
-                path: 'add',
-                element: <h1>Add new Expense</h1>
+                path: "add",
+                element: <h1>Add new Expense</h1>,
               },
               {
-                path: ':expenseId',
+                path: ":expenseId",
                 children: [
                   {
                     index: true,
-                    element: <h1>This is the expense by id detail</h1>
+                    element: <h1>This is the expense by id detail</h1>,
                   },
                   {
-                    path: 'edit',
-                    element: <h1>This edit expense by id</h1>
-                  }
-                ]
-              }
-            ]
+                    path: "edit",
+                    element: <h1>This edit expense by id</h1>,
+                  },
+                ],
+              },
+            ],
           },
           // Accounting Bill Section
           {
-            path: 'bill',
+            path: "bill",
             children: [
               {
                 index: true,
-                element: <h1>List bill section for accounting</h1>
+                element: <h1>List bill section for accounting</h1>,
               },
               {
-                path: 'add',
-                element: <h1>Add Bill</h1>
+                path: "add",
+                element: <h1>Add Bill</h1>,
               },
               {
-                path: ':billId',
+                path: ":billId",
                 children: [
                   {
                     index: true,
-                    element: <h1>Bill Detail By id</h1>
+                    element: <h1>Bill Detail By id</h1>,
                   },
                   {
-                    path: 'edit',
-                    element: <h1>This is the bill edit detail by id</h1>
-                  }
-                ]
-              }
-            ]
-          }, 
+                    path: "edit",
+                    element: <h1>This is the bill edit detail by id</h1>,
+                  },
+                ],
+              },
+            ],
+          },
           // Accounting Vendor section
           {
-            path: 'vendor',
+            path: "vendor",
             children: [
               {
                 index: true,
-                element: <h1>Vendor table</h1>
+                element: <h1>Vendor table</h1>,
               },
               {
-                path: ':vendorId',
+                path: ":vendorId",
                 children: [
                   {
                     index: true,
-                    element: <h1>List of transaction by vendor id</h1>
+                    element: <h1>List of transaction by vendor id</h1>,
                   },
                   {
-                    path: ':transId',
+                    path: ":transId",
                     children: [
                       {
                         index: true,
-                        element: <h1>The transaction detail id</h1>
+                        element: <h1>The transaction detail id</h1>,
                       },
                       {
-                        path: 'edit',
-                        element: <h1>The transaction edit detail by id</h1>
-                      }
-                    ] 
-                  }
-                ]
-              }
-            ]
+                        path: "edit",
+                        element: <h1>The transaction edit detail by id</h1>,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
           // Accounting Report Section
           {
-            path: 'report', 
-            children: [
-              {
-                  index: true,
-                  element: <h1>this is to create the accounting reports</h1>
-              }
-            ]
-          },
-          // Accounting Sales Tax Section
-          {
-            path: 'saletax',
+            path: "report",
             children: [
               {
                 index: true,
-                element: <h1>This is the sale tax section</h1>
-              }
-            ]
+                element: <h1>this is to create the accounting reports</h1>,
+              },
+            ],
+          },
+          // Accounting Sales Tax Section
+          {
+            path: "saletax",
+            children: [
+              {
+                index: true,
+                element: <h1>This is the sale tax section</h1>,
+              },
+            ],
+          },
+          // Accounting file 1099
+          {
+            path: "file1099",
+            element: <h1>1099 filing</h1>,
+          },
+          // Accounting Payroll
+          {
+            path: "payroll",
+            children: [
+              {
+                index: true,
+                element: <h1>This is main payroll page</h1>,
+              },
+              // TODO: DETERMINE ROUTES
+            ],
+          },
+          // accounting mileage section
+          {
+            path: "mileage",
+            children: [
+              {
+                index: true,
+                element: <h1>Mileage main section</h1>,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: "service",
+        element: <LayoutServ />,
+        children: [
+          {
+            index: true,
+            element: <h1>The Service Dashboard</h1>,
           },
           {
-            path: 'file1099',
-            element: <h1>1099 filing</h1>
+            path: "maintenance",
+            element: <h1>The maintenance section</h1>,
+          },
+          {
+            path: "landscaping",
+            element: <h1>The landscping section</h1>,
+          },
+        ],
+      },
+      {
+        path: "inventory",
+        element: <LayoutInv />,
+        children: [
+          {
+            index: true,
+            element: <h1>Inventory Overview</h1>,
+          },
+          {
+            path: "equipment",
+            children: [
+              {
+                index: true,
+                element: <h1>This is the equipment page</h1>,
+              },
+            ],
+          },
+          {
+            path: "fleet",
+            children: [
+              { 
+                index: true, 
+                element: <h1>This is the fleet page</h1> 
+              },
+            ],
+          },
+          {
+            path: 'supply',
+            children: [
+              {
+                index: true,
+                element: <h1>Supplie page</h1>
+              }
+            ]
           }
-        ]
-      }
-
+        ],
+      },
     ],
   },
 ]);
