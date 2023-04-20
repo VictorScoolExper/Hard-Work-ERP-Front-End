@@ -10,24 +10,6 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 
 const Layout = () => {
   return (
-    // <>
-    //   <nav>
-    //     <ul>
-    //       <li>
-    //         <Link to="/crm">Overview</Link>
-    //       </li>
-    //       <li>
-    //         <Link to="/crm/contact">Contacts</Link>
-    //       </li>
-    //       <li>
-    //         <Link to="/crm/help">Help</Link>
-    //       </li>
-    //     </ul>
-    //   </nav>
-
-    //   <Outlet />
-    // </>
-
     <>
       <Navbar bg="light" expand="lg">
         <Container fluid>

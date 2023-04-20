@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import DynamicTable from "../../../components/Table";
+import DynamicTable from "../components/Table";
 import { Link } from 'react-router-dom';
 
 const Employee = () => {

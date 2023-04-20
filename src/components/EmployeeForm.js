@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import "./EmployeeForm.css";
+import "./EmployeeForm.module.css";
 
 function EmployeeForm(props) {
   const { id } = useParams();

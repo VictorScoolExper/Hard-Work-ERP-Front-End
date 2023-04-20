@@ -1,6 +1,5 @@
 import { Outlet, Link, NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import Navbar from './components/Navbar';
 
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
