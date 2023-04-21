@@ -9,27 +9,28 @@ import LayoutServ from "./pages/ServiceLayout";
 import LayoutInv from "./pages/InventoryLayout";
 
 // Pages
-import AuthenticationPage from './pages/AuthenticationPage';
+import AuthenticationPage, {action as authAction} from './pages/AuthenticationPage';
 
 import ErrorPage from "./pages/Error";
 import AddEditEmployee from "./pages/AddEditEmployeePage";
 import DetailEmployee from "./pages/DetailEmployeePage";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { checkAuthLoader } from "./util/auth";
+import { checkAuthCookieLoader } from "./util/auth";
 
 
 const router = createBrowserRouter([
   {
     path: "/auth",
-    element: <AuthenticationPage/>
+    element: <AuthenticationPage/>,
+    action: authAction
   },
   {
     path: "/",
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     id: 'root',
-    loader: checkAuthLoader,
+    loader: checkAuthCookieLoader,
     children: [
       { index: true, element: <MainDash /> },
       // HR section

@@ -17,7 +17,7 @@ const Container = styled.div`
   background-color: #f0f2f5;
 `;
 
-const FormContainer = styled.Form`
+const FormContainer = styled.div`
   width: 300px;
   padding: 2rem;
   background-color: #ffffff;
@@ -65,34 +65,36 @@ const LoginForm = () => {
 
   return (
     <Container>
-      <FormContainer method="post">
-        <TitleContainer>
-          <Title>Green Works ERP</Title>
-          {data && data.errors && (
-            <ul>
-              {Object.values(data.errors).map((err) => (
-                <li key={err}>{err}</li>
-              ))}
-            </ul>
-          )}
-        </TitleContainer>
-        <Input
-          id="email"
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-        />
-        <Input
-          id="password"
-          type="password"
-          name="password"
-          placeholder="Password"
-          required
-        />
-        <Button disabled={isSubmitting}>
-          {isSubmitting ? "Submitting" : "Login"}
-        </Button>
+      <FormContainer>
+        <Form method="post">
+          <TitleContainer>
+            <Title>Green Works ERP</Title>
+            {data && data.errors && (
+              <ul>
+                {Object.values(data.errors).map((err) => (
+                  <li key={err}>{err}</li>
+                ))}
+              </ul>
+            )}
+          </TitleContainer>
+          <Input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <Input
+            id="password"
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <Button disabled={isSubmitting}>
+            {isSubmitting ? "Submitting" : "Login"}
+          </Button>
+        </Form>
       </FormContainer>
     </Container>
   );
