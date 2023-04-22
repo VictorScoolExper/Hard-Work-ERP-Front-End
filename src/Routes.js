@@ -16,7 +16,7 @@ import AddEditEmployee from "./pages/AddEditEmployeePage";
 import DetailEmployee from "./pages/DetailEmployeePage";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { checkAuthCookieLoader } from "./util/auth";
+import { checkUserLogged } from "./util/auth";
 
 
 const router = createBrowserRouter([
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     id: 'root',
-    loader: checkAuthCookieLoader,
+    loader: checkUserLogged,
     children: [
       { index: true, element: <MainDash /> },
       // HR section

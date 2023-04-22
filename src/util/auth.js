@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { redirect } from "react-router-dom";
 
 // export function getTokenDuration(){
@@ -61,16 +62,12 @@ export function checkAuthCookieLoader() {
 //     return false;
 // }
   
-export function checkCookieExists(cookieName) {
-    const cookieArray = document.cookie;
-    // for (let i = 0; i < cookieArray.length; i++) {
-    //   const cookiePair = cookieArray[i].split('=');
-    //   if (cookieName === cookiePair[0].trim()) {
-    //     console.log(cookieName);
-    //     return true;
-    //   }
-    // }
-    console.log('These are the cookies ' + cookieArray);
-    return false;
+export function checkUserLogged() {
+  const userLogged = useSelector((state)=> state.user.loggedIn);
+  if(userLogged !== true){
+    return redirect("/auth");
+  }
+  
+  return redirect("/");
 }
   
