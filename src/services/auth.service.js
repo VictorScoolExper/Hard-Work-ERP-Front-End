@@ -1,18 +1,23 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:4000/api/v1/auth/login";
+const API_URL = "http://localhost:4000/api/v1/auth";
 
-const login = (username, password) => {
-  return axios
-    .post(API_URL + "signin", {
-      username,
-      password,
+const login = async (email, password) => {
+  return await axios
+    (API_URL + "/login", {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true,
+      data: {email,password}
     })
     .then((response) => {
-      if (response.data.username) {
+      if (response.data.userId) {
         localStorage.setItem("user", JSON.stringify(response.data));
       }
 
+      // console.log(response.data);
       return response.data;
     });
 };

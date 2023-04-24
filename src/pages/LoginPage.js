@@ -75,34 +75,47 @@ const LoginPage = () => {
     dispatch(clearMessage());
   }, [dispatch]);
 
-  const handleEmailChange = (event) =>{
+  const handleEmailChange = (event) => {
     setEmail(event.target.value);
-    console.log('The email is ' + event.target.value);
-  }
+    // console.log('The email is ' + event.target.value);
+  };
 
-  const handlePasswordChange = (event) =>{
+  const handlePasswordChange = (event) => {
     setPassword(event.target.value);
-    console.log('This is the password ' + event.target.value);
-  }
+    // console.log('This is the password ' + event.target.value);
+  };
 
   const handleLogin = (event) => {
     event.preventDefault();
-    
-    console.log('The form has a email of ' + email + ' and password of ' + password);
+
+    setLoading(true);
+
+    dispatch(login({ email, password }))
+      .unwrap()
+      .then(() => {
+        navigate("/");
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   };
+
+  if (isLoggedIn) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Container>
       <Form method="post" onSubmit={handleLogin}>
         <TitleContainer>
           <Title>Green Works ERP</Title>
-          {/* {data && data.errors && (
-              <ul>
-                {Object.values(data.errors).map((err) => (
-                  <li key={err}>{err}</li>
-                ))}
-              </ul>
-            )} */}
+          {message && (
+            <div className="form-group">
+              <div className="alert alert-danger" role="alert">
+                {message}
+              </div>
+            </div>
+          )}
         </TitleContainer>
         <Input
           id="email"
@@ -120,12 +133,8 @@ const LoginPage = () => {
           onChange={handlePasswordChange}
           required
         />
-        <Button
-          // disabled={isSubmitting}
-          type="submit"
-        >
-          {/* {isSubmitting ? "Submitting" : "Login"} */}
-          Login
+        <Button disabled={loading} type="submit">
+          {loading ? "Loading" : "Login"}
         </Button>
       </Form>
     </Container>
