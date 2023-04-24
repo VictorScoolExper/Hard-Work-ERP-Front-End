@@ -9,28 +9,27 @@ import LayoutServ from "./pages/ServiceLayout";
 import LayoutInv from "./pages/InventoryLayout";
 
 // Pages
-import AuthenticationPage, {action as authAction} from './pages/AuthenticationPage';
+import LoginPage from './pages/LoginPage';
 
 import ErrorPage from "./pages/Error";
 import AddEditEmployee from "./pages/AddEditEmployeePage";
 import DetailEmployee from "./pages/DetailEmployeePage";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { checkUserLogged } from "./util/auth";
+// import {checkUserLogged} from "./util/auth";
 
 
 const router = createBrowserRouter([
   {
     path: "/auth",
-    element: <AuthenticationPage/>,
-    action: authAction
+    element: <LoginPage/>
   },
   {
     path: "/",
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     id: 'root',
-    loader: checkUserLogged,
+    // loader: CheckUserLogged,
     children: [
       { index: true, element: <MainDash /> },
       // HR section

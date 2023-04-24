@@ -1,11 +1,16 @@
 import {configureStore} from "@reduxjs/toolkit";
 
-import userSlice from "./user-slice";
+import authReducer from "./slices/auth";
+import messageReducer from "./slices/message";
+
+const reducer = {
+    auth: authReducer,
+    message: messageReducer
+  }
 
 const store = configureStore({
-    reducer: {
-        user: userSlice.reducer
-    }
+    reducer: reducer,
+    devTools: true,
 });
 
 export default store;

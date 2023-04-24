@@ -39,15 +39,15 @@ import { redirect } from "react-router-dom";
 //     return null;
 // }
 
-export function checkAuthCookieLoader() {
-  const token = checkCookieExists('token');
+// export function checkAuthCookieLoader() {
+//   const token = checkCookieExists('token');
 
-  if (!token) {
-    return redirect("/auth");
-  }
+//   if (!token) {
+//     return redirect("/auth");
+//   }
 
-  return null;
-}
+//   return null;
+// }
 
 // When multiple cookies are involved
 // export function checkCookieExists(cookieName) {
