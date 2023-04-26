@@ -8,7 +8,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { login } from "../store/slices/auth";
-import { clearMessage } from "../store/slices/message";
+import { clearMessage } from "../../store/slices/message";
 import styled from "styled-components";
 
 const Container = styled.div`

@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./index.css";
 import App from "./App";
-import store from "./store";
+import store from "./app/store";
 
 import { ProSidebarProvider } from "react-pro-sidebar";
 import reportWebVitals from "./reportWebVitals";

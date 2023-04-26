@@ -9,7 +9,7 @@ import LayoutServ from "./pages/ServiceLayout";
 import LayoutInv from "./pages/InventoryLayout";
 
 // Pages
-import LoginPage from './pages/LoginPage';
+import LoginPage from './features/auth/LoginPage';
 
 import ErrorPage from "./pages/Error";
 import AddEditEmployee from "./pages/AddEditEmployeePage";
