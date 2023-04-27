@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import DynamicTable from "../components/Table";
+import DynamicTable from "../../components/Table";
 import { Link } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { fetchAllEmployees } from "./employee-slice";
 
 const Employee = () => {
+  const dispatch = useDispatch();
+
+  const [isActive, setIsActive] = useState("true")
   
   const headers = ["Name", "Age", "City"];
   const [employees, setEmployees] = useState([
@@ -11,6 +16,12 @@ const Employee = () => {
     { id: 2, name: "Jane Smith", age: 25, city: "ABC" },
     { id: 3, name: "Bob Johnson", age: 45, city: "ABC" },
   ]);
+
+  useEffect(() =>{
+    // get all active employees
+    const response = dispatch(fetchAllEmployees(isActive));
+    console.log(response);
+  }, [dispatch])
 
  
   return (

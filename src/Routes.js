@@ -10,8 +10,8 @@ import LayoutInv from "./pages/InventoryLayout";
 
 // Pages
 import LoginPage from './features/auth/LoginPage';
-
 import ErrorPage from "./pages/Error";
+import EmployeePage from "./features/employees/EmployeePage";
 import AddEditEmployee from "./pages/AddEditEmployeePage";
 import DetailEmployee from "./pages/DetailEmployeePage";
 
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
             children: [
               { 
                 index: true, 
-                element: <h1>This is the main employee</h1>
+                element: <EmployeePage />
               },
               {
                 path: "add",
