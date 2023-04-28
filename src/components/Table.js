@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
 
 const DynamicTable = (props) => {
   const navigate = useNavigate();
@@ -34,22 +36,33 @@ const DynamicTable = (props) => {
           <tr>
             {props.header &&
               props.header.map((item) => <th key={item}>{item}</th>)}
-            <th>Actions</th>
+            <th className="text-center" scope="col">Details</th>
+            <th className="text-center" scope="col">Edit</th>
+            <th className="text-center" scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
           {props.data.map((data) => (
-            <tr key={data.employee_id} onClick={() => navigateToDetails(data.employee_id)}>
+            <tr key={data.employee_id}>
               {props.header &&
                 props.header.map((item) => (
                   <td key={item}>{data[item.toLowerCase()]}</td>
                 ))}
-              <td>
+              <td className="text-center">
+                <Link to={props.link + data.employee_id}>
+                  <Button variant="success">
+                  <i className="bi bi-binoculars"></i>
+                  </Button>
+                </Link>{" "}
+              </td>
+              <td className="text-center">
                 <Link to={props.link + data.employee_id + '/edit'}>
-                  <Button variant="info">
+                  <Button style={{background: "orange", border: "none"}}>
                     <i className="bi bi-pencil-square"></i>
                   </Button>
                 </Link>{" "}
+              </td>
+              <td className="text-center">
                 <Button
                   variant="danger"
                   onClick={() => handleDeleteClick(data)}

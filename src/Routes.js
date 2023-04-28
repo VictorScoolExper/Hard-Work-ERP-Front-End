@@ -13,7 +13,7 @@ import LoginPage from './features/auth/LoginPage';
 import ErrorPage from "./pages/Error";
 import EmployeePage from "./features/employees/EmployeePage";
 import AddEditEmployee from "./pages/AddEditEmployeePage";
-import DetailEmployee from "./pages/DetailEmployeePage";
+import DetailEmployee from "./features/employees/DetailEmployeePage";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {checkUserLogged} from "./util/auth";

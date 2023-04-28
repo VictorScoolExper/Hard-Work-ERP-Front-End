@@ -10,7 +10,7 @@ import {
 
 import { Spinner } from "../../components/Spinner";
 import {loginUser} from './authSlice';
-import { clearMessage } from "../messages/message-slice";
+import { clearMessage } from "../messages/messageSlice";
 
 import {
   Container,

@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import DynamicTable from "../../components/Table";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllEmployees, selectEmployees } from "./employee-slice";
+import { fetchAllEmployees, selectEmployees } from "./employeeSlice";
 
 const Employee = () => {
   const dispatch = useDispatch();
