@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const DynamicTable = (props) => {
+  const navigate = useNavigate();
+
+  const propLink = props.link;
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selected, setSelected] = useState(null);
 
@@ -18,6 +22,10 @@ const DynamicTable = (props) => {
     props.onDelete && props.onDelete(update);
   };
 
+  const navigateToDetails = (id) =>{
+    navigate(propLink + id)
+  }
+
   return (
     <>
       {props.title && <h2>{props.title}</h2>}
@@ -31,13 +39,13 @@ const DynamicTable = (props) => {
         </thead>
         <tbody>
           {props.data.map((data) => (
-            <tr key={data.id}>
+            <tr key={data.employee_id} onClick={() => navigateToDetails(data.employee_id)}>
               {props.header &&
                 props.header.map((item) => (
                   <td key={item}>{data[item.toLowerCase()]}</td>
                 ))}
               <td>
-                <Link to={props.link + data.id + '/edit'}>
+                <Link to={props.link + data.employee_id + '/edit'}>
                   <Button variant="info">
                     <i className="bi bi-pencil-square"></i>
                   </Button>

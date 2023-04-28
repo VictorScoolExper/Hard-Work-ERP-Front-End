@@ -1,29 +1,25 @@
 import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import DynamicTable from "../../components/Table";
-import { Link } from 'react-router-dom';
-import { useDispatch } from "react-redux";
-import { fetchAllEmployees } from "./employee-slice";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllEmployees, selectEmployees } from "./employee-slice";
 
 const Employee = () => {
   const dispatch = useDispatch();
 
-  const [isActive, setIsActive] = useState("true")
-  
-  const headers = ["Name", "Age", "City"];
-  const [employees, setEmployees] = useState([
-    { id: 1, name: "John Doe", age: 30, city: "ABC" },
-    { id: 2, name: "Jane Smith", age: 25, city: "ABC" },
-    { id: 3, name: "Bob Johnson", age: 45, city: "ABC" },
-  ]);
+  const [isActive, setIsActive] = useState("true");
 
-  useEffect(() =>{
+  const employeesList = useSelector(selectEmployees);
+
+  const headers = ["Name", "Last_name", "Role", "Job_Title", "Department"];
+
+  useEffect(() => {
     // get all active employees
     const response = dispatch(fetchAllEmployees(isActive));
     console.log(response);
-  }, [dispatch])
+  }, [dispatch]);
 
- 
   return (
     <>
       <div className="row d-flex p-2">
@@ -37,11 +33,18 @@ const Employee = () => {
         </div>
       </div>
       <div className="mt-4">
-        <h6>Employee Table</h6>
-        <DynamicTable header={headers} data={employees} link={`/hr/employee/`} />
+        {employeesList && (
+          <>
+            <h6>Employee Table</h6>
+            <DynamicTable
+              header={headers}
+              data={employeesList}
+              link={`/hr/employee/`}
+            />
+          </>
+        )}
+        {!employeesList && <h3>No Employees Exist</h3>}
       </div>
-
-     
     </>
   );
 };
