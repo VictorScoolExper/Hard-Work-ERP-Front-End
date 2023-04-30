@@ -22,27 +22,27 @@ const CircularImage = styled(Card.Img)`
 
 const EmployeeInfo = () => {
   const { employeeId } = useParams();
-  const employeeExample = useSelector((state) => selectEmployeeById(state, employeeId));
+  const employee = useSelector((state) => selectEmployeeById(state, employeeId));
 
 
-  console.log(`Employee from redux: ${employeeExample || "did not get"}`);
+  // console.log(`Employee from redux: ${employeeExample || "did not get"}`);
 
-  const employee = {
-    name: "Jose",
-    last_name: "Munoz",
-    cell_number: "4771234",
-    role: "Manager",
-    age: 56,
-    active: "true",
-    employee_id: 4,
-    user_id: 9,
-    job_title: "Gardener",
-    department: "Maintenance",
-    driver_license: "64asd54asdasd",
-    start_date: "2022-01-01T06:00:00.000Z",
-    end_date: null,
-    wage_per_hour: 20,
-  };
+  // const employee = {
+  //   name: "Jose",
+  //   last_name: "Munoz",
+  //   cell_number: "4771234",
+  //   role: "Manager",
+  //   age: 56,
+  //   active: "true",
+  //   employee_id: 4,
+  //   user_id: 9,
+  //   job_title: "Gardener",
+  //   department: "Maintenance",
+  //   driver_license: "64asd54asdasd",
+  //   start_date: "2022-01-01T06:00:00.000Z",
+  //   end_date: null,
+  //   wage_per_hour: 20,
+  // };
 
   // Format the date
   const formatDate = (dateString) => {

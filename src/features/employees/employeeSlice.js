@@ -94,7 +94,7 @@ export default employeesSlice.reducer;
 export const selectEmployees = (state) => state.employees.employees;
 
 export const selectEmployeeById = (state, employeeId) => 
-  state.employees.employees.find((employee) => employee.employee_id === employeeId);
+  state.employees.employees.find((employee) => employee.employee_id === Number(employeeId));
 
 
 

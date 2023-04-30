@@ -17,7 +17,6 @@ const Employee = () => {
   useEffect(() => {
     // get all active employees
     const response = dispatch(fetchAllEmployees(isActive));
-    console.log(response);
   }, [dispatch]);
 
   return (

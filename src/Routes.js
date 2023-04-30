@@ -14,6 +14,7 @@ import ErrorPage from "./pages/Error";
 import EmployeePage from "./features/employees/EmployeePage";
 import AddEditEmployee from "./pages/AddEditEmployeePage";
 import DetailEmployee from "./features/employees/DetailEmployeePage";
+import CreateEmployee from "./features/employees/CreateEmployeePage";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {checkUserLogged} from "./util/auth";
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "add",
-                element: <AddEditEmployee />,
+                element: <CreateEmployee />,
               },
               {
                 path: ":employeeId",
