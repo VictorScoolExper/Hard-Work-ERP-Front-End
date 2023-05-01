@@ -15,7 +15,7 @@ const StyledForm = styled(Form)`
 `;
 
 const RowForm = styled(Row)`
-  margin: 10px
+  margin: 10px;
 `;
 
 const FormTitle = styled.h1`
@@ -28,23 +28,24 @@ const FormButton = styled(Button)`
 `;
 
 const NewEmployeeForm = () => {
-
   const [formData, setFormData] = useState({
-    name: "",
-    last_name: "",
-    cell_number: "",
-    role: "",
-    age: "",
-    active: "",
-    employee_id: "",
-    user_id: "",
-    job_title: "",
-    department: "",
-    driver_license: "",
-    start_date: "",
-    end_date: "",
-    wage_per_hour: "",
+    name: '',
+    last_name: '',
+    cell_number: '',
+    role: '',
+    age: '',
+    image: null,
+    job_title: '',
+    department: '',
+    driver_license: '',
+    start_date: '',
+    wage_per_hour: '',
+    created_by_user: '',
   });
+
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, image: e.target.files[0] });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -221,13 +222,13 @@ const NewEmployeeForm = () => {
           </Col>
           <Col>
             <Form.Group controlId="formEndDate">
-              <Form.Label>End Date</Form.Label>
+              {/* <Form.Label>End Date</Form.Label>
               <Form.Control
                 type="date"
                 name="end_date"
                 value={formData.end_date}
                 onChange={handleChange}
-              />
+              /> */}
             </Form.Group>
           </Col>
         </RowForm>
@@ -246,6 +247,28 @@ const NewEmployeeForm = () => {
           </Col>
           <Col></Col>
           <Col></Col>
+        </RowForm>
+        <RowForm>
+          <Col>
+            <Form.Group controlId="imageFile">
+              <Form.Label>Choose employee image</Form.Label>
+              <div className="col-sm-10">
+                <div className="custom-file">
+                  <input
+                    type="file"
+                    className="custom-file-input"
+                    id="image"
+                    name="image"
+                    onChange={handleFileChange}
+                    required
+                  />
+                  <label className="custom-file-label" htmlFor="image">
+                    Choose an image
+                  </label>
+                </div>
+              </div>
+            </Form.Group>
+          </Col>
         </RowForm>
         <FormButton variant="primary" type="submit">
           Submit
