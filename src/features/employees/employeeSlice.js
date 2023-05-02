@@ -50,7 +50,8 @@ export const addNewEmployee = createAsyncThunk(
     const response = await axios(API_URL + "/", {
       method: "post",
       headers: {
-        "Content-Type": "application/json",
+        // "Content-Type": "application/json",
+        'Content-Type': 'multipart/form-data',
       },
       withCredentials: true,
       data: newEmployee
@@ -82,7 +83,17 @@ const employeesSlice = createSlice({
         state.error = action.error.message;
       })
       // adding new employee
-      // .addCase(addNewEmployee.fulfilled, employeeAdapter.addOne)
+      .addCase(addNewEmployee.pending, (state, action) =>{
+        state.status = "loading";
+      })
+      .addCase(addNewEmployee.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        fetchAllEmployees();
+      })
+      .addCase(addNewEmployee.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
   },
 });
 

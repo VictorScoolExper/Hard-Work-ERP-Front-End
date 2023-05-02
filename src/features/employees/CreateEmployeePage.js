@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
+import { addNewEmployee } from "./employeeSlice";
 
 const FormContainer = styled(Container)`
   margin-top: 50px;
@@ -27,24 +29,48 @@ const FormButton = styled(Button)`
   margin-top: 2rem;
 `;
 
+const ImagePreview = styled.img`
+  max-width: 100px;
+  max-height: 100px;
+  margin-left: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+`;
+
 const NewEmployeeForm = () => {
+  const dispatch = useDispatch();
+  const message = useSelector((state) => state.employees.message);
+
   const [formData, setFormData] = useState({
-    name: '',
-    last_name: '',
-    cell_number: '',
-    role: '',
-    age: '',
+    name: "",
+    last_name: "",
+    cell_number: "",
+    role: "",
+    age: "",
     image: null,
-    job_title: '',
-    department: '',
-    driver_license: '',
-    start_date: '',
-    wage_per_hour: '',
-    created_by_user: '',
+    job_title: "",
+    department: "",
+    driver_license: "",
+    start_date: "",
+    wage_per_hour: "",
+    created_by_user: "",
   });
 
+  const [previewUrl, setPreviewUrl] = useState("");
+
   const handleFileChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
+    const file = e.target.files[0];
+    setFormData({ ...formData, image: file });
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setPreviewUrl("");
+    }
   };
 
   const handleChange = (e) => {
@@ -52,9 +78,21 @@ const NewEmployeeForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
+  const handleSubmit = async () => {
+   
+    // construct a set of key/value pairs representing form fields and their values
+    const payload = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      payload.append(key, value);
+    });
+
+    try {
+      await dispatch(addNewEmployee(payload));
+     
+    } catch (error) {
+      alert("Error");
+      console.log(error);
+    }
   };
 
   return (
@@ -143,7 +181,7 @@ const NewEmployeeForm = () => {
             </Form.Group>
           </Col>
         </RowForm>
-        <RowForm>
+        {/* <RowForm>
           <Col>
             <Form.Group controlId="formEmployeeId">
               <Form.Label>Employee ID</Form.Label>
@@ -168,7 +206,7 @@ const NewEmployeeForm = () => {
               />
             </Form.Group>
           </Col>
-        </RowForm>
+        </RowForm> */}
         <RowForm>
           <Col>
             <Form.Group controlId="formJobTitle">
@@ -265,12 +303,16 @@ const NewEmployeeForm = () => {
                   <label className="custom-file-label" htmlFor="image">
                     Choose an image
                   </label>
+                  {/* image preview */}
+                  {previewUrl && (
+                    <ImagePreview src={previewUrl} alt="Employee" />
+                  )}
                 </div>
               </div>
             </Form.Group>
           </Col>
         </RowForm>
-        <FormButton variant="primary" type="submit">
+        <FormButton type="button" onClick={handleSubmit} >
           Submit
         </FormButton>
       </StyledForm>
