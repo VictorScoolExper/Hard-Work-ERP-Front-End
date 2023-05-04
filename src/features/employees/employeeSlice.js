@@ -47,14 +47,14 @@ export const fetchAllEmployees = createAsyncThunk(
 export const addNewEmployee = createAsyncThunk(
   "employee/addNewEmployee",
   async(newEmployee) => {
-    const response = await axios(API_URL + "/", {
+    const response = await axios(API_URL + "/", newEmployee, {
       method: "post",
       headers: {
         // "Content-Type": "application/json",
         'Content-Type': 'multipart/form-data',
       },
       withCredentials: true,
-      data: newEmployee
+      // data: newEmployee
     });
     return response.data;
   }

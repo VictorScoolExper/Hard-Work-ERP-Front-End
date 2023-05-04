@@ -40,8 +40,9 @@ const ImagePreview = styled.img`
 const NewEmployeeForm = () => {
   const dispatch = useDispatch();
   const message = useSelector((state) => state.employees.message);
+  const userId = useSelector((state) => state.auth.user.userId);
 
-  const [formData, setFormData] = useState({
+  const initialState = {
     name: "",
     last_name: "",
     cell_number: "",
@@ -53,8 +54,11 @@ const NewEmployeeForm = () => {
     driver_license: "",
     start_date: "",
     wage_per_hour: "",
-    created_by_user: "",
-  });
+    created_by_user: userId,
+  };
+
+  const [formData, setFormData] = useState(initialState);
+  const [addRequestStatus, setAddRequestStatus] = useState("idle");
 
   const [previewUrl, setPreviewUrl] = useState("");
 
@@ -78,20 +82,27 @@ const NewEmployeeForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async () => {
-   
-    // construct a set of key/value pairs representing form fields and their values
-    const payload = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      payload.append(key, value);
-    });
+  const canSave = addRequestStatus === "idle";
 
-    try {
-      await dispatch(addNewEmployee(payload));
-     
-    } catch (error) {
-      alert("Error");
-      console.log(error);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formDataEmployee = new FormData();
+    for (const key in formData) {
+      formDataEmployee.append(key, formDataEmployee[key]);
+    }
+
+    if (canSave) {
+      try {
+        setAddRequestStatus("pending");
+        await dispatch(addNewEmployee({formDataEmployee})).unwrap();
+        formData = initialState;
+      } catch (error) {
+        alert("Error");
+        console.log(error);
+      } finally {
+        setAddRequestStatus("idle");
+      }
     }
   };
 
@@ -312,7 +323,7 @@ const NewEmployeeForm = () => {
             </Form.Group>
           </Col>
         </RowForm>
-        <FormButton type="button" onClick={handleSubmit} >
+        <FormButton type="button" onClick={handleSubmit}>
           Submit
         </FormButton>
       </StyledForm>
