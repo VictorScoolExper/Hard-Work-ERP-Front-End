@@ -24,26 +24,6 @@ const EmployeeInfo = () => {
   const { employeeId } = useParams();
   const employee = useSelector((state) => selectEmployeeById(state, employeeId));
 
-
-  // console.log(`Employee from redux: ${employeeExample || "did not get"}`);
-
-  // const employee = {
-  //   name: "Jose",
-  //   last_name: "Munoz",
-  //   cell_number: "4771234",
-  //   role: "Manager",
-  //   age: 56,
-  //   active: "true",
-  //   employee_id: 4,
-  //   user_id: 9,
-  //   job_title: "Gardener",
-  //   department: "Maintenance",
-  //   driver_license: "64asd54asdasd",
-  //   start_date: "2022-01-01T06:00:00.000Z",
-  //   end_date: null,
-  //   wage_per_hour: 20,
-  // };
-
   // Format the date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -68,7 +48,7 @@ const EmployeeInfo = () => {
         <div className="col-6">
           <CircularImage
             src={
-              employee.image ||
+              employee.imageUrl ||
               "https://cdn.pixabay.com/photo/2012/04/26/19/43/profile-42914_1280.png"
             }
             alt="Employee"

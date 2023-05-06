@@ -48,23 +48,24 @@ const NewEmployeeForm = () => {
     cell_number: "",
     role: "",
     age: "",
-    image: null,
+    email: "",
     job_title: "",
     department: "",
     driver_license: "",
     start_date: "",
     wage_per_hour: "",
-    created_by_user: userId,
+    created_by: userId,
   };
 
   const [formData, setFormData] = useState(initialState);
+  const [file, setFile] = useState();
   const [addRequestStatus, setAddRequestStatus] = useState("idle");
 
   const [previewUrl, setPreviewUrl] = useState("");
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFormData({ ...formData, image: file });
+    setFile(file);
 
     if (file) {
       const reader = new FileReader();
@@ -89,13 +90,19 @@ const NewEmployeeForm = () => {
 
     const formDataEmployee = new FormData();
     for (const key in formData) {
-      formDataEmployee.append(key, formDataEmployee[key]);
+      formDataEmployee.append(key, formData[key]);
     }
+    formDataEmployee.append("image", file);
+
+    // Testing purposes
+    // for(var pair of formDataEmployee.entries()){
+    //   console.log(pair[0] + ', ' + pair[1]);
+    // }
 
     if (canSave) {
       try {
         setAddRequestStatus("pending");
-        await dispatch(addNewEmployee({formDataEmployee})).unwrap();
+        await dispatch(addNewEmployee(formDataEmployee)).unwrap();
         formData = initialState;
       } catch (error) {
         alert("Error");
@@ -156,6 +163,20 @@ const NewEmployeeForm = () => {
                 type="text"
                 name="role"
                 value={formData.role}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+          </Col>
+        </RowForm>
+        <RowForm>
+          <Col>
+          <Form.Group controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
                 required
               />
