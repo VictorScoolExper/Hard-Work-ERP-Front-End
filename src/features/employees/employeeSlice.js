@@ -58,6 +58,20 @@ export const addNewEmployee = createAsyncThunk(
   }
 );
 
+export const deleteEmployeeUser = createAsyncThunk(
+  "employee/deleteEmployeeUser",
+  async(employeeId) => {
+    const response = await axios.delete(API_URL + `/${employeeId}`, employeeId, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true
+    });
+
+    return response.data;
+  }
+)
+
 const employeesSlice = createSlice({
   name: "employees",
   initialState,
@@ -92,6 +106,18 @@ const employeesSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
+      // adding cases for delete employee
+      .addCase(deleteEmployeeUser.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(addNewEmployee.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        fetchAllEmployees();
+      })
+      .addCase(deleteEmployeeUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
   },
 });
 
@@ -104,6 +130,10 @@ export const selectEmployees = (state) => state.employees.employees;
 
 export const selectEmployeeById = (state, employeeId) => 
   state.employees.employees.find((employee) => employee.employee_id === Number(employeeId));
+
+// Create sorted list of active 
+
+// Create a sorted list of inactive
 
 
 

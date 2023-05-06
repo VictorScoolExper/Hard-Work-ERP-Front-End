@@ -11,11 +11,18 @@ const DynamicTable = (props) => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [name, setName] = useState('');
+  const [lastname, setLastName] = useState('');
 
   // const { headers, data } = props;
 
-  const handleDeleteClick = (id) => {
-    setSelected(id);
+  const handleDeleteClick = (employee) => {
+    setSelected(employee.employee_id);
+    setName(employee.name);
+    setLastName(employee.last_name);
+    console.log('id: ' + selected);
+    console.log(`fullname: ${name} ${lastname}`);
+    
     setShowDeleteModal(true);
   };
 
@@ -81,8 +88,8 @@ const DynamicTable = (props) => {
           <Modal.Title>Confirm Delete</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure you want to delete the employee with ID{" "}
-          {selected && selected.id}?
+          Are you sure you want to delete the employee {" "}
+          {name} {" "} {lastname}?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>

@@ -39,6 +39,7 @@ const Employee = () => {
               header={headers}
               data={employeesList}
               link={`/hr/employee/`}
+              
             />
           </>
         )}
