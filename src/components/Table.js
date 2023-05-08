@@ -27,8 +27,8 @@ const DynamicTable = (props) => {
   };
 
   const handleDeleteConfirm = () => {
-    const update = props.onDeleteConfirm(selected);
-    props.onDelete && props.onDelete(update);
+    props.onDelete(selected);
+    setShowDeleteModal(false);
   };
 
   const navigateToDetails = (id) =>{

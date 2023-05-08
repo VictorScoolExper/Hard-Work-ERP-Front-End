@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Card, ListGroup } from "react-bootstrap";
 import styled from "styled-components";
@@ -22,8 +22,10 @@ const CircularImage = styled(Card.Img)`
 
 const EmployeeInfo = () => {
   const { employeeId } = useParams();
-  const employee = useSelector((state) => selectEmployeeById(state, employeeId));
-
+  const employee = useSelector((state) =>
+    selectEmployeeById(state, employeeId)
+  );
+  
   // Format the date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -33,7 +35,17 @@ const EmployeeInfo = () => {
     return `${month}-${day}-${year}`;
   };
 
+  function calculateAge(dateString) {
+    var birthday = new Date(dateString);
+    var ageDifMs = Date.now() - birthday.getTime();
+    var ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+
   const formattedStartDate = formatDate(employee.start_date);
+  const formattedBirthDate = formatDate(employee.birth_date);
+  const employeeAge = calculateAge(employee.birth_date);
+  
 
   return (
     <Fragment>
@@ -42,7 +54,9 @@ const EmployeeInfo = () => {
           <i className="bi bi-backspace" style={{ fontSize: "30px" }}></i>
         </Link>
 
-        <h1 className="col-10 text-left">Detail Employee {employee.name} {employee.last_name}</h1>
+        <h1 className="col-10 text-left">
+          Detail Employee {employee.name} {employee.last_name}
+        </h1>
       </div>
       <div className="row m-5">
         <div className="col-6">
@@ -61,16 +75,17 @@ const EmployeeInfo = () => {
       <EmployeeCard>
         <Card.Header>
           <h2>
-            {employee.name} {employee.last_name}
+            Details of Employee {employee.name} {employee.last_name}
           </h2>
         </Card.Header>
         <ListGroup variant="flush">
+          <ListGroup.Item>Employee ID: {employee.employee_id}</ListGroup.Item>
           <ListGroup.Item>Cell Number: {employee.cell_number}</ListGroup.Item>
           <ListGroup.Item>Role: {employee.role}</ListGroup.Item>
-          <ListGroup.Item>Age: {employee.age}</ListGroup.Item>
+          <ListGroup.Item>Age: {employeeAge}</ListGroup.Item>
+          <ListGroup.Item>Birth Date: {formattedBirthDate}</ListGroup.Item>
           <ListGroup.Item>Active: {employee.active}</ListGroup.Item>
-          <ListGroup.Item>Employee ID: {employee.employee_id}</ListGroup.Item>
-          <ListGroup.Item>User ID: {employee.user_id}</ListGroup.Item>
+          {/* <ListGroup.Item>User ID: {employee.user_id}</ListGroup.Item> */}
           <ListGroup.Item>Job Title: {employee.job_title}</ListGroup.Item>
           <ListGroup.Item>Department: {employee.department}</ListGroup.Item>
           <ListGroup.Item>

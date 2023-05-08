@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import DynamicTable from "../../components/Table";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllEmployees, selectEmployees } from "./employeeSlice";
+import { fetchAllEmployees, selectEmployees, deleteEmployeeUser } from "./employeeSlice";
 
 const Employee = () => {
   const dispatch = useDispatch();
@@ -15,8 +15,13 @@ const Employee = () => {
   const headers = ["Name", "Last_name", "Role", "Job_Title", "Department"];
 
   useEffect(() => {
-    // get all active employees
-    const response = dispatch(fetchAllEmployees(isActive));
+    (async () =>{
+      try {
+        await dispatch(fetchAllEmployees());
+      } catch (error) {
+        console.error(error);
+      }
+    })();    
   }, [dispatch]);
 
   return (
@@ -39,11 +44,19 @@ const Employee = () => {
               header={headers}
               data={employeesList}
               link={`/hr/employee/`}
-              
+              onDelete={async (employee_id) => {
+                try {
+                  await dispatch(deleteEmployeeUser(employee_id));
+                  await dispatch(fetchAllEmployees());
+                } catch (error) {
+                  alert(error);
+                  console.log('delete ' + error);
+                }
+              }}
             />
           </>
         )}
-        {!employeesList && <h3>No Employees Exist</h3>}
+        {!employeesList || employeesList.length === 0 && <h3>No Employees Exist</h3>}
       </div>
     </>
   );

@@ -1,28 +1,30 @@
-import { useState, useEffect } from "react";
-import EmployeeForm from "../components/EmployeeForm";
+import { useState, useEffect, Fragment } from "react";
+import EmployeeForm from "./EmployeeForm";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const AddEditEmployee = () => {
-  const { id } = useParams();
-
+  const { employeeId } = useParams();
+  console.log('id: ' + employeeId);
+  
   return (
-    <>
+    <Fragment>
       <div className="row">
         <Link to="/hr/employee" className="col-1 text-center">
-          <i class="bi bi-backspace" style={{ fontSize: "30px" }}></i>
+          <i className="bi bi-backspace" style={{ fontSize: "30px" }}></i>
         </Link>
-        {!id ? (
+
+        {!employeeId ? (
           <h1 className="col-10 text-left">Add new Employee</h1>
         ) : (
             // id should no be used but rather name
-          <h1 className="col-10 text-left">Employee {id}</h1>
+          <h1 className="col-10 text-left">Employee {employeeId}</h1>
         )}
       </div>
-      <div>
-        <EmployeeForm typeTrans />
-      </div>
-    </>
+  
+      <EmployeeForm />
+      
+    </Fragment>
   );
 };
 

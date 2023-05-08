@@ -61,7 +61,7 @@ export const addNewEmployee = createAsyncThunk(
 export const deleteEmployeeUser = createAsyncThunk(
   "employee/deleteEmployeeUser",
   async(employeeId) => {
-    const response = await axios.delete(API_URL + `/${employeeId}`, employeeId, {
+    const response = await axios.delete(API_URL + `/${employeeId}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -110,7 +110,7 @@ const employeesSlice = createSlice({
       .addCase(deleteEmployeeUser.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(addNewEmployee.fulfilled, (state, action) => {
+      .addCase(deleteEmployeeUser.fulfilled, (state, action) => {
         state.status = "succeeded";
         fetchAllEmployees();
       })
