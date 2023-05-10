@@ -12,10 +12,11 @@ import LayoutInv from "./pages/InventoryLayout";
 import LoginPage from './features/auth/LoginPage';
 import ErrorPage from "./pages/Error";
 import EmployeePage from "./features/employees/EmployeePage";
-import AddEditEmployee from "./features/employees/AddEditEmployeePage";
+import EmployeeAddForm from "./features/employees/EmployeeAddForm";
+import EmployeeEditForm from "./features/employees/EmployeeEditForm";
 import DetailEmployee from "./features/employees/DetailEmployeePage";
 
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import {checkUserLogged} from "./util/auth";
 
 
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "add",
-                element: <AddEditEmployee />,
+                element: <EmployeeAddForm />,
               },
               {
                 path: ":employeeId",
@@ -58,7 +59,7 @@ const router = createBrowserRouter([
                   },
                   {
                     path: "edit",
-                    element: <AddEditEmployee />,
+                    element: <EmployeeEditForm />,
                   },
                 ],
               },

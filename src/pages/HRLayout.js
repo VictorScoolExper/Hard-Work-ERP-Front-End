@@ -1,18 +1,16 @@
-import { Outlet, Link, NavLink } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+
 
 const Layout = () => {
   return (
     <>
       <Navbar bg="light" expand="lg">
-        <Container fluid>
+        <Container>
           <Navbar.Brand>HR</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
@@ -21,7 +19,7 @@ const Layout = () => {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link as={Link} to="/hr/employee" end>
+              <Nav.Link as={Link} to="/hr/employee">
                 Employee
               </Nav.Link>
 
