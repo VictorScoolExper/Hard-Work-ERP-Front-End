@@ -1,16 +1,16 @@
-import MainDash from "./pages/MainDash";
+import MainDash from "./root-pages/MainDash";
 
 // Root layout
-import RootLayout from "./pages/Root";
-import HRLayout from "./pages/HRLayout";
-import LayoutAccounting from "./pages/AccountingLayout";
-import LayoutCRM from "./pages/CRMLayout";
-import LayoutServ from "./pages/ServiceLayout";
-import LayoutInv from "./pages/InventoryLayout";
+import RootLayout from "./root-pages/Root";
+import HRLayout from "./root-pages/HRLayout";
+import LayoutAccounting from "./root-pages/AccountingLayout";
+import LayoutCRM from "./root-pages/CRMLayout";
+import LayoutServ from "./root-pages/ServiceLayout";
+import LayoutInv from "./root-pages/InventoryLayout";
 
 // Pages
 import LoginPage from './features/auth/LoginPage';
-import ErrorPage from "./pages/Error";
+import ErrorPage from "./root-pages/Error";
 import EmployeePage from "./features/employees/EmployeePage";
 import EmployeeAddForm from "./features/employees/EmployeeAddForm";
 import EmployeeEditForm from "./features/employees/EmployeeEditForm";

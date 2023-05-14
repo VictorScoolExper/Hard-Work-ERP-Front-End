@@ -16,7 +16,7 @@ function RootLayout() {
     // </>
     <>
       <div style={{ height: "100vh", display: "flex", flexDirection: "row" }}>
-        <div className="p-0" style={{ maxWidth: "20%" }}>
+        <div className="p-0" style={{ maxWidth: "20%", height: "100%"}}>
           <SidebarMenu />
         </div>
         <div className="p-0" style={{ flex: "1" }}>

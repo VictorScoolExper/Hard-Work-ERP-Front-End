@@ -80,6 +80,7 @@ const EmployeeInfo = () => {
         </Card.Header>
         <ListGroup variant="flush">
           <ListGroup.Item>Employee ID: {employee.employee_id}</ListGroup.Item>
+          <ListGroup.Item>Email: {employee.email}</ListGroup.Item>
           <ListGroup.Item>Cell Number: {employee.cell_number}</ListGroup.Item>
           <ListGroup.Item>Role: {employee.role}</ListGroup.Item>
           <ListGroup.Item>Age: {employeeAge}</ListGroup.Item>

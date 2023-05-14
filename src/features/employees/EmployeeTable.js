@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
+import { fetchAllEmployees } from "./employeeSlice";
 
-const DynamicTable = (props) => {
+const EmployeeTable = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const propLink = props.link;
 
@@ -26,14 +28,11 @@ const DynamicTable = (props) => {
     setShowDeleteModal(true);
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     props.onDelete(selected);
     setShowDeleteModal(false);
+   
   };
-
-  const navigateToDetails = (id) =>{
-    navigate(propLink + id)
-  }
 
   return (
     <>
@@ -103,4 +102,4 @@ const DynamicTable = (props) => {
     </>
   );
 };
-export default DynamicTable;
+export default EmployeeTable;

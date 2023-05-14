@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import DynamicTable from "../../components/Table";
+import EmployeeTable from "./EmployeeTable";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllEmployees, selectEmployees, deleteEmployeeUser } from "./employeeSlice";
@@ -40,7 +40,7 @@ const Employee = () => {
         {employeesList && (
           <>
             <h6>Employee Table</h6>
-            <DynamicTable
+            <EmployeeTable
               header={headers}
               data={employeesList}
               link={`/hr/employee/`}

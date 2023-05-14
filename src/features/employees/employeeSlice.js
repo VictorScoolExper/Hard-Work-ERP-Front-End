@@ -58,6 +58,20 @@ export const addNewEmployee = createAsyncThunk(
   }
 );
 
+export const editEmployee = createAsyncThunk(
+  "employee/editEmployee",
+  async(employee) => {
+    const response = await axios.put(API_URL + `/${employee.get("employeeId")}`, employee, {
+      headers: {
+        // "Content-Type": "application/json",
+        'Content-Type': 'multipart/form-data',
+      },
+      withCredentials: true
+    });
+    return response.data;
+  }
+);
+
 export const deleteEmployeeUser = createAsyncThunk(
   "employee/deleteEmployeeUser",
   async(employeeId) => {
@@ -115,6 +129,18 @@ const employeesSlice = createSlice({
         fetchAllEmployees();
       })
       .addCase(deleteEmployeeUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      // adding cases for updating employee
+      .addCase(editEmployee.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(editEmployee.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        fetchAllEmployees();
+      })
+      .addCase(editEmployee.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
