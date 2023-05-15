@@ -6,24 +6,14 @@ function RootLayout() {
   const navigation = useNavigation();
 
   return (
-    // <>
-    //     <MainNavigation />
-    //     <main>
-    //         {/* notifies user content is loading */}
-    //         {navigation.state === 'loading' && <p>Loading..</p>}
-    //         <Outlet/>
-    //     </main>
-    // </>
-    <>
-      <div style={{ height: "100vh", display: "flex", flexDirection: "row" }}>
-        <div className="p-0" style={{ maxWidth: "20%", height: "100%"}}>
+      <div style={{ height: "100vh", display: "flex", flexDirection: "row", overflow: 'hidden' }}>
+        <div className="p-0" style={{ maxWidth: "20%"}}>
           <SidebarMenu />
         </div>
         <div className="p-0" style={{ flex: "1" }}>
           <Outlet />
         </div>
       </div>
-    </>
   );
 }
 

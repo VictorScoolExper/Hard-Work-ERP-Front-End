@@ -33,7 +33,7 @@ const SidebarMenu = () => {
   };
 
   return (
-    <Sidebar width="100%" rootStyles={{ height: "100%" }}>
+    <Sidebar width="100%" rootStyles={{ height: "100vh" }}>
       <EncapsulatedMenuItems>
         <Menu
           menuItemStyles={{

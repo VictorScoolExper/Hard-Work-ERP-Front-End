@@ -5,7 +5,6 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
-
 const Layout = () => {
   return (
     <>
@@ -34,7 +33,6 @@ const Layout = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-
       <Outlet />
     </>
   );

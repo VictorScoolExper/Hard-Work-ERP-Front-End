@@ -25,7 +25,7 @@ const Employee = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <div>
       <div className="row d-flex p-2">
         <div className="col-6">
           <h1>Employee</h1>
@@ -58,7 +58,7 @@ const Employee = () => {
         )}
         {!employeesList || employeesList.length === 0 && <h3>No Employees Exist</h3>}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -119,7 +119,7 @@ const EmployeeForm = () => {
   };
 
   return (
-    <Fragment>
+    <div style={{overflowY: 'scroll', height: '94vh'}}>
       <div className="row mt-2">
         <Link to="/hr/employee" className="col-1 text-center">
           <i className="bi bi-backspace" style={{ fontSize: "30px" }}></i>
@@ -362,7 +362,7 @@ const EmployeeForm = () => {
           </FormButton>
         </StyledForm>
       </FormContainer>
-    </Fragment>
+    </div>
   );
 };
 
