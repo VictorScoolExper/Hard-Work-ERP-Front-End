@@ -98,7 +98,8 @@ const employeesSlice = createSlice({
       })
       .addCase(fetchAllEmployees.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.employees = action.payload.employees.slice().sort((a, b) => a.name.localeCompare(b.name));;
+        // TODO: Edit so it does not sort once the payload is recieved
+        state.employees = action.payload.employees.slice().sort((a, b) => a.name.localeCompare(b.name));
         state.total_employees = action.payload.total_employees;
 
         // Use the `upsertMany` reducer as a mutating update utility
@@ -114,7 +115,6 @@ const employeesSlice = createSlice({
       })
       .addCase(addNewEmployee.fulfilled, (state, action) => {
         state.status = "succeeded";
-        fetchAllEmployees();
       })
       .addCase(addNewEmployee.rejected, (state, action) => {
         state.status = "failed";
@@ -126,7 +126,6 @@ const employeesSlice = createSlice({
       })
       .addCase(deleteEmployeeUser.fulfilled, (state, action) => {
         state.status = "succeeded";
-        fetchAllEmployees();
       })
       .addCase(deleteEmployeeUser.rejected, (state, action) => {
         state.status = "failed";
@@ -138,7 +137,6 @@ const employeesSlice = createSlice({
       })
       .addCase(editEmployee.fulfilled, (state, action) => {
         state.status = "succeeded";
-        fetchAllEmployees();
       })
       .addCase(editEmployee.rejected, (state, action) => {
         state.status = "failed";
@@ -156,6 +154,7 @@ export const selectEmployees = (state) => state.employees.employees;
 
 export const selectEmployeeById = (state, employeeId) => 
   state.employees.employees.find((employee) => employee.employee_id === Number(employeeId));
+
 
 // Create sorted list of active 
 

@@ -3,7 +3,7 @@ import { Table, Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { fetchAllEmployees } from "./employeeSlice";
+import {deleteEmployeeUser, fetchAllEmployees} from './employeeSlice'
 
 const EmployeeTable = (props) => {
   const navigate = useNavigate();
@@ -28,8 +28,18 @@ const EmployeeTable = (props) => {
     setShowDeleteModal(true);
   };
 
+  const onDelete = async (employee_id) => {
+      try {
+        await dispatch(deleteEmployeeUser(employee_id));
+        // await dispatch(fetchAllEmployees());
+      } catch (error) {
+        alert(error);
+        console.log('delete ' + error);
+      }
+  }
+
   const handleDeleteConfirm = async () => {
-    props.onDelete(selected);
+    onDelete(selected);
     setShowDeleteModal(false);
    
   };

@@ -10,7 +10,6 @@ import {
 
 import { Spinner } from "../../components/Spinner";
 import {loginUser} from './authSlice';
-import { clearMessage } from "../messages/messageSlice";
 
 import {
   Container,
@@ -31,10 +30,6 @@ const LoginPage = () => {
   const error = useSelector(state => state.auth.error);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearMessage());
-  }, [dispatch]);
 
   const onEmailChange = (event) => setEmail(event.target.value);
   const onPasswordChange = (event) => setPassword(event.target.value);

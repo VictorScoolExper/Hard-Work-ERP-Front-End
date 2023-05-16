@@ -12,7 +12,7 @@ const Employee = () => {
 
   const employeesList = useSelector(selectEmployees);
 
-  const headers = ["Name", "Last_name", "Role", "Job_Title", "Department"];
+  const headers = ["Name", "Last_Name", "Role", "Job_Title", "Department"];
 
   useEffect(() => {
     (async () =>{
@@ -44,15 +44,6 @@ const Employee = () => {
               header={headers}
               data={employeesList}
               link={`/hr/employee/`}
-              onDelete={async (employee_id) => {
-                try {
-                  await dispatch(deleteEmployeeUser(employee_id));
-                  await dispatch(fetchAllEmployees());
-                } catch (error) {
-                  alert(error);
-                  console.log('delete ' + error);
-                }
-              }}
             />
           </>
         )}
