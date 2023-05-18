@@ -7,15 +7,13 @@ import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import { addNewEmployee } from "./employeeSlice";
 
-const FormContainer = styled(Container)`
-  margin-top: 50px;
-`;
-
-const StyledForm = styled(Form)`
+const FormContainer = styled(Form)`
   background-color: #f8f9fa;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+  margin-bottom: 20px;
 `;
 
 const RowForm = styled(Row)`
@@ -119,7 +117,7 @@ const EmployeeForm = () => {
   };
 
   return (
-    <div style={{overflowY: 'scroll', height: '94vh'}}>
+    <div className="container" style={{overflowY: 'scroll', height: '94vh'}}>
       <div className="row mt-2">
         <Link to="/hr/employee" className="col-1 text-center">
           <i className="bi bi-backspace" style={{ fontSize: "30px" }}></i>
@@ -127,8 +125,7 @@ const EmployeeForm = () => {
 
         <h1 className="col-10 text-left">New Employee</h1>
       </div>
-      <FormContainer>
-        <StyledForm onSubmit={handleSubmit}>
+        <FormContainer onSubmit={handleSubmit}>
           <FormTitle>Add New Employee Details</FormTitle>
           <RowForm>
             <Col>
@@ -360,8 +357,7 @@ const EmployeeForm = () => {
           <FormButton type="button" onClick={handleSubmit}>
             Submit
           </FormButton>
-        </StyledForm>
-      </FormContainer>
+        </FormContainer>
     </div>
   );
 };
