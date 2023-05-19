@@ -7,8 +7,8 @@ import axios from "axios";
 import {CLIENT_API_URL} from "../../api-routes";
 
 const initialState = {
-    client: null,
-    total_client: null,
+    clients: null,
+    total_clients: null,
     status: 'idle',
     error: null
 }
@@ -81,8 +81,8 @@ const clientsSlice = createSlice({
         })
         .addCase(fetchClients.fulfilled, (state, action) => {
             state.status = "succeeded";
-            state.client = action.payload.clients;
-            state.total_client = action.payload.list_length;
+            state.clients = action.payload.clients;
+            state.total_clients = action.payload.list_length;
         })
         .addCase(fetchClients.rejected, (state, action) => {
             state.status = "failed";
@@ -130,12 +130,11 @@ export default clientsSlice.reducer;
 
 // fast access vendor
 export const selectSortedEmployee = (state) =>{ 
-    if(state.clients.client != null){
-        return state.clients.client.slice().sort((a, b) => a.name.localeCompare(b.name))
+    if(state.clients.clients != null){
+        return state.clients.clients.slice().sort((a, b) => a.name.localeCompare(b.name))
     } else {
         return null
     }
-    
 };
 
 export const selectClientById = (state, clientId) =>

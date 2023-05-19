@@ -12,11 +12,12 @@ const ClientTable = () => {
 
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
+  const link = "/crm/client/";
 
-  const clientList = useSelector(selectSortedEmployee)
+  const clientList = useSelector(selectSortedEmployee);
 
   useEffect(() => {
-    (async () =>{
+    (async () => {
       try {
         await dispatch(fetchClients());
       } catch (error) {
@@ -26,28 +27,48 @@ const ClientTable = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="container-fluid">
       {/* TODO: add a section where we can filter the user */}
       {clientList && (
         <Table striped bordered hover>
           <thead>
             <tr>
               {headers && headers.map((item) => <th key={item}>{item}</th>)}
+              <th className="text-center" scope="col">
+                Details
+              </th>
+              <th className="text-center" scope="col">
+                Edit
+              </th>
             </tr>
           </thead>
           <tbody>
-            {clientList.map((client)=>(
-                <tr key={client.client_id}>
-                    {headers && headers.map((head) => (
-                        <td key={head}>{client[head.toLowerCase()]}</td>
-                    ))}
-                </tr>
+            {clientList.map((client) => (
+              <tr key={client.client_id}>
+                {headers &&
+                  headers.map((head) => (
+                    <td key={head}>{client[head.toLowerCase()]}</td>
+                  ))}
+                <td className="text-center">
+                  <Link to={link + client.client_id}>
+                    <Button variant="success">
+                      <i className="bi bi-binoculars"></i>
+                    </Button>
+                  </Link>{" "}
+                </td>
+                <td className="text-center">
+                  <Link to={link + client.client_id}>
+                    <Button style={{ background: "orange", border: "none" }}>
+                      <i className="bi bi-pencil-square"></i>
+                    </Button>
+                  </Link>{" "}
+                </td>
+              </tr>
             ))}
           </tbody>
         </Table>
-      
       )}
-      {!clientList  && <h3>No clients exist.</h3>}
+      {!clientList && <h3>No clients exist.</h3>}
     </div>
   );
 };
