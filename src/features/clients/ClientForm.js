@@ -2,7 +2,9 @@ import { useState } from "react";
 
 import styled from "styled-components";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createVendor } from "./clientSlice";
 
 export const FormContainer = styled(Form)`
   background-color: #f8f9fa;
@@ -23,6 +25,9 @@ export const FormButton = styled(Button)`
 `;
 
 const ClientForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [client, setClient] = useState({
     name: "",
     last_name: "",
@@ -33,11 +38,12 @@ const ClientForm = () => {
       street: "",
       city: "",
       state: "",
-      zip_code: "",
-      country: "",
+      zip_code: null,
+      country: "usa",
     },
   });
   const [formType, setFormType] = useState("create");
+  const [requestStatus, setRequestStatus] = useState("idle");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,29 +53,45 @@ const ClientForm = () => {
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
     setClient({ ...client, address: { ...client.address, [name]: value } });
+    // console.log("the value is " + name + " " + value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     // TODO add the clientSlice Thunk function
-    setClient({
-      name: "",
-      last_name: "",
-      email: "",
-      cell_number: "",
-      life_stage: "",
-      address: {
-        street: "",
-        city: "",
-        state: "",
-        zip_code: "",
-        country: "",
-      },
-    });
+    try {
+      setRequestStatus("loading");
+      await dispatch(createVendor(client)).unwrap();
+      setRequestStatus("succeeded");
+      setClient({
+        name: "",
+        last_name: "",
+        email: "",
+        cell_number: "",
+        life_stage: "",
+        address: {
+          street: "", 
+          city: "",
+          state: "",
+          zip_code: "",
+          country: "USA",
+        },
+      });
+      navigate("/crm/client");
+    } catch (error) {
+      alert("error ocurred");
+      setRequestStatus("error");
+    } finally {
+      setRequestStatus("idle");
+    }
   };
 
   return (
-    <div className="container" style={{ overflowY: "scroll", height: "94vh" }}>
+    <div
+      className="container-fluid"
+      style={{ overflowY: "scroll", height: "94vh" }}
+    >
       <div className="row mt-2">
         <Link to="/crm/client" className="col-1 text-center">
           <i className="bi bi-backspace" style={{ fontSize: "30px" }}></i>
@@ -125,12 +147,12 @@ const ClientForm = () => {
               <Form.Label>Life Stage of Client</Form.Label>
               <Form.Control
                 as="select"
-                name="active"
+                name="life_stage"
                 value={client.life_stage}
                 onChange={handleChange}
                 required
               >
-                <option value="">Choose...</option>
+                <option value="">Select one... </option>
                 <option value="customer">Customer</option>
                 <option value="lead">Lead</option>
                 <option value="opportunity">Opportunity</option>
@@ -152,29 +174,67 @@ const ClientForm = () => {
             </Form.Group>
           </Col>
         </RowForm>
+
+        <Col>
+          <h3>Address</h3>
+        </Col>
+
         <RowForm>
-          {/* {client.address.map((address, index) => (
-            <div key={index}>
-              <Form.Row>
-                <Form.Group as={Col} controlId={`street-${index}`}>
-                  <Form.Label>Street</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="street"
-                    value={address.street}
-                    onChange={(e) => handleAddressChange(e, index)}
-                    required
-                  />
-                </Form.Group>
-              </Form.Row>
-            </div>
-          ))} */}
+          <Col>
+            <Form.Group controlId={`formStreet`}>
+              <Form.Label>Street</Form.Label>
+              <Form.Control
+                type="text"
+                name="street"
+                value={client.address.street}
+                onChange={(e) => handleAddressChange(e)}
+                required
+              />
+            </Form.Group>
+          </Col>
         </RowForm>
         <RowForm>
           <Col>
-            <FormButton type="submit">
-              Submit
-            </FormButton>
+            <Form.Group controlId={`formCity`}>
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                type="text"
+                name="city"
+                value={client.address.city}
+                onChange={(e) => handleAddressChange(e)}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId={`formState`}>
+              <Form.Label>State</Form.Label>
+              <Form.Control
+                type="text"
+                name="state"
+                value={client.address.state}
+                onChange={(e) => handleAddressChange(e)}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId={`formZipCode`}>
+              <Form.Label>Zip Code</Form.Label>
+              <Form.Control
+                type="number"
+                name="zip_code"
+                value={client.address.zip_code || ""}
+                onChange={(e) => handleAddressChange(e)}
+                required
+              />
+            </Form.Group>
+          </Col>
+        </RowForm>
+
+        <RowForm>
+          <Col>
+            <FormButton type="submit">Submit</FormButton>
           </Col>
         </RowForm>
       </FormContainer>

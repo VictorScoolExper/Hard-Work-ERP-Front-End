@@ -136,7 +136,7 @@ const EmployeeForm = () => {
   };
 
   return (
-    <Fragment className="container">
+    <Fragment className="container-fluid">
       <div className="row">
         <Link to="/hr/employee" className="col-1 text-center">
           <i className="bi bi-backspace" style={{ fontSize: "30px" }}></i>

@@ -22,9 +22,6 @@ const EmployeeTable = (props) => {
     setSelected(employee.employee_id);
     setName(employee.name);
     setLastName(employee.last_name);
-    console.log('id: ' + selected);
-    console.log(`fullname: ${name} ${lastname}`);
-    
     setShowDeleteModal(true);
   };
 
@@ -41,7 +38,6 @@ const EmployeeTable = (props) => {
   const handleDeleteConfirm = async () => {
     onDelete(selected);
     setShowDeleteModal(false);
-   
   };
 
   return (

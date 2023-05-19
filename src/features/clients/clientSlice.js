@@ -13,7 +13,7 @@ const initialState = {
     error: null
 }
 
-export const fetchClient = createAsyncThunk(
+export const fetchClients = createAsyncThunk(
     "client/getAll",
     async () => {
         const response = await axios(CLIENT_API_URL + "/", {
@@ -76,15 +76,15 @@ const clientsSlice = createSlice({
     extraReducers(builder) {
         builder
         // get all client
-        .addCase(fetchClient.pending, (state, action) => {
+        .addCase(fetchClients.pending, (state, action) => {
             state.status = "loading";
         })
-        .addCase(fetchClient.fulfilled, (state, action) => {
+        .addCase(fetchClients.fulfilled, (state, action) => {
             state.status = "succeeded";
-            state.client = action.payload.client;
-            state.total_client = action.payload.total_client;
+            state.client = action.payload.clients;
+            state.total_client = action.payload.list_length;
         })
-        .addCase(fetchClient.rejected, (state, action) => {
+        .addCase(fetchClients.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.error.message;
         })
@@ -129,8 +129,14 @@ export const {} = clientsSlice.actions;
 export default clientsSlice.reducer;
 
 // fast access vendor
-export const selectSortedEmployee = (state) => 
-    state.clients.clients.slice().sort((a, b) => a.name.localeCompare(b.name));
+export const selectSortedEmployee = (state) =>{ 
+    if(state.clients.client != null){
+        return state.clients.client.slice().sort((a, b) => a.name.localeCompare(b.name))
+    } else {
+        return null
+    }
+    
+};
 
 export const selectClientById = (state, clientId) =>
     state.clients.clients.find((client) => client.client_id === Number(clientId));

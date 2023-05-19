@@ -117,7 +117,7 @@ const EmployeeForm = () => {
   };
 
   return (
-    <div className="container" style={{overflowY: 'scroll', height: '94vh'}}>
+    <div className="container-fluid" style={{overflowY: 'scroll', height: '94vh'}}>
       <div className="row mt-2">
         <Link to="/hr/employee" className="col-1 text-center">
           <i className="bi bi-backspace" style={{ fontSize: "30px" }}></i>
@@ -288,17 +288,7 @@ const EmployeeForm = () => {
                 />
               </Form.Group>
             </Col>
-            {/* <Col>
-            <Form.Group controlId="formEndDate">
-              <Form.Label>End Date</Form.Label>
-              <Form.Control
-                type="date"
-                name="end_date"
-                value={formData.end_date}
-                onChange={handleChange}
-              />
-            </Form.Group>
-          </Col> */}
+            
             <Col>
               <Form.Group controlId="formStartDate">
                 <Form.Label>Start Date</Form.Label>
@@ -317,7 +307,7 @@ const EmployeeForm = () => {
               <Form.Group controlId="formWagePerHour">
                 <Form.Label>Wage per Hour</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   name="wage_per_hour"
                   value={formData.wage_per_hour}
                   onChange={handleChange}
