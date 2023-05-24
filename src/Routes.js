@@ -19,6 +19,7 @@ import DetailEmployee from "./features/employees/DetailEmployeePage";
 import ClientPage from "./features/clients/ClientPage";
 import ClientForm from "./features/clients/ClientForm";
 import ClientDetailPage from "./features/clients/ClientDetailPage";
+import ClientEditForm from "./features/clients/ClientEditForm";
 
 import { createBrowserRouter } from "react-router-dom";
 import {checkUserLogged} from "./util/auth";
@@ -148,8 +149,12 @@ const router = createBrowserRouter([
                   },
                   {
                     path: "edit",
-                    element: <h1>Client Edit</h1>,
+                    element: <ClientEditForm />,
                   },
+                  {
+                    path: "edit/address/:addressId",
+                    element: <h1>Edit address</h1>
+                  }
                 ],
               },
             ],
@@ -577,7 +582,7 @@ const router = createBrowserRouter([
             ]
           }
         ],
-      },
+      }
     ],
   },
 ]);

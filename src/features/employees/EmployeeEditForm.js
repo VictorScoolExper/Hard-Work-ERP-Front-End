@@ -8,15 +8,12 @@ import { Container, Form, Button, Row, Col } from "react-bootstrap";
 
 import { editEmployee } from "./employeeSlice";
 
-export const FormContainer = styled(Container)`
-  margin-top: 50px;
-`;
-
-export const StyledForm = styled(Form)`
+export const FormContainer = styled(Form)`
   background-color: #f8f9fa;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
 `;
 
 export const RowForm = styled(Row)`
@@ -139,12 +136,11 @@ const EmployeeForm = () => {
     <Fragment className="container-fluid">
       <div className="row">
         <Link to="/hr/employee" className="col-1 text-center">
-          <i className="bi bi-backspace" style={{ fontSize: "30px" }}></i>
+          
         </Link>
         <h1 className="col-10 text-left">Employee {formData.name} {formData.last_name}</h1>
       </div>
-      <FormContainer>
-        <StyledForm onSubmit={handleSubmit}>
+      <FormContainer onSubmit={handleSubmit}>
           <FormTitle>Edit Employee Details</FormTitle>
           <RowForm>
             <Col>
@@ -339,7 +335,6 @@ const EmployeeForm = () => {
           <FormButton type="button" onClick={handleSubmit}>
             Submit
           </FormButton>
-        </StyledForm>
       </FormContainer>
     </Fragment>
   );

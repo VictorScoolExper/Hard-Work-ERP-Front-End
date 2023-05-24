@@ -57,7 +57,7 @@ const ClientTable = () => {
                   </Link>{" "}
                 </td>
                 <td className="text-center">
-                  <Link to={link + client.client_id}>
+                  <Link to={link + client.client_id + '/edit'}>
                     <Button style={{ background: "orange", border: "none" }}>
                       <i className="bi bi-pencil-square"></i>
                     </Button>
