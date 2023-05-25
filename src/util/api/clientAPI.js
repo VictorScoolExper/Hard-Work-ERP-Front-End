@@ -13,3 +13,12 @@ export const getClientAddresses = async (clientId) => {
 
   return address.data;
 };
+
+export const updateClient = async (client) => {
+  return await axios.put(CLIENT_API_URL+`/${client.client_id}`, client, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  })
+}

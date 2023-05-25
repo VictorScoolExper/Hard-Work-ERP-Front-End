@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createVendor } from "./clientSlice";
+import { createClient } from "./clientSlice";
 
 export const FormContainer = styled(Form)`
   background-color: #f8f9fa;
@@ -62,7 +62,7 @@ const ClientForm = () => {
     // TODO add the clientSlice Thunk function
     try {
       setRequestStatus("loading");
-      await dispatch(createVendor(client)).unwrap();
+      await dispatch(createClient(client)).unwrap();
       setRequestStatus("succeeded");
       setClient({
         name: "",

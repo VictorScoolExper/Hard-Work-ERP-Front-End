@@ -23,6 +23,7 @@ import ClientEditForm from "./features/clients/ClientEditForm";
 
 import { createBrowserRouter } from "react-router-dom";
 import {checkUserLogged} from "./util/auth";
+import ClientAddressEdit from "./features/clients/ClientAddressEdit";
 
 
 const router = createBrowserRouter([
@@ -153,7 +154,7 @@ const router = createBrowserRouter([
                   },
                   {
                     path: "edit/address/:addressId",
-                    element: <h1>Edit address</h1>
+                    element: <ClientAddressEdit />
                   }
                 ],
               },

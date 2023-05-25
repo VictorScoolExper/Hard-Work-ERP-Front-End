@@ -2,12 +2,12 @@ import { useEffect } from "react";
 
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { selectClientById } from "./clientSlice";
 import { useState } from "react";
-import { getClientAddresses } from "../../util/api/clientAPI";
+import { getClientAddresses, updateClient } from "../../util/api/clientAPI";
 import AddressWidget from "../../components/AddressWidget";
 
 export const FormContainer = styled(Form)`
@@ -33,6 +33,7 @@ export const FormButton = styled(Button)`
 
 const ClientEditForm = () => {
   const { clientId } = useParams();
+  const navigate = useNavigate();
 
   const reduxClient = useSelector((state) => selectClientById(state, clientId));
   const [client, setClient] = useState(reduxClient);
@@ -43,12 +44,25 @@ const ClientEditForm = () => {
       const clientAddress = await getClientAddresses(clientId);
       setAddresses(clientAddress.listAddress);
     })();
-  }, []);
+  }, [clientId]);
 
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setClient({ ...client, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await updateClient(client);
+      navigate(-1);
+    } catch (error) {
+      alert("Error: Could not update client")
+    }
+  }
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{overflowY: 'scroll', height: '94vh'}}>
       <div className="row">
         <Link to="/crm/client" className="col-1 text-center">
           <i className="bi bi-backspace" style={{ fontSize: "30px" }}></i>
@@ -58,7 +72,7 @@ const ClientEditForm = () => {
         </h1>
       </div>
       {/* form inputs */}
-      <FormContainer>
+      <FormContainer onSubmit={handleSubmit}>
         <FormTitle>Edit Client Details Below</FormTitle>
         <RowForm>
           <Col>
@@ -133,23 +147,24 @@ const ClientEditForm = () => {
             </Form.Group>
           </Col>
         </RowForm>
+        <FormButton type="submit">
+          Click to Update Client
+        </FormButton>
+        <h4 className="mt-3">Address</h4>
         {addresses.length > 0 &&
           addresses.map((address) => (
-            <>
-              <AddressWidget
-                className="col"
-                key={address.address_id}
-                address={address}
-              />
-              <div class="d-flex justify-content-center">
-                <Link to={`/crm/client/${clientId}/edit/address/${address.address_id}`} >
+            <div key={address.address_id}>
+              <AddressWidget className="col" address={address} />
+              <div className="d-flex justify-content-center">
+                <Link
+                  to={`/crm/client/${clientId}/edit/address/${address.address_id}`}
+                >
                   <Button style={{ width: "100%" }} type="button">
-                    Edit address {address.address_id} with street{" "}
-                    {address.street} in {address.city}
+                    Click to Edit Address {address.address_id}
                   </Button>
                 </Link>
               </div>
-            </>
+            </div>
           ))}
       </FormContainer>
     </div>

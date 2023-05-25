@@ -28,10 +28,10 @@ export const fetchClients = createAsyncThunk(
     }
 );
 
-export const createVendor = createAsyncThunk(
-    "client/createVendor",
-    async (newVendor) => {
-        await axios.post(CLIENT_API_URL + "/", newVendor, {
+export const createClient = createAsyncThunk(
+    "client/createClient",
+    async (newClient) => {
+        await axios.post(CLIENT_API_URL + "/", newClient, {
             headers: {
                 "Content-Type" : "application/json",
             },
@@ -42,10 +42,10 @@ export const createVendor = createAsyncThunk(
     }
 );
 
-export const editVendor = createAsyncThunk(
-    "client/editVendor",
-    async (vendor) => {
-        await axios.put(CLIENT_API_URL + `/${vendor.get("vendorId")}`, vendor, {
+export const editClient = createAsyncThunk(
+    "client/editClient",
+    async (client) => {
+        await axios.put(CLIENT_API_URL + `/${client.get("vendorId")}`, client, {
             headers: {
                 "Content-Type" : "application/json",
             },
@@ -55,10 +55,10 @@ export const editVendor = createAsyncThunk(
     }
 );
 
-export const deleteVendor = createAsyncThunk(
-    "client/deleteVendor",
-    async (vendorId) =>{
-        await axios.delete(CLIENT_API_URL + `${vendorId}`, {
+export const deleteClient = createAsyncThunk(
+    "client/deleteClient",
+    async (clientId) =>{
+        await axios.delete(CLIENT_API_URL + `${clientId}`, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -89,35 +89,35 @@ const clientsSlice = createSlice({
             state.error = action.error.message;
         })
         // adding new client
-        .addCase(createVendor.pending, (state, action) => {
+        .addCase(createClient.pending, (state, action) => {
             state.status = "loading";
         })
-        .addCase(createVendor.fulfilled, (state, action) => {
+        .addCase(createClient.fulfilled, (state, action) => {
             state.status = "succeeded";
         })
-        .addCase(createVendor.rejected, (state, action) => {
+        .addCase(createClient.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.error.message;
         })
         // update client
-        .addCase(editVendor.pending, (state, action) => {
+        .addCase(editClient.pending, (state, action) => {
             state.status = "loading";
         })
-        .addCase(editVendor.fulfilled, (state, action) => {
+        .addCase(editClient.fulfilled, (state, action) => {
             state.status = "succeeded";
         })
-        .addCase(editVendor.rejected, (state, action) => {
+        .addCase(editClient.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.error.message;
         })
-        // delete vendor
-        .addCase(deleteVendor.pending, (state, action) => {
+        // delete client
+        .addCase(deleteClient.pending, (state, action) => {
             state.status = "loading";
         })
-        .addCase(deleteVendor.fulfilled, (state, action) => {
+        .addCase(deleteClient.fulfilled, (state, action) => {
             state.status = "succeeded";
         })
-        .addCase(deleteVendor.rejected, (state, action) => {
+        .addCase(deleteClient.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.error.message;
         })
