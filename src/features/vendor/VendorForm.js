@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-
 import styled from "styled-components";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { createVendor } from "./vendorSlice";
 
 export const FormContainer = styled(Form)`
   background-color: #f8f9fa;
@@ -28,15 +28,80 @@ const VendorForm = () => {
   const searchParams = new URL(url).searchParams;
   const mode = searchParams.get("mode") || "create";
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [formType, setFormType] = useState(mode);
   const [status, setStatus] = useState("idle");
   const [switchAddress, setSwitchAddress] = useState(false);
   const [vendor, setVendor] = useState({
     name: "",
     last_name: "",
+    company_id: null,
+    email: "",
+    cell_number: null,
+    street: "",
+    city: "",
+    state: "",
+    zip_code: null,
+    country: "usa",
+    include_address: false,
   });
 
-  const handleChange = () => {};
+  // Temporary company list
+  const companies = [
+    {
+      name: "Acme Corporation",
+      company_id: 1,
+    },
+    {
+      name: "BigCorp",
+      company_id: 2,
+    },
+    {
+      name: "SmallCorp",
+      company_id: 3,
+    },
+  ];
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setVendor({ ...vendor, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(vendor);
+
+    if (status === "idle") {
+      switch (formType) {
+        case "create":
+          try {
+            setStatus("loading");
+            await dispatch(createVendor(vendor));
+            navigate(-1);
+          } catch (error) {
+            alert("Error when saving vendor");
+          } finally {
+            setStatus("idle");
+          }
+          break;
+        case "edit":
+          try {
+            setStatus("loading");
+            // await dispatch(editCompany(company));
+            navigate(-1);
+          } catch (error) {
+            alert("Error when saving vendor");
+          } finally {
+            setStatus("idle");
+          }
+          break;
+        default:
+          break;
+      }
+    }
+  };
 
   return (
     <div
@@ -54,7 +119,7 @@ const VendorForm = () => {
           {formType === "edit" && <FormTitle>Edit Vendor</FormTitle>}
         </h2>
       </div>
-      <FormContainer onSubmit={() => {}}>
+      <FormContainer onSubmit={handleSubmit}>
         {formType === "create" && <FormTitle>Create New Vendor</FormTitle>}
         {formType === "view" && <FormTitle>View Vendor</FormTitle>}
         {formType === "edit" && <FormTitle>Edit Vendor</FormTitle>}
@@ -91,13 +156,21 @@ const VendorForm = () => {
             <Form.Group controlId="formCompany">
               <Form.Label>Company</Form.Label>
               <Form.Control
-                type="text"
-                name="company"
-                value={vendor.company}
+                as="select"
+                name="company_id"
+                value={vendor.company_id || 0}
                 onChange={handleChange}
                 required
                 disabled={formType === "view"}
-              />
+              >
+                <option value={0}>Select One</option>
+                {companies &&
+                  companies.map((company) => (
+                    <option key={company.company_id} value={company.company_id}>
+                      {company.name}
+                    </option>
+                  ))}
+              </Form.Control>
             </Form.Group>
           </Col>
         </RowForm>
@@ -120,7 +193,7 @@ const VendorForm = () => {
               <Form.Control
                 type="text"
                 name="cell_number"
-                value={vendor.cell_number}
+                value={vendor.cell_number || ""}
                 onChange={handleChange}
                 required
               />
@@ -136,6 +209,7 @@ const VendorForm = () => {
               checked={switchAddress}
               onChange={() => {
                 setSwitchAddress(!switchAddress);
+                setVendor({ ...vendor, ["include_address"]: !switchAddress });
               }}
             />
           </Col>
@@ -201,10 +275,10 @@ const VendorForm = () => {
           </>
         )}
         <RowForm>
-        <Col>
-          <FormButton type="submit">Submit Vendor</FormButton>
-        </Col>
-      </RowForm>
+          <Col>
+            <FormButton type="submit">Submit Vendor</FormButton>
+          </Col>
+        </RowForm>
       </FormContainer>
     </div>
   );

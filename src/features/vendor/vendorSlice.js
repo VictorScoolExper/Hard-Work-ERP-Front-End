@@ -78,8 +78,6 @@ const vendorsSlice = createSlice({
         })
         .addCase(createVendor.fulfilled, (state, action) =>{
             state.status = "succeeded";
-            state.vendors = action.payload.vendors;
-            state.total_vendors = action.payload.list_length;
         })
         .addCase(createVendor.rejected, (state, action) => {
             state.status = "failed";
