@@ -108,6 +108,7 @@ const SidebarMenu = () => {
           >
             <MenuItem component={<Link to="crm/client" />}>Clients</MenuItem>
             <MenuItem component={<Link to="crm/vendor" />}>Vendors</MenuItem>
+            <MenuItem component={<Link to="crm/company" />}>Companies</MenuItem>
           </SubMenu>
           {/* Accouting */}
           <SubMenu

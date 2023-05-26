@@ -8,14 +8,14 @@ import {COMPANY_API_URL} from "../../api-routes";
 export const getCompanies = createAsyncThunk(
     "company/getCompanies",
     async () => {
-        await axios(COMPANY_API_URL + "/", {
+        const response = await axios(COMPANY_API_URL + "/", {
             method: "get",
             headers: {
                 "Content-Type" : "application/json",
             },
             withCredentials: true,
         });
-        return;
+        return response.data;
     }
 );
 
@@ -35,7 +35,7 @@ export const createCompany = createAsyncThunk(
 export const editCompany = createAsyncThunk(
     "company/editCompany",
     async (company) => {
-        await axios.put(COMPANY_API_URL + `/${company.company_id}`, company, {
+         await axios.put(COMPANY_API_URL + `/${company.company_id}`, company, {
             headers: {
                 "Content-Type" : "application/json",
             },
@@ -79,7 +79,7 @@ const companiesSlice = createSlice({
         .addCase(getCompanies.fulfilled, (state, action) => {
             state.status = "succeeded";
             state.companies = action.payload.companies;
-            state.total_companies = action.payload.list_length;
+            state.total_companies = action.payload.length;
         })
         .addCase(getCompanies.rejected, (state, action) => {
             state.status = "failed";

@@ -21,10 +21,14 @@ import ClientForm from "./features/clients/ClientForm";
 import ClientDetailPage from "./features/clients/ClientDetailPage";
 import ClientEditForm from "./features/clients/ClientEditForm";
 
+import ClientAddressEdit from "./features/clients/ClientAddressEdit";
+import CompanyPage from "./features/companies/CompanyPage";
+import CompanyForm from "./features/companies/CompanyForm";
+
 import { createBrowserRouter } from "react-router-dom";
 import {checkUserLogged} from "./util/auth";
-import ClientAddressEdit from "./features/clients/ClientAddressEdit";
-
+import VendorForm from "./features/vendor/VendorForm";
+import VendorPage from "./features/vendor/VendorPage";
 
 const router = createBrowserRouter([
   {
@@ -165,11 +169,11 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <h1>This is the vendor list</h1>,
+                element: <VendorPage />,
               },
               {
                 path: "add",
-                element: <ClientForm />,
+                element: <VendorForm />,
               },
               {
                 path: ":vendorId",
@@ -186,6 +190,32 @@ const router = createBrowserRouter([
               },
             ],
           },
+          {
+            path: "company",
+            children: [
+              {
+                index: true,
+                element: <CompanyPage />
+              },
+              {
+                path: "add",
+                element: <CompanyForm />,
+              },
+              {
+                path: ":companyId",
+                children: [
+                  {
+                    index: true,
+                    element: <CompanyForm />,
+                  },
+                  {
+                    path: "edit",
+                    element: <CompanyForm />,
+                  },
+                ],
+              },
+            ]
+          }
         ],
       },
       // Accounting section
