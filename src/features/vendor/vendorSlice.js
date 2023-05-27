@@ -18,17 +18,17 @@ export const createVendor = createAsyncThunk(
     }
 );
 
-export const fetchVendors = createAsyncThunk(
+export const getVendors = createAsyncThunk(
     "vendor/getVendors",
     async () => {
-        await axios(VENDOR_API_URL + "/", {
+        const response = await axios(VENDOR_API_URL + "/", {
             method: "get",
             headers: {
                 "Content-Type" : "application/json",
             },
             withCredentials: true,
         });
-        return;
+        return response.data;
     }
 )
 
@@ -84,15 +84,15 @@ const vendorsSlice = createSlice({
             state.error = action.error.message;
         })
         // get vendors
-        .addCase(fetchVendors.pending, (state, action) => {
+        .addCase(getVendors.pending, (state, action) => {
             state.status = "loading";
         })
-        .addCase(fetchVendors.fulfilled, (state, action) =>{
+        .addCase(getVendors.fulfilled, (state, action) =>{
             state.status = "succeeded";
             state.vendors = action.payload.vendors;
             state.total_vendors = action.payload.list_length;
         })
-        .addCase(fetchVendors.rejected, (state, action) => {
+        .addCase(getVendors.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.error.message;
         })
@@ -125,7 +125,7 @@ export const {} = vendorsSlice.actions;
 
 export default vendorsSlice.reducer;
 
-export const selectSortedEmployees = (state) =>{
+export const selectSortedVendors = (state) =>{
     if(state.vendors.vendors != null){
         return state.vendors.vendors.slice().sort((a, b) => a.name.localeCompare(b.name));
     } else {

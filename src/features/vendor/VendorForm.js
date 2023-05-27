@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createVendor } from "./vendorSlice";
+import { createVendor, getVendors } from "./vendorSlice";
+import { selectorSortedCompanies, getCompanies } from "../companies/companySlice";
 
 export const FormContainer = styled(Form)`
   background-color: #f8f9fa;
@@ -49,20 +50,17 @@ const VendorForm = () => {
   });
 
   // Temporary company list
-  const companies = [
-    {
-      name: "Acme Corporation",
-      company_id: 1,
-    },
-    {
-      name: "BigCorp",
-      company_id: 2,
-    },
-    {
-      name: "SmallCorp",
-      company_id: 3,
-    },
-  ];
+  const companies = useSelector(selectorSortedCompanies);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        await dispatch(getCompanies());
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

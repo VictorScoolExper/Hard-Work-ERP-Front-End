@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 
+import VendorTable from "./VendorTable";
+
 const VendorPage = () => {
   return (
     <div className="row d-flex p-2">
@@ -14,7 +16,7 @@ const VendorPage = () => {
       </div>
       <div style={{marginTop: '30px'}}>
         <h6>Vendor Table</h6>
-        {/* <CompanyTable /> */}
+        <VendorTable />
       </div>
     </div>
   );
