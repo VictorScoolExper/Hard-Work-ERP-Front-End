@@ -44,7 +44,7 @@ const CompanyForm = () => {
     if(companyId){
       setCompany(companyRedux)
     }
-  }, [dispatch]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

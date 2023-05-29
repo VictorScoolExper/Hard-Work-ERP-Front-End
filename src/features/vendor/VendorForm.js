@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createVendor, getVendors } from "./vendorSlice";
+import { createVendor, getVendors, selectVendorById, editVendor } from "./vendorSlice";
 import { selectorSortedCompanies, getCompanies } from "../companies/companySlice";
 
 export const FormContainer = styled(Form)`
@@ -29,6 +29,8 @@ const VendorForm = () => {
   const searchParams = new URL(url).searchParams;
   const mode = searchParams.get("mode") || "create";
 
+  const {vendorId} = useParams();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -51,6 +53,8 @@ const VendorForm = () => {
 
   // Temporary company list
   const companies = useSelector(selectorSortedCompanies);
+  // get vendor from redux
+  const vendorRedux = useSelector((state) => selectVendorById(state, vendorId));
 
   useEffect(() => {
     (async () => {
@@ -61,6 +65,12 @@ const VendorForm = () => {
       }
     })();
   }, [dispatch]);
+  
+  useEffect(() => {
+    if(vendorId){
+      setVendor({...vendorRedux, ['include_address'] : false});
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -87,7 +97,7 @@ const VendorForm = () => {
         case "edit":
           try {
             setStatus("loading");
-            // await dispatch(editCompany(company));
+            await dispatch(editVendor(vendor));
             navigate(-1);
           } catch (error) {
             alert("Error when saving vendor");
@@ -182,6 +192,7 @@ const VendorForm = () => {
                 value={vendor.email}
                 onChange={handleChange}
                 required
+                disabled={formType === 'view'}
               />
             </Form.Group>
           </Col>
@@ -194,6 +205,7 @@ const VendorForm = () => {
                 value={vendor.cell_number || ""}
                 onChange={handleChange}
                 required
+                disabled={formType === 'view'}
               />
             </Form.Group>
           </Col>
@@ -225,9 +237,10 @@ const VendorForm = () => {
                   <Form.Control
                     type="text"
                     name="street"
-                    value={vendor.street}
+                    value={vendor.street || ""}
                     onChange={handleChange}
                     required
+                    disabled={formType === 'view'}
                   />
                 </Form.Group>
               </Col>
@@ -239,9 +252,10 @@ const VendorForm = () => {
                   <Form.Control
                     type="text"
                     name="city"
-                    value={vendor.city}
+                    value={vendor.city || ""}
                     onChange={handleChange}
                     required
+                    disabled={formType === 'view'}
                   />
                 </Form.Group>
               </Col>
@@ -251,9 +265,10 @@ const VendorForm = () => {
                   <Form.Control
                     type="text"
                     name="state"
-                    value={vendor.state}
+                    value={vendor.state  || ""}
                     onChange={handleChange}
                     required
+                    disabled={formType === 'view'}
                   />
                 </Form.Group>
               </Col>
@@ -266,6 +281,7 @@ const VendorForm = () => {
                     value={vendor.zip_code || ""}
                     onChange={handleChange}
                     required
+                    disabled={formType === 'view'}
                   />
                 </Form.Group>
               </Col>

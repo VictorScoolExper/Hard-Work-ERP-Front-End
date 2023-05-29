@@ -180,11 +180,11 @@ const router = createBrowserRouter([
                 children: [
                   {
                     index: true,
-                    element: <h1>This is detail vendor id</h1>,
+                    element: <VendorForm />,
                   },
                   {
                     path: "edit",
-                    element: <h1>This is edit vendor by id</h1>,
+                    element: <VendorForm />,
                   },
                 ],
               },

@@ -7,7 +7,7 @@ import { getVendors, selectSortedVendors } from "./vendorSlice";
 import {
   getCompanies,
   selectCompanyById,
-  selectorSortedCompanies
+  selectorSortedCompanies,
 } from "../companies/companySlice";
 
 const VendorTable = () => {
@@ -15,8 +15,8 @@ const VendorTable = () => {
     { id: "name", title: "Name" },
     { id: "last_name", title: "Last Name" },
     { id: "company_id", title: "Company" },
-    { id: "cell_number", title: "Cell Phone"},
-    { id: "email", title:"Email"},
+    { id: "cell_number", title: "Cell Phone" },
+    { id: "email", title: "Email" },
   ];
 
   const dispatch = useDispatch();
@@ -45,13 +45,14 @@ const VendorTable = () => {
 
   const vendorList = useSelector(selectSortedVendors);
   const companyList = useSelector(selectorSortedCompanies);
-  
+
   const getCompanyName = (id) => {
-    const company = companyList.find((company) => company.company_id === Number(id))
+    const company = companyList.find(
+      (company) => company.company_id === Number(id)
+    );
     // console.log(company);
     return company.name;
-};
-  
+  };
 
   return (
     <div>
@@ -59,7 +60,8 @@ const VendorTable = () => {
         <Table striped bordered hover>
           <thead>
             <tr>
-              {headers && headers.map((item) => <th key={item.id}>{item.title}</th>)}
+              {headers &&
+                headers.map((item) => <th key={item.id}>{item.title}</th>)}
               <th className="text-center" scope="col">
                 Details
               </th>
@@ -73,17 +75,21 @@ const VendorTable = () => {
               <tr key={vendor.vendor_id}>
                 {headers &&
                   headers.map((head) => (
-                    <td key={head.id}>{head.id === "company_id" ? `${getCompanyName(vendor[head.id])}`: vendor[head.id]}</td>
+                    <td key={head.id}>
+                      {head.id === "company_id"
+                        ? `${getCompanyName(vendor[head.id])}`
+                        : vendor[head.id]}
+                    </td>
                   ))}
                 <td className="text-center">
-                  <Link to={link + vendor.vendor_id + '?mode=view'}>
+                  <Link to={link + vendor.vendor_id + "?mode=view"}>
                     <Button variant="success">
                       <i className="bi bi-binoculars"></i>
                     </Button>
                   </Link>{" "}
                 </td>
                 <td className="text-center">
-                  <Link to={link + vendor.vendor_id + '/edit?mode=edit'}>
+                  <Link to={link + vendor.vendor_id + "/edit?mode=edit"}>
                     <Button style={{ background: "orange", border: "none" }}>
                       <i className="bi bi-pencil-square"></i>
                     </Button>
