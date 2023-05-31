@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 
 import styled from "styled-components";
-import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectServiceById } from "./serviceSlice";
+import { selectServiceById, createService, editService} from "./serviceSlice";
 
 export const FormContainer = styled(Form)`
   background-color: #f8f9fa;
@@ -39,9 +39,8 @@ const ServiceForm = () => {
   const initialServiceState = {
     service_name: "",
     description: "",
-    is_per_hour: null,
-    price: null,
-    duration_minutes: null,
+    is_per_hour: "",
+    price: ""
   };
 
   const [service, setService] = useState(initialServiceState);
@@ -61,27 +60,28 @@ const ServiceForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(service);
     if (status === "idle") {
       switch (formType) {
         case "create":
           try {
             setStatus("loading");
-            // await dispatch(createCompany(company));
+            await dispatch(createService(service));
             navigate(-1);
             setService(initialServiceState);
-            setStatus("idle");
           } catch (error) {
             alert("Error when saving");
+          } finally {
             setStatus("idle");
           }
           break;
         case "edit":
           try {
             setStatus("loading");
-            // await dispatch(editCompany(company));
+            await dispatch(editService(service));
             setStatus("idle");
             navigate(-1);
+            setService(initialServiceState);
           } catch (error) {
             alert("Error when saving");
             setStatus("idle");
@@ -157,24 +157,14 @@ const ServiceForm = () => {
                 required
                 disabled={formType === "view"}
               >
-                <option value="">Select One...</option>
-                <option value={1}>Yes</option>
-                <option value={0}>No</option>
+                <option value=" ">Select One...</option>
+                <option value="true">Yes</option>
+                <option value={"false"}>No</option>
               </Form.Control>
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group controlId="formDurationMinutes">
-              <Form.Label>Is service charged per hour?</Form.Label>
-              <Form.Control
-                type="number"
-                name="duration_minutes"
-                value={service.duration_minutes}
-                onChange={handleChange}
-                required
-                disabled={formType === "view"}
-              />
-            </Form.Group>
+            
           </Col>
         </RowForm>
         <RowForm>
