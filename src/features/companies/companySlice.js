@@ -60,7 +60,7 @@ export const deleteCompany = createAsyncThunk(
 );
 
 const initialState = {
-    companies: null,
+    companies: [],
     total_companies: null,
     status: 'idle',
     error: null

@@ -30,6 +30,9 @@ import {checkUserLogged} from "./util/auth";
 import VendorForm from "./features/vendor/VendorForm";
 import VendorPage from "./features/vendor/VendorPage";
 
+import ServicePage from "./features/services/ServicePage";
+import ServiceForm from "./features/services/ServiceForm";
+
 const router = createBrowserRouter([
   {
     path: "/auth",
@@ -565,16 +568,29 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <h1>The Service Dashboard</h1>,
+            element: <ServicePage />,
           },
           {
-            path: "maintenance",
-            element: <h1>The maintenance section</h1>,
+            path: "dash",
+            element: <h1>The dashboard section</h1>,
           },
           {
-            path: "landscaping",
-            element: <h1>The landscping section</h1>,
+            path: "add",
+            element: <ServiceForm/>
           },
+          {
+            path: ":serviceId",
+            children: [
+              {
+                index: true,
+                element: <h1>Service details</h1>
+              },
+              {
+                path: "edit",
+                element: <h1>Edit service detail</h1>
+              }
+            ]
+          }
         ],
       },
       {

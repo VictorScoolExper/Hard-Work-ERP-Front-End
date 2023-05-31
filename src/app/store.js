@@ -5,13 +5,15 @@ import employeeReducer from "../features/employees/employeeSlice";
 import clientReducer from "../features/clients/clientSlice";
 import vendorReducer from "../features/vendor/vendorSlice";
 import companyReducer from "../features/companies/companySlice";
+import serviceReducer from "../features/services/serviceSlice";
 
 const reducer = {
   auth: authReducer,
   employees: employeeReducer,
   clients: clientReducer,
   vendors: vendorReducer,
-  companies: companyReducer
+  companies: companyReducer,
+  services: serviceReducer
 };
 
 const store = configureStore({

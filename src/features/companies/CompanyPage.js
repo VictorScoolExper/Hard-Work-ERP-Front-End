@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button, Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import CompanyTable from "./CompanyTable";
 
 const CompanyPage = () => {

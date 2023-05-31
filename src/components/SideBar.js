@@ -173,12 +173,9 @@ const SidebarMenu = () => {
           </SubMenu>
           {/* Service */}
           <SubMenu label="Services" icon={<i className="bi bi-hammer"></i>}>
-            <MenuItem component={<Link to="service" />}>Dashboard</MenuItem>
-            <MenuItem component={<Link to="service/maintenance" />}>
+            <MenuItem component={<Link to="/service/dash" />}>Dashboard</MenuItem>
+            <MenuItem component={<Link to="/service" />}>
               Service
-            </MenuItem>
-            <MenuItem component={<Link to="service/landscaping" />}>
-              Project
             </MenuItem>
           </SubMenu>
 
