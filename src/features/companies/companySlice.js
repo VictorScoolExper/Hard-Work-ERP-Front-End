@@ -129,7 +129,7 @@ export const selectorSortedCompanies = (state) =>{
     if(state.companies.companies != null){
         return state.companies.companies.slice().sort((a, b) => a.name.localeCompare(b.name))
     } else {
-        return null
+        return null;
     }
 }; 
 

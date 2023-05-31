@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import ServiceTable from "./ServiceTable";
 
 const ServicePage = () => {
   return (
@@ -14,7 +15,7 @@ const ServicePage = () => {
       </div>
       <div style={{ marginTop: "30px" }}>
         <h6>Service Table</h6>
-        {/* <ServiceTable /> */}
+        <ServiceTable />
       </div>
     </div>
   );

@@ -101,12 +101,12 @@ export const {} = servicesSlice.actions;
 export default servicesSlice.reducer;
 
 export const selectorSortedServices = (state) => {
-    if(state.services.services != null){
-        return state.services.services.slice().sort((a,b) => a.service_name.localCompare(b.service_name))
+    if(state.services.total_services != null){
+        return state.services.services.slice().sort((a,b) => a.service_name.localeCompare(b.service_name));
     } else {
         return null;
     }
 }
 
 export const selectServiceById = (state, serviceId) =>
-    state.services.services.find((service)=> service.service_id === Number(serviceId));
+    state.services.services.find((service) => service.service_id === Number(serviceId));

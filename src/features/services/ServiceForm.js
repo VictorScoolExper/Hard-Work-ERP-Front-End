@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectServiceById, createService, editService} from "./serviceSlice";
+import { selectServiceById, createService, editService } from "./serviceSlice";
 
 export const FormContainer = styled(Form)`
   background-color: #f8f9fa;
@@ -40,7 +40,7 @@ const ServiceForm = () => {
     service_name: "",
     description: "",
     is_per_hour: "",
-    price: ""
+    price: "",
   };
 
   const [service, setService] = useState(initialServiceState);
@@ -163,9 +163,7 @@ const ServiceForm = () => {
               </Form.Control>
             </Form.Group>
           </Col>
-          <Col>
-            
-          </Col>
+          <Col></Col>
         </RowForm>
         <RowForm>
           <Col>
@@ -177,6 +175,7 @@ const ServiceForm = () => {
                 value={service.price}
                 onChange={handleChange}
                 required
+                disabled={formType === "view"}
               />
             </Form.Group>
           </Col>
@@ -184,7 +183,11 @@ const ServiceForm = () => {
         </RowForm>
         <RowForm>
           <Col>
-            <FormButton type="submit">Submit</FormButton>
+            {formType === "create" || formType === "edit" ? (
+              <FormButton type="submit">Submit</FormButton>
+            ) : (
+              <></>
+            )}
           </Col>
         </RowForm>
       </FormContainer>

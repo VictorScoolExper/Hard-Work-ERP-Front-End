@@ -583,11 +583,11 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <h1>Service details</h1>
+                element: <ServiceForm/>
               },
               {
                 path: "edit",
-                element: <h1>Edit service detail</h1>
+                element: <ServiceForm/>
               }
             ]
           }
