@@ -4,7 +4,11 @@ import styled from "styled-components";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {createCompany, editCompany, selectCompanyById} from "./companySlice"
+import {
+  createMaterial,
+  editMaterial,
+  selectMaterialById,
+} from "./materialSlice";
 
 export const FormContainer = styled(Form)`
   background-color: #f8f9fa;
@@ -24,65 +28,79 @@ export const FormButton = styled(Button)`
   margin-top: 2rem;
 `;
 
-const CompanyForm = () => {
+const MaterialForm = () => {
   const url = window.location.href;
   const searchParams = new URL(url).searchParams;
   const mode = searchParams.get("mode") || "create";
 
-  const { companyId } = useParams();
-  const companyRedux = useSelector((state) => selectCompanyById(state, companyId));
+  const { materialId } = useParams();
+  const materialRedux = useSelector((state) =>
+    selectMaterialById(state, materialId)
+  );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [company, setCompany] = useState({ name: "", service_type: "" });
+  const materialIniState = {
+    service_name: "",
+    description: "",
+    unit: ""
+  };
+  const [material, setMaterial] = useState(materialIniState);
   const [formType, setFormType] = useState(mode);
-  const [status, setStatus] = useState('idle');
-
+  const [status, setStatus] = useState("idle");
 
   useEffect(() => {
-    if(companyId){
-      setCompany(companyRedux)
+    if (materialId) {
+      setMaterial(materialRedux);
     }
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCompany({ ...company, [name]: value });
+    setMaterial({ ...material, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(status === 'idle'){
-      switch(formType){
+    if (status === "idle") {
+      switch (formType) {
         case "create":
           try {
             setStatus("loading");
-            await dispatch(createCompany(company));
+            await dispatch(createMaterial(material));
             navigate(-1);
             setStatus("idle");
           } catch (error) {
-            alert('Error when saving')
+            alert("Error when saving");
             setStatus("idle");
           }
           break;
         case "edit":
           try {
             setStatus("loading");
-            await dispatch(editCompany(company));
+            await dispatch(editMaterial(material));
             setStatus("idle");
             navigate(-1);
           } catch (error) {
-            alert('Error when saving')
+            alert("Error when editing");
             setStatus("idle");
           }
           break;
         default:
-            break;
+          break;
       }
-    };
+    }
   };
+
+  const formTitles = {
+    create: "New Material",
+    view: "View Material",
+    edit: "Edit Material"
+  };
+  
+  const formTitle = formTitles[formType];
 
   return (
     <div
@@ -93,27 +111,22 @@ const CompanyForm = () => {
         <Link to={-1} className="col-1 text-center">
           <i className="bi bi-backspace" style={{ fontSize: "30px" }}></i>
         </Link>
-        {/* TODO: fixed embedded h tags */}
+
         <h2 className="col-10 text-left">
-        {formType === "create" && <FormTitle>New Company</FormTitle>}
-        {formType === "view" && <FormTitle>View Company</FormTitle>}
-        {formType === "edit" && <FormTitle>Edit Company</FormTitle>}
+            {formTitle}
         </h2>
       </div>
 
       <FormContainer onSubmit={handleSubmit}>
-        {/* TODO: optimize to not repeat code */}
-        {formType === "create" && <FormTitle>Create New Company</FormTitle>}
-        {formType === "view" && <FormTitle>View Company</FormTitle>}
-        {formType === "edit" && <FormTitle>Edit Company</FormTitle>}
+        <FormTitle>{formTitle}</FormTitle>
         <RowForm>
-          <Col>
-            <Form.Group controlId="formName">
-              <Form.Label>Company Name</Form.Label>
+        <Col>
+            <Form.Group controlId="formMaterialName">
+              <Form.Label>Material Name</Form.Label>
               <Form.Control
                 type="text"
-                name="name"
-                value={company.name}
+                name="material_name"
+                value={material.material_name}
                 onChange={handleChange}
                 required
                 disabled={formType === 'view'}
@@ -123,27 +136,46 @@ const CompanyForm = () => {
         </RowForm>
         <RowForm>
           <Col>
-            <Form.Group controlId="formServiceType">
-              <Form.Label>Service Type</Form.Label>
+            <Form.Group controlId="formDescription">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="description"
+                value={material.description}
+                onChange={handleChange}
+                required
+                disabled={formType === "view"}
+              />
+            </Form.Group>
+          </Col>
+        </RowForm>
+        <RowForm>
+          <Col>
+            <Form.Group controlId="formUnitType">
+              <Form.Label>Unit Type</Form.Label>
               <Form.Control
                 as="select"
-                name="service_type"
-                value={company.service_type}
+                name="unit"
+                value={material.unit}
                 onChange={handleChange}
                 required
                 disabled={formType === 'view'}
               >
                 <option value="">Select one... </option>
-                <option value="store">Store</option>
-                <option value="product">Product</option>
-                <option value="service">Service</option>
+                <option value="piece">Piece/s</option>
+                <option value="ton">Ton/s</option>
+                <option value="yard">Yard/s</option>
               </Form.Control>
             </Form.Group>
           </Col>
         </RowForm>
         <RowForm>
           <Col>
-            <FormButton type="submit">Submit</FormButton>
+            {formType === "create" || formType === "edit" ? (
+              <FormButton type="submit">Submit</FormButton>
+            ) : (
+              <></>
+            )}
           </Col>
         </RowForm>
       </FormContainer>
@@ -151,4 +183,4 @@ const CompanyForm = () => {
   );
 };
 
-export default CompanyForm;
+export default MaterialForm;

@@ -177,6 +177,9 @@ const SidebarMenu = () => {
             <MenuItem component={<Link to="/service" />}>
               Service
             </MenuItem>
+            <MenuItem component={<Link to="/service/material" />}>
+              Material
+            </MenuItem>
           </SubMenu>
 
           {/* Inventory */}

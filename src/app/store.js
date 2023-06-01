@@ -6,6 +6,7 @@ import clientReducer from "../features/clients/clientSlice";
 import vendorReducer from "../features/vendor/vendorSlice";
 import companyReducer from "../features/companies/companySlice";
 import serviceReducer from "../features/services/serviceSlice";
+import materialReducer from "../features/materials/materialSlice";
 
 const reducer = {
   auth: authReducer,
@@ -13,7 +14,8 @@ const reducer = {
   clients: clientReducer,
   vendors: vendorReducer,
   companies: companyReducer,
-  services: serviceReducer
+  services: serviceReducer,
+  materials: materialReducer
 };
 
 const store = configureStore({

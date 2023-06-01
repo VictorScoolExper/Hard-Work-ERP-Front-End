@@ -32,6 +32,8 @@ import VendorPage from "./features/vendor/VendorPage";
 
 import ServicePage from "./features/services/ServicePage";
 import ServiceForm from "./features/services/ServiceForm";
+import MaterialPage from "./features/materials/MaterialPage";
+import MaterialForm from "./features/materials/MaterialForm";
 
 const router = createBrowserRouter([
   {
@@ -588,6 +590,32 @@ const router = createBrowserRouter([
               {
                 path: "edit",
                 element: <ServiceForm/>
+              }
+            ]
+          },
+          {
+            path: "material",
+            children: [
+              {
+                index: true,
+                element: <MaterialPage />
+              },
+              {
+                path: "add",
+                element: <MaterialForm />
+              },
+              {
+                path: ":materialId",
+                children: [
+                  // {
+                  //   index: true,
+                  //   element: <ServiceForm/>
+                  // },
+                  // {
+                  //   path: "edit",
+                  //   element: <ServiceForm/>
+                  // }
+                ]
               }
             ]
           }
