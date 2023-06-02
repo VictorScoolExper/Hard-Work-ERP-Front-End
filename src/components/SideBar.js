@@ -20,16 +20,15 @@ const SidebarMenu = () => {
 
   const { collapseSidebar } = useProSidebar();
 
-  const error = useSelector(state => state.auth.error);
+  const error = useSelector((state) => state.auth.error);
 
   const handleLogout = async () => {
     try {
-      await  dispatch(logoutUser())
-      navigate("/auth")
-      
+      await dispatch(logoutUser());
+      navigate("/auth");
     } catch (error) {
-      console.log('This is the error: ' + error)
-    } 
+      console.log("This is the error: " + error);
+    }
   };
 
   return (
@@ -173,10 +172,10 @@ const SidebarMenu = () => {
           </SubMenu>
           {/* Service */}
           <SubMenu label="Services" icon={<i className="bi bi-hammer"></i>}>
-            <MenuItem component={<Link to="/service/dash" />}>Dashboard</MenuItem>
-            <MenuItem component={<Link to="/service" />}>
-              Service
+            <MenuItem component={<Link to="/service/dash" />}>
+              Dashboard
             </MenuItem>
+            <MenuItem component={<Link to="/service" />}>Service</MenuItem>
             <MenuItem component={<Link to="/service/material" />}>
               Material
             </MenuItem>
@@ -202,6 +201,13 @@ const SidebarMenu = () => {
         </Menu>
 
         <Menu>
+          <BottomButton
+            icon={<i className="bi bi-gear"></i>}
+            className="bottom-button"
+            component={<Link to="/setting" />}
+          >
+            Setting
+          </BottomButton>
           <BottomButton
             icon={<i className="bi bi-box-arrow-right"></i>}
             className="bottom-button"

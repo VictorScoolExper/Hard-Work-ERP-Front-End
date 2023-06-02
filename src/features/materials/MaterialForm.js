@@ -42,7 +42,7 @@ const MaterialForm = () => {
   const navigate = useNavigate();
 
   const materialIniState = {
-    service_name: "",
+    material_name: "",
     description: "",
     unit: ""
   };
@@ -143,7 +143,6 @@ const MaterialForm = () => {
                 name="description"
                 value={material.description}
                 onChange={handleChange}
-                required
                 disabled={formType === "view"}
               />
             </Form.Group>

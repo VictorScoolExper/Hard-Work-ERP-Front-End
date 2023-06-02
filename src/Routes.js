@@ -27,13 +27,14 @@ import CompanyForm from "./features/companies/CompanyForm";
 
 import { createBrowserRouter } from "react-router-dom";
 import {checkUserLogged} from "./util/auth";
-import VendorForm from "./features/vendor/VendorForm";
-import VendorPage from "./features/vendor/VendorPage";
+import VendorForm from "./features/vendors/VendorForm";
+import VendorPage from "./features/vendors/VendorPage";
 
 import ServicePage from "./features/services/ServicePage";
 import ServiceForm from "./features/services/ServiceForm";
 import MaterialPage from "./features/materials/MaterialPage";
 import MaterialForm from "./features/materials/MaterialForm";
+import SettingsPage from "./features/settings/SettingsPage";
 
 const router = createBrowserRouter([
   {
@@ -607,20 +608,21 @@ const router = createBrowserRouter([
               {
                 path: ":materialId",
                 children: [
-                  // {
-                  //   index: true,
-                  //   element: <ServiceForm/>
-                  // },
-                  // {
-                  //   path: "edit",
-                  //   element: <ServiceForm/>
-                  // }
+                  {
+                    index: true,
+                    element: <MaterialForm/>
+                  },
+                  {
+                    path: "edit",
+                    element: <MaterialForm/>
+                  }
                 ]
               }
             ]
           }
         ],
       },
+      // Inventory
       {
         path: "inventory",
         element: <LayoutInv />,
@@ -657,6 +659,11 @@ const router = createBrowserRouter([
             ]
           }
         ],
+      },
+      // setting 
+      {
+        path: "setting",
+        element: <SettingsPage />
       }
     ],
   },

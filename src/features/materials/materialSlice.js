@@ -5,7 +5,7 @@ import {
 import axios from "axios";
 import {MATERIALS_API_URL} from "../../api-routes";
 
-export const getMaterial = createAsyncThunk(
+export const getMaterials = createAsyncThunk(
     "materials/getMaterials",
     async () => {
         const response = await axios(MATERIALS_API_URL + "/", {
@@ -59,15 +59,15 @@ const materialsSlice = createSlice({
     extraReducers(builder){
         builder 
         // get material
-        .addCase(getMaterial.pending, (state, action) => {
+        .addCase(getMaterials.pending, (state, action) => {
             state.status = "loading";
         })
-        .addCase(getMaterial.fulfilled, (state, action) => {
+        .addCase(getMaterials.fulfilled, (state, action) => {
             state.status = "succeeded";
             state.materials = action.payload.materials;
             state.total_materials = action.payload.length;
         })
-        .addCase(getMaterial.rejected, (state, action) => {
+        .addCase(getMaterials.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.error.message;
         })

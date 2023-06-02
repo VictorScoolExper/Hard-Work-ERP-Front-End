@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
-// import MaterialTable from "./MaterialTable";
+import MaterialTable from "./MaterialTable";
 
 const MaterialPage = () => {
     return (
@@ -15,7 +15,7 @@ const MaterialPage = () => {
         </div>
         <div style={{marginTop: '30px'}}>
           <h6>Material Table</h6>
-          {/* <CompanyTable /> */}
+          <MaterialTable />
         </div>
       </div>
     );

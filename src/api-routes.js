@@ -8,4 +8,6 @@ export const VENDOR_API_URL = API_BASE_URL + "/vendor";
 export const COMPANY_API_URL = API_BASE_URL + "/company";
 export const SERVICES_API_URL = API_BASE_URL + "/service";
 export const MATERIALS_API_URL = API_BASE_URL + "/material";
+export const APP_SETTING_API_URL = API_BASE_URL + "/app-setting";
+
 
