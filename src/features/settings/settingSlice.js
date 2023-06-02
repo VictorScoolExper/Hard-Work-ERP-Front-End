@@ -19,7 +19,7 @@ export const getAppSettings = createAsyncThunk(
 export const createAppSetting = createAsyncThunk(
     "app_settings/createAppSetting",
     async (appSetting) => {
-        await axios.post(MATERIALS_API_URL + "/", appSetting, {
+        await axios.post(APP_SETTING_API_URL + "/", appSetting, {
             headers: {
                 "Content-Type" : "application/json",
             },
@@ -32,7 +32,7 @@ export const createAppSetting = createAsyncThunk(
 export const editAppSetting = createAsyncThunk(
     "app_settings/editAppSetting",
     async (appSetting) => {
-         await axios.put(MATERIALS_API_URL + `/`, appSetting, {
+         await axios.put(APP_SETTING_API_URL + `/`, appSetting, {
             headers: {
                 "Content-Type" : "application/json",
             },
