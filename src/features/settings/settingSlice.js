@@ -29,8 +29,8 @@ export const createAppSetting = createAsyncThunk(
     }
 );
 
-export const editAppSetting = createAsyncThunk(
-    "app_settings/editAppSetting",
+export const updateAppSetting = createAsyncThunk(
+    "app_settings/updateAppSetting",
     async (appSetting) => {
          await axios.put(APP_SETTING_API_URL + `/`, appSetting, {
             headers: {
@@ -80,13 +80,13 @@ const appSettingsSlice = createSlice({
         })
         // update app settings
         // TODO: add functionality that affects redux state
-        .addCase(editAppSetting.pending, (state, action) => {
+        .addCase(updateAppSetting.pending, (state, action) => {
             state.status = "loading";
         })
-        .addCase(editAppSetting.fulfilled, (state, action) => {
+        .addCase(updateAppSetting.fulfilled, (state, action) => {
             state.status = "succeeded";
         })
-        .addCase(editAppSetting.rejected, (state, action) => {
+        .addCase(updateAppSetting.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.error.message;
         })

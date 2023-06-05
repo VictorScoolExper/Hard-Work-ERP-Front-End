@@ -4,30 +4,77 @@ import styled from "styled-components";
 import { InputGroup, Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { getAppSettings, selectAppSettingByName, updateAppSetting } from "./settingSlice";
 
 const SettingsPage = () => {
-  const [editState, setEditState] = useState(false);
-  const [saleTax, setSaleTax] = useState({ value: "", type: "" });
-  const [markUpPrice, setMarkUpPrice] = useState({ value: "", type: "" });
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    (async () => {
+      try {
+        await dispatch(getAppSettings());
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [dispatch]);
+
+  const saleTaxRedux = useSelector((state) =>
+    selectAppSettingByName(state, "sales_tax")
+  );
+  const markUpPercentRedux = useSelector((state) =>
+    selectAppSettingByName(state, "mark_up_percent")
+  );
+
+  const [editState, setEditState] = useState(false);
+  const [saleTax, setSaleTax] = useState(saleTaxRedux);
+  const [markUpPercent, setMarkUpPercent] = useState(markUpPercentRedux);
+  const [status, setStatus] = useState("idle");
+
+  useEffect(() => {
+    setSaleTax(saleTaxRedux);
+    setMarkUpPercent(markUpPercentRedux);
+  }, []);
 
   const editButton = () => {
     setEditState(!editState);
-  }
+  };
 
-  const handleEdit = (clickFrom) =>{
-    switch(clickFrom){
-        case 'mark_up_per_material':
-            console.log('hello from mark up percent material')
-            break;
-        case 'sales_tax':
-            console.log('This is from sales tax');
-            break;
-        default:
-            alert('Error ocurred');
-            break;
+  const handleSaleTaxChange = (e) => {
+    const { name, value } = e.target;
+    setSaleTax({ ...saleTax, [name]: value });
+    // console.log(value);
+  };
+
+  const handleMarkUpPercentChange = (e) => {
+    const { name, value } = e.target;
+    setMarkUpPercent({ ...markUpPercent, [name]: value });
+    // console.log(value);
+  };
+
+  const handleEdit = async (clickFrom) => {
+    switch (clickFrom) {
+      case "mark_up_percent":
+        try {
+          await dispatch(updateAppSetting(markUpPercent)).unwrap();
+          alert("The mark up price was edited correctly");
+        } catch (error) {
+          alert("Error has ocurred when editing mark up percent");
+        } finally {editButton();}
+        break;
+      case "sales_tax":
+        try {
+          await dispatch(updateAppSetting(saleTax)).unwrap();
+          alert("The sales tax was edited correctly");
+        } catch (error) {
+          alert("Error has ocurred when editing sales tax");
+        } finally {editButton()}
+        break;
+      default:
+        alert("Error ocurred");
+        break;
     }
-  }
+  };
 
   return (
     <div className="container-fluid">
@@ -37,7 +84,9 @@ const SettingsPage = () => {
 
       <div className="row" style={{ marginTop: "60px" }}>
         <h2 className="col-6">Setting configuration</h2>
-        <Button className="col-3" onClick={editButton} >Edit Settings</Button>
+        <Button className="col-3" onClick={editButton}>
+          Edit Settings
+        </Button>
       </div>
 
       <div style={{ marginTop: "60px" }} className="col-8">
@@ -46,12 +95,19 @@ const SettingsPage = () => {
             <Form.Label>Sales Tax</Form.Label>
             <InputGroup>
               <Form.Control
-                type="text"
-                name="sales_tax"
+                type="number"
+                name="setting_value"
+                value={saleTax.setting_value}
+                onChange={handleSaleTaxChange}
                 aria-describedby="basic-addon2"
+                disabled={!editState}
               />
               {editState && (
-                <Button variant="warning" id="button-addon2" >
+                <Button
+                  variant="warning"
+                  id="button-addon2"
+                  onClick={()=>handleEdit("sales_tax")}
+                >
                   Edit
                 </Button>
               )}
@@ -63,12 +119,19 @@ const SettingsPage = () => {
             <Form.Label>Mark up percent on Materials</Form.Label>
             <InputGroup>
               <Form.Control
-                type="text"
-                name="material_mark_up"
+                type="number"
+                name="setting_value"
+                value={markUpPercent.setting_value}
+                onChange={handleMarkUpPercentChange}
                 aria-describedby="basic-addon2"
+                disabled={!editState}
               />
               {editState && (
-                <Button variant="warning" id="button-addon2">
+                <Button
+                  variant="warning"
+                  id="button-addon2"
+                  onClick={()=>handleEdit("mark_up_percent")}
+                >
                   Edit
                 </Button>
               )}
