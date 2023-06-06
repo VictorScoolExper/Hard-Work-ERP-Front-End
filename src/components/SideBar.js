@@ -110,12 +110,11 @@ const SidebarMenu = () => {
             <MenuItem component={<Link to="crm/company" />}>Companies</MenuItem>
           </SubMenu>
           {/* Accouting */}
-          <SubMenu
+          {/* <SubMenu
             label="Accounting"
             icon={<i className="bi bi-calculator"></i>}
           >
             <MenuItem component={<Link to="/acct" />}>Dashboard</MenuItem>
-            {/* This is the users section to accounting */}
             <SubMenu label="Banking">
               <MenuItem component={<Link to="/acct/banking" />}>
                 Banking
@@ -124,7 +123,6 @@ const SidebarMenu = () => {
                 Receipts
               </MenuItem>
             </SubMenu>
-            {/* This is the Transcation to the Users Section */}
             <SubMenu label="Sale">
               <MenuItem component={<Link to="/acct/sale/overview" />}>
                 Overview
@@ -145,7 +143,6 @@ const SidebarMenu = () => {
                 Services
               </MenuItem>
             </SubMenu>
-            {/* Expense section */}
             <SubMenu label="Expenses">
               <MenuItem component={<Link to="/acct/expense" />}>
                 Expenses
@@ -155,9 +152,7 @@ const SidebarMenu = () => {
                 Vendors
               </MenuItem>
             </SubMenu>
-            {/* Report section */}
             <MenuItem component={<Link to="/acct/report" />}>Report</MenuItem>
-            {/* This is the Setting section */}
             <SubMenu label="Taxes">
               <MenuItem component={<Link to="/acct/saletax" />}>
                 Sales Tax
@@ -166,11 +161,31 @@ const SidebarMenu = () => {
                 1099 filing
               </MenuItem>
             </SubMenu>
-            {/* Payroll */}
             <MenuItem component={<Link to="/acct/payroll" />}>Payroll</MenuItem>
             <MenuItem component={<Link to="/acct/mileage" />}>Mileage</MenuItem>
+          </SubMenu> */}
+          {/* This is the invoice section */}
+          <SubMenu label="Invoices" icon={<i class="bi bi-receipt"></i>}>
+            <MenuItem component={<Link to="/invoice-dash" />}>
+              Dashboard
+            </MenuItem>
+            <MenuItem component={<Link to="/timesheet" />}>
+              Timesheet
+            </MenuItem>
+            <MenuItem component={<Link to="/invoice" />}>
+              Invoices
+            </MenuItem>
+            <MenuItem component={<Link to="/payments-recieved" />}>
+              Payments Received
+            </MenuItem>
+            <MenuItem component={<Link to="/quotes" />}>
+              Quotes
+            </MenuItem>
+            <MenuItem component={<Link to="/invoice-reports" />}>
+              Reports
+            </MenuItem>
           </SubMenu>
-          {/* Service */}
+          {/* Services */}
           <SubMenu label="Services" icon={<i className="bi bi-hammer"></i>}>
             <MenuItem component={<Link to="/service/dash" />}>
               Dashboard

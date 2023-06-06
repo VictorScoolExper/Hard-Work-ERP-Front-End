@@ -7,6 +7,7 @@ import LayoutAccounting from "./root-pages/AccountingLayout";
 import LayoutCRM from "./root-pages/CRMLayout";
 import LayoutServ from "./root-pages/ServiceLayout";
 import LayoutInv from "./root-pages/InventoryLayout";
+import InvoiceLayout from "./root-pages/InvoiceLayout";
 
 // Pages
 import LoginPage from './features/auth/LoginPage';
@@ -565,6 +566,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+      // Service section
       {
         path: "service",
         element: <LayoutServ />,
@@ -622,7 +624,7 @@ const router = createBrowserRouter([
           }
         ],
       },
-      // Inventory
+      // Inventory Section
       {
         path: "inventory",
         element: <LayoutInv />,
@@ -659,6 +661,67 @@ const router = createBrowserRouter([
             ]
           }
         ],
+      },
+      // Invoice Section
+      {
+        path: "invoice-dash",
+        element: <InvoiceLayout />,
+        children: [
+          {
+            index: true,
+            element: <h1>invoice dashboard Overview</h1>,
+          },
+        ]
+      },
+      {
+        path: "invoice",
+        element: <InvoiceLayout />,
+        children: [
+          {
+            index: true,
+            element: <h1>invoice Overview</h1>,
+          },
+        ]
+      },
+      {
+        path: "timesheet",
+        element: <InvoiceLayout />,
+        children: [
+          {
+            index: true,
+            element: <h1>timesheet Overview</h1>,
+          },
+        ]
+      },
+      {
+        path: "payments-recieved",
+        element: <InvoiceLayout />,
+        children: [
+          {
+            index: true,
+            element: <h1>Payments recieved Overview</h1>,
+          },
+        ]
+      },
+      {
+        path: "quotes",
+        element: <InvoiceLayout />,
+        children: [
+          {
+            index: true,
+            element: <h1>Quotes Overview</h1>,
+          },
+        ]
+      },
+      {
+        path: "invoice-reports",
+        element: <InvoiceLayout />,
+        children: [
+          {
+            index: true,
+            element: <h1>Invoice Reports Overview</h1>,
+          },
+        ]
       },
       // setting 
       {
