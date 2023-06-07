@@ -37,6 +37,11 @@ import MaterialPage from "./features/materials/MaterialPage";
 import MaterialForm from "./features/materials/MaterialForm";
 import SettingsPage from "./features/settings/SettingsPage";
 
+import InvoicePage from "./features/invoices/InvoicePage";
+import InvoiceForm from "./features/invoices/InvoiceForm";
+import ScheduleLayout from "./root-pages/ScheduleLayout";
+import SchedulePage from "./features/schedules/SchedulePage";
+
 const router = createBrowserRouter([
   {
     path: "/auth",
@@ -662,6 +667,21 @@ const router = createBrowserRouter([
           }
         ],
       },
+      // Schedule Section
+      {
+        path: 'schedule',
+        element: <ScheduleLayout />,
+        children: [
+          {
+            index: true,
+            element: <SchedulePage />
+          },
+          {
+            path: 'add',
+            element: <h1>add schedule to calendar page</h1>
+          }
+        ]
+      },
       // Invoice Section
       {
         path: "invoice-dash",
@@ -679,8 +699,12 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <h1>invoice Overview</h1>,
+            element: <InvoicePage />,
           },
+          {
+            path: 'add',
+            element: <InvoiceForm />
+          }
         ]
       },
       {

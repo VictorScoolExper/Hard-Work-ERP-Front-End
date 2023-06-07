@@ -164,22 +164,31 @@ const SidebarMenu = () => {
             <MenuItem component={<Link to="/acct/payroll" />}>Payroll</MenuItem>
             <MenuItem component={<Link to="/acct/mileage" />}>Mileage</MenuItem>
           </SubMenu> */}
+          {/* Schedule */}
+          <SubMenu label="Schedules" icon={<i className="bi bi-calendar"></i>}>
+            <MenuItem component={<Link to="/schedule" />}>
+              Calendar
+            </MenuItem>
+            <MenuItem component={<Link to="/schedule/add" />}>
+              Schedule Service
+            </MenuItem>
+          </SubMenu>
           {/* This is the invoice section */}
-          <SubMenu label="Invoices" icon={<i class="bi bi-receipt"></i>}>
+          <SubMenu label="Invoices" icon={<i className="bi bi-receipt"></i>}>
             <MenuItem component={<Link to="/invoice-dash" />}>
               Dashboard
             </MenuItem>
-            <MenuItem component={<Link to="/timesheet" />}>
-              Timesheet
-            </MenuItem>
+            {/* <MenuItem component={<Link to="/quotes" />}>
+              Quotes
+            </MenuItem> */}
             <MenuItem component={<Link to="/invoice" />}>
               Invoices
             </MenuItem>
             <MenuItem component={<Link to="/payments-recieved" />}>
               Payments Received
             </MenuItem>
-            <MenuItem component={<Link to="/quotes" />}>
-              Quotes
+            <MenuItem component={<Link to="/timesheet" />}>
+              Timesheet
             </MenuItem>
             <MenuItem component={<Link to="/invoice-reports" />}>
               Reports

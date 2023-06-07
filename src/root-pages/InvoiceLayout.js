@@ -1,9 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-
 import {Navbar, Nav, Container } from "react-bootstrap";
 
-const Invoice = () => {
+const InvoiceLayout = () => {
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -19,17 +17,17 @@ const Invoice = () => {
               <Nav.Link as={Link} to="/invoice-dash">
                 Dashboard
               </Nav.Link>
-              <Nav.Link as={Link} to="/timesheet">
-                Timesheet
-              </Nav.Link>
+              {/* <Nav.Link as={Link} to="/quotes">
+                Quotes
+              </Nav.Link> */}
               <Nav.Link as={Link} to="/invoice">
                 Invoice
               </Nav.Link>
               <Nav.Link as={Link} to="/payments-recieved">
                 Payments Recieved
               </Nav.Link>
-              <Nav.Link as={Link} to="/quotes">
-                Quotes
+              <Nav.Link as={Link} to="/timesheet">
+                Timesheet
               </Nav.Link>
               <Nav.Link as={Link} to="/invoice-reports">
                 Report
@@ -46,4 +44,4 @@ const Invoice = () => {
   );
 };
 
-export default Invoice;
+export default InvoiceLayout;
