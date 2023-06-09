@@ -78,3 +78,19 @@ const Autocomplete = () => {
 };
 
 export default Autocomplete;
+
+// return (
+//   <Form.Control
+//     as="select"
+//     value={inputValue}
+//     onChange={handleInputChange}
+//     placeholder="Type to search..."
+//   >
+//     <option value="">Select one... </option>
+//     {filteredOptions.map((opt, index) => (
+//       <option key={index} value={opt}>
+//         {opt}
+//       </option>
+//     ))}
+//   </Form.Control>
+// );
