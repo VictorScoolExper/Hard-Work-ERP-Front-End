@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Form } from 'react-bootstrap';
+import React, { useState, Fragment } from "react";
+import styled from "styled-components";
+import { Form } from "react-bootstrap";
 
 const AutocompleteContainer = styled.div`
   position: relative;
 `;
 
-// const Input = styled.input`
+// const Input = styled.input`.div
 //   width: 100%;
 //   padding: 0.5rem;
 //   border: 1px solid #ccc;
@@ -36,8 +36,14 @@ const Option = styled.li`
 `;
 
 const Autocomplete = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [options, setOptions] = useState(['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry']);
+  const [inputValue, setInputValue] = useState("");
+  const [options, setOptions] = useState([
+    "Apple",
+    "Banana",
+    "Cherry",
+    "Date",
+    "Elderberry",
+  ]);
   const [filteredOptions, setFilteredOptions] = useState([]);
 
   const handleInputChange = (event) => {
@@ -57,23 +63,25 @@ const Autocomplete = () => {
   };
 
   return (
-    <AutocompleteContainer>
-      <Form.Control
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        placeholder="Type to search..."
-      />
-      {filteredOptions.length > 0 && (
-        <Dropdown>
-          {filteredOptions.map((option, index) => (
-            <Option key={index} onClick={() => handleOptionClick(option)}>
-              {option}
-            </Option>
-          ))}
-        </Dropdown>
-      )}
-    </AutocompleteContainer>
+    <Fragment>
+      <AutocompleteContainer>
+        <Form.Control
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="Type to search..."
+        />
+        {filteredOptions.length > 0 && (
+          <Dropdown>
+            {filteredOptions.map((option, index) => (
+              <Option key={index} onClick={() => handleOptionClick(option)}>
+                {option}
+              </Option>
+            ))}
+          </Dropdown>
+        )}
+      </AutocompleteContainer>
+    </Fragment>
   );
 };
 
