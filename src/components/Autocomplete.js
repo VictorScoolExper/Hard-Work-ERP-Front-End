@@ -1,17 +1,11 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import ReactDOM from "react-dom";
 import styled from "styled-components";
 import { Form } from "react-bootstrap";
 
 const AutocompleteContainer = styled.div`
   position: relative;
 `;
-
-// const Input = styled.input`.div
-//   width: 100%;
-//   padding: 0.5rem;
-//   border: 1px solid #ccc;
-//   border-radius: 4px;
-// `;
 
 const Dropdown = styled.ul`
   position: absolute;
@@ -24,6 +18,7 @@ const Dropdown = styled.ul`
   border: 1px solid #ccc;
   border-radius: 4px;
   list-style-type: none;
+  z-index: 1;
 `;
 
 const Option = styled.li`
@@ -45,6 +40,7 @@ const Autocomplete = () => {
     "Elderberry",
   ]);
   const [filteredOptions, setFilteredOptions] = useState([]);
+  const dropdownRef = useRef(null);
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -62,8 +58,22 @@ const Autocomplete = () => {
     setFilteredOptions([]);
   };
 
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setFilteredOptions([]);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <Fragment>
+    <React.Fragment>
       <AutocompleteContainer>
         <Form.Control
           type="text"
@@ -72,33 +82,20 @@ const Autocomplete = () => {
           placeholder="Type to search..."
         />
         {filteredOptions.length > 0 && (
-          <Dropdown>
+          <Dropdown ref={dropdownRef}>
             {filteredOptions.map((option, index) => (
-              <Option key={index} onClick={() => handleOptionClick(option)}>
+              <Option
+                key={index}
+                onClick={() => handleOptionClick(option)}
+              >
                 {option}
               </Option>
             ))}
           </Dropdown>
         )}
       </AutocompleteContainer>
-    </Fragment>
+    </React.Fragment>
   );
 };
 
 export default Autocomplete;
-
-// return (
-//   <Form.Control
-//     as="select"
-//     value={inputValue}
-//     onChange={handleInputChange}
-//     placeholder="Type to search..."
-//   >
-//     <option value="">Select one... </option>
-//     {filteredOptions.map((opt, index) => (
-//       <option key={index} value={opt}>
-//         {opt}
-//       </option>
-//     ))}
-//   </Form.Control>
-// );
