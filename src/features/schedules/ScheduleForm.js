@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { Button, Form, Row, Col, Container } from "react-bootstrap";
 
 import MaterialForm from "./MaterialForm";
 import Autocomplete from "../../components/Autocomplete";
+import ProjectForm from "./ProjectForm";
 
 const ScheduleForm = ({ selectedDate, addTask }) => {
   const [task, setTask] = useState({ title: "", description: "" });
@@ -20,6 +21,13 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
     scheduled_time: "",
     schedule_type: "",
   });
+
+  const [projectFormStatus, setProjectFormStatus] = useState(false);
+
+  const handleSwitchProjectForm = () => {
+    setProjectFormStatus(!projectFormStatus);
+    console.log(!projectFormStatus);
+  };
 
   const [services, setServices] = useState([{ service: "", quantity: "" }]);
 
@@ -89,12 +97,12 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
             </Row>
             {/* TODOL create a dynamic list of services */}
             <Row className="border rounded mt-3 mb-3">
-              <h4 className="mt-2" >Services to be done</h4>
+              <h4 className="mt-2">Tasks to be done</h4>
               {services.map((service, index) => (
                 <Row key={index} style={{ marginTop: "10px" }}>
                   <Col>
                     <Form.Group>
-                      <Form.Label>Service</Form.Label>
+                      <Form.Label>Task/Service</Form.Label>
                       <Autocomplete
                         value={service.service}
                         onChange={(value) => handleServiceChange(index, value)}
@@ -114,9 +122,10 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                     </Form.Group>
                   </Col>
                   {services.length > 1 && index !== 0 ? (
-                    <Col className="d-flex justify-content-center col-1">
+                    <Col className="d-flex align-items-center col-1">
                       <Button
                         variant="danger"
+                        style={{ marginTop: "30px" }}
                         onClick={() => removeService(index)}
                       >
                         Remove
@@ -127,17 +136,16 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                   )}
                 </Row>
               ))}
-            <Row className="d-flex justify-content-center mb-3">
-            <Button
-                className="col-8"
-                style={{ marginTop: "10px" }}
-                variant="primary"
-                onClick={addService}
-              >
-                Add Service
-              </Button>
-            </Row>
-              
+              <Row className="d-flex justify-content-center mb-3">
+                <Button
+                  className="col-8"
+                  style={{ marginTop: "10px" }}
+                  variant="primary"
+                  onClick={addService}
+                >
+                  Add Task
+                </Button>
+              </Row>
             </Row>
             {/* End of add services list */}
             <MaterialForm />
@@ -154,11 +162,11 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                   />
                 </Form.Group>
               </Col>
-              <Col>
+              <Col className="col-4">
                 <Row>
                   <Col>
                     <Form.Group>
-                      <Form.Label>Hour</Form.Label>
+                      <Form.Label>Starting Hour</Form.Label>
 
                       <Form.Control
                         type="number"
@@ -166,32 +174,46 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                         max="23"
                         // value={hours}
                         // onChange={handleHourChange}
-                        placeholder="Hours"
+                        placeholder="Hour"
                       />
                     </Form.Group>
                   </Col>
-                  {/* <Col>
-                    <Form.Group>
-                      <span>:</span>
-                    </Form.Group>
-                  </Col> */}
+                  <Col className="d-flex align-items-center col-1">
+                    {/* <Form.Group> */}
+                    <span style={{ marginTop: "20px" }}>:</span>
+                    {/* </Form.Group> */}
+                  </Col>
                   <Col>
                     <Form.Group>
-                      <Form.Label>Minute</Form.Label>
+                      <Form.Label>and Minute</Form.Label>
                       <Form.Control
                         type="number"
                         min="0"
                         max="59"
                         // value={minutes}
                         // onChange={handleMinuteChange}
-                        placeholder="Minutes"
+                        placeholder="Minute"
                       />
                     </Form.Group>
                   </Col>
                 </Row>
               </Col>
             </Row>
-            <Row style={{ marginTop: "10px" }}>
+            <Row>
+              <Col className="mt-3">
+                <Form.Group>
+                  <Form.Label>Is it a Project?</Form.Label>
+                  <Form.Check // prettier-ignore
+                    type="switch"
+                    id="custom-switch"
+                    label="Check this switch"
+                    checked={projectFormStatus}
+                    onChange={handleSwitchProjectForm}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            {/* <Row style={{ marginTop: "10px" }}>
               <Col>
                 <Form.Group>
                   <Form.Label>Type</Form.Label>
@@ -203,8 +225,31 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                 </Form.Group>
               </Col>
               <Col></Col>
-            </Row>
-
+            </Row> */}
+            {projectFormStatus && (
+              <>
+                <Row className="mt-2">
+                  <Col className="col-4">
+                    <Form.Group>
+                      <Form.Label>Select the project</Form.Label>
+                      <Form.Select aria-label="Default select example">
+                        <option>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </Form.Select>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="col-4">
+                    <Row style={{ marginTop: "10px", marginBottom: "10px" }}>
+                      <ProjectForm />
+                    </Row>
+                  </Col>
+                </Row>
+              </>
+            )}
             <label>
               Title:
               <input
