@@ -1,34 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import ReactDOM from "react-dom";
-import styled from "styled-components";
-import { Form } from "react-bootstrap";
+import React, { useState, useEffect, useRef, Fragment } from "react";
+import { Form, InputGroup, Button } from "react-bootstrap";
 
-const AutocompleteContainer = styled.div`
-  position: relative;
-`;
-
-const Dropdown = styled.ul`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  list-style-type: none;
-  z-index: 1;
-`;
-
-const Option = styled.li`
-  padding: 0.25rem 0.5rem;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f0f0f0;
-  }
-`;
 
 const Autocomplete = () => {
   const [inputValue, setInputValue] = useState("");
@@ -42,21 +14,6 @@ const Autocomplete = () => {
   const [filteredOptions, setFilteredOptions] = useState([]);
   const dropdownRef = useRef(null);
 
-  const handleInputChange = (event) => {
-    const value = event.target.value;
-    setInputValue(value);
-
-    // Filter options based on input value
-    const filtered = options.filter((option) =>
-      option.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredOptions(filtered);
-  };
-
-  const handleOptionClick = (value) => {
-    setInputValue(value);
-    setFilteredOptions([]);
-  };
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -73,28 +30,25 @@ const Autocomplete = () => {
   }, []);
 
   return (
-    <React.Fragment>
-      <AutocompleteContainer>
-        <Form.Control
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="Type to search..."
-        />
-        {filteredOptions.length > 0 && (
-          <Dropdown ref={dropdownRef}>
-            {filteredOptions.map((option, index) => (
-              <Option
+    <Fragment>
+      <InputGroup>
+        <Form.Select>
+            <option>Open the options</option>
+            {options.map((opt, index) => (
+              <option
                 key={index}
-                onClick={() => handleOptionClick(option)}
+                value={opt}
               >
-                {option}
-              </Option>
+                {opt}
+              </option>
             ))}
-          </Dropdown>
-        )}
-      </AutocompleteContainer>
-    </React.Fragment>
+         
+        </Form.Select>
+        <Button variant="primary">
+          <i class="bi bi-search"></i>
+        </Button>
+      </InputGroup>
+    </Fragment>
   );
 };
 

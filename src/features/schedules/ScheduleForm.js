@@ -24,9 +24,15 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
 
   const [projectFormStatus, setProjectFormStatus] = useState(false);
 
+  const [materialFormStatus, setMaterialFormStatus] = useState(false);
+
+  const handleSwitchMaterialForm = () => {
+    setMaterialFormStatus(!materialFormStatus);
+  };
+
   const handleSwitchProjectForm = () => {
     setProjectFormStatus(!projectFormStatus);
-    console.log(!projectFormStatus);
+    // console.log(!projectFormStatus);
   };
 
   const [services, setServices] = useState([{ service: "", quantity: "" }]);
@@ -128,7 +134,7 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                         style={{ marginTop: "30px" }}
                         onClick={() => removeService(index)}
                       >
-                        Remove
+                        <i class="bi bi-trash"></i>
                       </Button>
                     </Col>
                   ) : (
@@ -148,7 +154,21 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
               </Row>
             </Row>
             {/* End of add services list */}
-            <MaterialForm />
+            <Row className="justify-content-center mt-3">
+              <Col xs="auto">
+                <Form.Label>Do you want to add materials?</Form.Label>
+              </Col>
+              <Col>
+                <Form.Check // prettier-ignore
+                  type="switch"
+                  id="custom-switch"
+                  // label="Check this switch"
+                  checked={materialFormStatus}
+                  onChange={handleSwitchMaterialForm}
+                />
+              </Col>
+            </Row>
+            {materialFormStatus && <MaterialForm />}
             <Row style={{ marginTop: "10px" }}>
               <Col>
                 <Form.Group controlId="formStartDate">
@@ -199,18 +219,17 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                 </Row>
               </Col>
             </Row>
-            <Row>
-              <Col className="mt-3">
-                <Form.Group>
-                  <Form.Label>Is it a Project?</Form.Label>
-                  <Form.Check // prettier-ignore
-                    type="switch"
-                    id="custom-switch"
-                    label="Check this switch"
-                    checked={projectFormStatus}
-                    onChange={handleSwitchProjectForm}
-                  />
-                </Form.Group>
+            <Row className="align-items-center mt-3">
+              <Col xs="auto">
+                <Form.Label>Is it a Project?</Form.Label>
+              </Col>
+              <Col>
+                <Form.Check // prettier-ignore
+                  type="switch"
+                  id="custom-switch"
+                  checked={projectFormStatus}
+                  onChange={handleSwitchProjectForm}
+                />
               </Col>
             </Row>
             {/* <Row style={{ marginTop: "10px" }}>
