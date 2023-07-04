@@ -1,30 +1,58 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { Button, Form, Row, Col, Container } from "react-bootstrap";
 
 import MaterialForm from "./MaterialForm";
 import Autocomplete from "../../components/Autocomplete";
 import ProjectForm from "./ProjectForm";
+import ProjectWidget from "./ProjectWidget";
+import DateWidget from "../../components/DateWidget";
+import ServiceListForm from "./ServiceListForm";
+import { isCompositeComponent } from "react-dom/test-utils";
 
 const ScheduleForm = ({ selectedDate, addTask }) => {
-  const [task, setTask] = useState({ title: "", description: "" });
-  const [showStatus, setShowStatus] = useState(false);
   const [scheduledServices, setScheduledServices] = useState({
     client: "",
     address: "",
-    services: [
-      {
-        serviceId: "",
-        qty: "",
-      },
-    ],
     date_scheduled: "",
     scheduled_time: "",
     schedule_type: "",
   });
-
+  // TODO: delte task state
+  const [task, setTask] = useState({ title: "", description: "" });
+  const [services, setServices] = useState([{ service: "", quantity: "" }]);
   const [projectFormStatus, setProjectFormStatus] = useState(false);
-
   const [materialFormStatus, setMaterialFormStatus] = useState(false);
+  const [showStatus, setShowStatus] = useState(false);
+
+  const handleServiceChange = (index, value, type) => {
+    // Copy service list
+    let copiedServices = [...services];
+
+    if (type === "quantity") {
+      // Change value
+      copiedServices[index].quantity = value;
+    }
+
+    if (type === "service") {
+      // we change the value
+      copiedServices[index].service = value;
+    }
+
+    if (type === "remove") {
+      copiedServices.splice(index, 1);
+    }
+
+    if (type === "new") {
+      // new service object
+      const newService = { service: "", quantity: "" };
+      // add to copied services
+      copiedServices = [...services, newService];
+    }
+
+    // we then overwrite the services
+    setServices(copiedServices);
+    
+  };
 
   const handleSwitchMaterialForm = () => {
     setMaterialFormStatus(!materialFormStatus);
@@ -32,34 +60,13 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
 
   const handleSwitchProjectForm = () => {
     setProjectFormStatus(!projectFormStatus);
-    // console.log(!projectFormStatus);
   };
 
-  const [services, setServices] = useState([{ service: "", quantity: "" }]);
-
-  const handleServiceChange = (index, value) => {
-    const updatedServices = [...services];
-    updatedServices[index].service = value;
-    setServices(updatedServices);
+  const handleShowStatus = () => {
+    setShowStatus(!showStatus);
   };
 
-  const handleQuantityChange = (index, value) => {
-    const updatedServices = [...services];
-    updatedServices[index].quantity = value;
-    setServices(updatedServices);
-  };
-
-  const addService = () => {
-    setServices([...services, { service: "", quantity: "" }]);
-  };
-
-  const removeService = (index) => {
-    const updatedServices = [...services];
-    updatedServices.splice(index, 1);
-    setServices(updatedServices);
-    console.log(index);
-  };
-
+  // TODO: Unneeded code
   const handleChange = (event) => {
     const { name, value } = event.target;
     setTask({ ...task, [name]: value });
@@ -71,10 +78,7 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
     addTask(newTask);
     setTask({ title: "", description: "" });
   };
-
-  const handleShowStatus = () => {
-    setShowStatus(!showStatus);
-  };
+  // End of uneeded code
 
   return (
     <div style={{ marginTop: "20px" }}>
@@ -104,54 +108,10 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
             {/* TODOL create a dynamic list of services */}
             <Row className="border rounded mt-3 mb-3">
               <h4 className="mt-2">Tasks to be done</h4>
-              {services.map((service, index) => (
-                <Row key={index} style={{ marginTop: "10px" }}>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label>Task/Service</Form.Label>
-                      <Autocomplete
-                        value={service.service}
-                        onChange={(value) => handleServiceChange(index, value)}
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label>Quantity/Amount Hours</Form.Label>
-                      <Form.Control
-                        type="number"
-                        value={service.quantity}
-                        onChange={(e) =>
-                          handleQuantityChange(index, e.target.value)
-                        }
-                      />
-                    </Form.Group>
-                  </Col>
-                  {services.length > 1 && index !== 0 ? (
-                    <Col className="d-flex align-items-center col-1">
-                      <Button
-                        variant="danger"
-                        style={{ marginTop: "30px" }}
-                        onClick={() => removeService(index)}
-                      >
-                        <i class="bi bi-trash"></i>
-                      </Button>
-                    </Col>
-                  ) : (
-                    <></>
-                  )}
-                </Row>
-              ))}
-              <Row className="d-flex justify-content-center mb-3">
-                <Button
-                  className="col-8"
-                  style={{ marginTop: "10px" }}
-                  variant="primary"
-                  onClick={addService}
-                >
-                  Add Task
-                </Button>
-              </Row>
+              <ServiceListForm handleServiceChange={handleServiceChange} services={services}  />
+              {/* <Button onClick={()=>{console.log(services);}}>
+                Console log services
+              </Button> */}
             </Row>
             {/* End of add services list */}
             <Row className="justify-content-center mt-3">
@@ -171,23 +131,13 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
             {materialFormStatus && <MaterialForm />}
             <Row style={{ marginTop: "10px" }}>
               <Col>
-                <Form.Group controlId="formStartDate">
-                  <Form.Label>Date Schedule</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="date_scheduled"
-                    // value={formData.start_date}
-                    // onChange={handleChange}
-                    required
-                  />
-                </Form.Group>
+                <DateWidget />
               </Col>
               <Col className="col-4">
                 <Row>
                   <Col>
                     <Form.Group>
                       <Form.Label>Starting Hour</Form.Label>
-
                       <Form.Control
                         type="number"
                         min="0"
@@ -224,7 +174,7 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                 <Form.Label>Is it a Project?</Form.Label>
               </Col>
               <Col>
-                <Form.Check // prettier-ignore
+                <Form.Check 
                   type="switch"
                   id="custom-switch"
                   checked={projectFormStatus}
@@ -232,43 +182,8 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                 />
               </Col>
             </Row>
-            {/* <Row style={{ marginTop: "10px" }}>
-              <Col>
-                <Form.Group>
-                  <Form.Label>Type</Form.Label>
-                  <Form.Select aria-label="Select one of the following services">
-                    <option>Open this select menu</option>
-                    <option value="service">Service</option>
-                    <option value="project">Project</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-              <Col></Col>
-            </Row> */}
-            {projectFormStatus && (
-              <>
-                <Row className="mt-2">
-                  <Col className="col-4">
-                    <Form.Group>
-                      <Form.Label>Select the project</Form.Label>
-                      <Form.Select aria-label="Default select example">
-                        <option>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </Form.Select>
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className="col-4">
-                    <Row style={{ marginTop: "10px", marginBottom: "10px" }}>
-                      <ProjectForm />
-                    </Row>
-                  </Col>
-                </Row>
-              </>
-            )}
+            {projectFormStatus && <ProjectWidget />}
+            {/* TODO: Delete */}
             <label>
               Title:
               <input
@@ -287,6 +202,7 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
               />
             </label>
             <Button type="submit">Add Task</Button>
+            {/* End Delte Section */}
           </Form>
         </Container>
       )}
