@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Button, Form, Row, Col, Container } from "react-bootstrap";
 
-import MaterialForm from "./MaterialForm";
+import MaterialListForm from "./MaterialListForm";
 import Autocomplete from "../../components/Autocomplete";
 import ProjectForm from "./ProjectForm";
 import ProjectWidget from "./ProjectWidget";
 import DateWidget from "../../components/DateWidget";
 import ServiceListForm from "./ServiceListForm";
-import { isCompositeComponent } from "react-dom/test-utils";
 
 const ScheduleForm = ({ selectedDate, addTask }) => {
   const [scheduledServices, setScheduledServices] = useState({
@@ -20,6 +19,9 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
   // TODO: delte task state
   const [task, setTask] = useState({ title: "", description: "" });
   const [services, setServices] = useState([{ service: "", quantity: "" }]);
+  const [materials, setMaterials] = useState([
+    { materialId: "", quantity: "", subtotal: 0 },
+  ]);
   const [projectFormStatus, setProjectFormStatus] = useState(false);
   const [materialFormStatus, setMaterialFormStatus] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
@@ -51,19 +53,48 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
 
     // we then overwrite the services
     setServices(copiedServices);
-    
   };
 
-  const handleSwitchMaterialForm = () => {
-    setMaterialFormStatus(!materialFormStatus);
+  const handleMaterialChange = (index, value, type) => {
+    let copiedMaterials = [...materials];
+    switch (type) {
+      case "material":
+        copiedMaterials[index].materialId = value;
+        break;
+      case "quantity":
+        copiedMaterials[index].quantity = value;
+        break;
+      case "subtotal":
+        copiedMaterials[index].subtotal = value;
+        break;
+      case "add":
+        const newMaterial = { materialId: "", quantity: "", subtotal: 0 };
+        copiedMaterials = [...materials, newMaterial];
+        break;
+      case "remove":
+        copiedMaterials.splice(index, 1);
+        break;
+    }
+
+    setMaterials(copiedMaterials);
+    console.log(copiedMaterials);
   };
 
-  const handleSwitchProjectForm = () => {
-    setProjectFormStatus(!projectFormStatus);
-  };
-
-  const handleShowStatus = () => {
-    setShowStatus(!showStatus);
+  const handleSwitchForm = (type) => {
+    switch (type) {
+      case "materialForm":
+        setMaterialFormStatus((materialFormStatus) => !materialFormStatus);
+        break;
+      case "projectForm":
+        setProjectFormStatus((projectFormStatus) => !projectFormStatus);
+        break;
+      // TODO: delete case or optimize
+      case "showFormStatus":
+        setShowStatus((showStatus) => !showStatus);
+        break;
+      default:
+        break;
+    }
   };
 
   // TODO: Unneeded code
@@ -107,11 +138,10 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
             </Row>
             {/* TODOL create a dynamic list of services */}
             <Row className="border rounded mt-3 mb-3">
-              <h4 className="mt-2">Tasks to be done</h4>
-              <ServiceListForm handleServiceChange={handleServiceChange} services={services}  />
-              {/* <Button onClick={()=>{console.log(services);}}>
-                Console log services
-              </Button> */}
+              <ServiceListForm
+                handleServiceChange={handleServiceChange}
+                services={services}
+              />
             </Row>
             {/* End of add services list */}
             <Row className="justify-content-center mt-3">
@@ -124,11 +154,16 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                   id="custom-switch"
                   // label="Check this switch"
                   checked={materialFormStatus}
-                  onChange={handleSwitchMaterialForm}
+                  onChange={() => handleSwitchForm("materialForm")}
                 />
               </Col>
             </Row>
-            {materialFormStatus && <MaterialForm />}
+            {materialFormStatus && (
+              <MaterialListForm
+                materials={materials}
+                handleMaterialChange={handleMaterialChange}
+              />
+            )}
             <Row style={{ marginTop: "10px" }}>
               <Col>
                 <DateWidget />
@@ -174,12 +209,12 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                 <Form.Label>Is it a Project?</Form.Label>
               </Col>
               <Col>
-                <Form.Check 
+                {/* <Form.Check 
                   type="switch"
                   id="custom-switch"
                   checked={projectFormStatus}
-                  onChange={handleSwitchProjectForm}
-                />
+                  onChange={()=>handleSwitchForm('projectForm')}
+                /> */}
               </Col>
             </Row>
             {projectFormStatus && <ProjectWidget />}
@@ -206,7 +241,7 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
           </Form>
         </Container>
       )}
-      <Button onClick={handleShowStatus}>
+      <Button onClick={() => handleSwitchForm("showFormStatus")}>
         {showStatus ? "Close Section" : "Schedule Service"}
       </Button>
     </div>

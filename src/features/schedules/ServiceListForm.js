@@ -6,12 +6,14 @@ const ServiceListForm = ({ services, handleServiceChange }) => {
   
   return (
     <Fragment>
+      <h4 className="mt-2">Services to be done</h4>
       {services.map((service, index) => (
         <Row key={index} style={{ marginTop: "10px" }}>
           <Col>
             <Form.Group>
-              <Form.Label>Task/Service</Form.Label>
+              <Form.Label>Service</Form.Label>
               <Autocomplete
+                // TODO: change service.service to service.serviceId 
                 selectedValue={service.service}
                 onChangeInput={(value) => {
                   handleServiceChange(index, value, "service");

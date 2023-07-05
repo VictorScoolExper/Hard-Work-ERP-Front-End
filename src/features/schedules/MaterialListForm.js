@@ -2,37 +2,10 @@ import { Fragment, useState } from "react";
 import { Row, Col, Form, Button, InputGroup } from "react-bootstrap";
 import Autocomplete from "../../components/Autocomplete";
 
-const MaterialForm = () => {
-  const [materials, setMaterials] = useState([
-    { materialId: "", quantity: "", subtotal: 0 },
-  ]);
-
-  const handleMaterialChange = (index, value) => {
-    const updatedMaterials = [...materials];
-    updatedMaterials[index].materialId = value;
-    setMaterials(updatedMaterials);
-  };
-
-  const handleQuantityChange = (index, value) => {
-    const updatedMaterials = [...materials];
-    updatedMaterials[index].quantity = value;
-    setMaterials(updatedMaterials);
-  };
-
-  const addMaterial = () => {
-    setMaterials([...materials, { materialId: "", quantity: "", subtotal: 0 }]);
-  };
-
-  const removeMaterial = (index) => {
-    const updatedMaterials = [...materials];
-    updatedMaterials.splice(index, 1);
-    setMaterials(updatedMaterials);
-    console.log(index);
-  };
-
+const MaterialListForm = ({materials, handleMaterialChange}) => {
+  
   return (
     <Fragment>
-      <Form>
         <Row className="border rounded mt-3 mb-3">
           <h4 className="mt-2">Material Form</h4>
           {materials.map((material, index) => (
@@ -41,8 +14,8 @@ const MaterialForm = () => {
                 <Form.Group>
                   <Form.Label>Material</Form.Label>
                   <Autocomplete
-                    value={materials.materialId}
-                    onChange={(value) => handleMaterialChange(index, value)}
+                    selectedValue={material.materialId}
+                    onChangeInput={(value) => handleMaterialChange(index, value, 'material')}
                   />
                 </Form.Group>
               </Col>
@@ -51,9 +24,9 @@ const MaterialForm = () => {
                   <Form.Label>Quantity</Form.Label>
                   <Form.Control
                     type="number"
-                    value={materials.quantity}
+                    value={material.quantity}
                     onChange={(e) =>
-                      handleQuantityChange(index, e.target.value)
+                      handleMaterialChange(index, e.target.value, 'quantity')
                     }
                   />
                 </Form.Group>
@@ -63,7 +36,14 @@ const MaterialForm = () => {
                   <Form.Label>SubTotal</Form.Label>
                   <InputGroup className="mb-3">
                     <InputGroup.Text>$</InputGroup.Text>
-                    <Form.Control aria-label="Sub Total on Material" />
+                    <Form.Control 
+                      aria-label="Sub Total on Material" 
+                      type="number"
+                      value={material.subtotal}
+                      onChange={(e) =>
+                        handleMaterialChange(index, e.target.value, 'subtotal')
+                      }
+                    />
                   </InputGroup>
                 </Form.Group>
               </Col>
@@ -72,9 +52,9 @@ const MaterialForm = () => {
                   <Button
                     variant="danger"
                     style={{ height: "50%", marginTop: "10px" }}
-                    onClick={() => removeMaterial(index)}
+                    onClick={() => handleMaterialChange(index, null, 'remove')}
                   >
-                    <i class="bi bi-trash"></i>
+                    <i className="bi bi-trash"></i>
                   </Button>
                 </Col>
               ) : (
@@ -87,15 +67,14 @@ const MaterialForm = () => {
               className="col-8"
               style={{ marginTop: "10px" }}
               variant="primary"
-              onClick={addMaterial}
+              onClick={()=>handleMaterialChange(null, null, "add")}
             >
               Add Material
             </Button>
           </Row>
         </Row>
-      </Form>
     </Fragment>
   );
 };
 
-export default MaterialForm;
+export default MaterialListForm;
