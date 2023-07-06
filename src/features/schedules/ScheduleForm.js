@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {getClientAddresses} from "../../util/api/clientAPI";
 import { Button, Form, Row, Col, Container } from "react-bootstrap";
 
 import MaterialListForm from "./MaterialListForm";
@@ -16,12 +17,29 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
     scheduled_time: "",
     schedule_type: "",
   });
+  const clientId = scheduledServices.client;
   // TODO: delte task state
   const [task, setTask] = useState({ title: "", description: "" });
+  // These are the address associated with the client
+  const [addressOptions, setAddressOptions] = useState([]);
   const [services, setServices] = useState([{ service: "", quantity: "" }]);
   const [materials, setMaterials] = useState([
     { materialId: "", quantity: "", subtotal: 0 },
   ]);
+
+  useEffect(()=>{
+    (async () => {
+      if(clientId){
+        try {
+          const clientAddress = await getClientAddresses(clientId);
+          setAddressOptions(clientAddress);
+        } catch (err) {
+          console.log(err);
+        }
+      } 
+    })();
+  }, [clientId])
+
   const [projectFormStatus, setProjectFormStatus] = useState(false);
   const [materialFormStatus, setMaterialFormStatus] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
@@ -209,12 +227,12 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                 <Form.Label>Is it a Project?</Form.Label>
               </Col>
               <Col>
-                {/* <Form.Check 
+                <Form.Check 
                   type="switch"
                   id="custom-switch"
                   checked={projectFormStatus}
                   onChange={()=>handleSwitchForm('projectForm')}
-                /> */}
+                />
               </Col>
             </Row>
             {projectFormStatus && <ProjectWidget />}

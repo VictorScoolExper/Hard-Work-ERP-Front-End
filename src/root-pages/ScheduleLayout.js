@@ -1,7 +1,26 @@
+import useFetch from "../hooks/use-fetch";
+import { getMaterials } from "../features/materials/materialSlice";
+import { getServices } from "../features/services/serviceSlice";
+import { fetchAllEmployees } from "../features/employees/employeeSlice";
+
 import { Outlet, Link } from "react-router-dom";
-import {Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 
 const ScheduleLayout = () => {
+  const { loading: materialLoading, error: materialError } = useFetch(
+    getMaterials()
+  );
+
+  const { loading: serviceLoading, error: serviceError } = useFetch(
+    getServices()
+  );
+
+  const { loading: employeeLoading, error: employeeError } = useFetch(
+    fetchAllEmployees()
+  );
+
+  const hello = "hello bitch";
+
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -23,14 +42,19 @@ const ScheduleLayout = () => {
               {/* <Nav.Link as={Link} to="">
                 Report
               </Nav.Link> */}
-              
             </Nav>
-            
           </Navbar.Collapse>
         </Container>
       </Navbar>
-
-      <Outlet />
+      {materialError !== null &&
+      serviceError !== null &&
+      employeeError !== null ? (
+        <div>
+          <h1>Loading</h1>
+        </div>
+      ) : (
+        <Outlet />
+      )}
     </>
   );
 };

@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
 import { Form, InputGroup, Button } from "react-bootstrap";
+import SearchModal from "./SearchModal";
 
-
-const Autocomplete = ({onChangeInput, selectedValue}) => {
+const Autocomplete = ({ onChangeInput, selectedValue }) => {
   const [inputValue, setInputValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [modalShow, setModalShow] = useState(false);
+
   const [options, setOptions] = useState([
     "Apple",
     "Banana",
@@ -14,14 +17,24 @@ const Autocomplete = ({onChangeInput, selectedValue}) => {
   const [filteredOptions, setFilteredOptions] = useState([]);
   const dropdownRef = useRef(null);
 
-  const handleSelect = (event) =>{
+  const handleSearchChange = (event) => {
+    const value = event.target.value;
+    setSearchValue(value);
+    setFilteredOptions(
+      options.filter((option) =>
+        option.toLowerCase().includes(value.toLowerCase())
+      )
+    );
+  };
+
+  const handleSelect = (event) => {
     // Copy the select value
     const inputValue = event.target.value;
     // save it in state
     setInputValue(inputValue);
     // pass it to the parent
     onChangeInput(inputValue);
-  }
+  };
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -40,25 +53,25 @@ const Autocomplete = ({onChangeInput, selectedValue}) => {
   return (
     <Fragment>
       <InputGroup>
-        <Form.Select 
-          onChange={handleSelect}
-          value={selectedValue}
-        >
-            <option>Open the options</option>
-            {options.map((opt, index) => (
-              <option
-                key={index}
-                value={opt}
-              >
-                {opt}
-              </option>
-            ))}
-         
+        <Form.Control
+          type="text"
+          value={searchValue}
+          onChange={handleSearchChange}
+          placeholder="Search"
+        />
+        <Form.Select onChange={handleSelect} value={selectedValue}>
+          <option>Open the options</option>
+          {options.map((opt, index) => (
+            <option key={index} value={opt}>
+              {opt}
+            </option>
+          ))}
         </Form.Select>
-        <Button variant="primary">
+        <Button variant="primary" onClick={() => setModalShow(true)}>
           <i className="bi bi-search"></i>
         </Button>
       </InputGroup>
+      <SearchModal show={modalShow} onHide={() => setModalShow(false)} />
     </Fragment>
   );
 };
