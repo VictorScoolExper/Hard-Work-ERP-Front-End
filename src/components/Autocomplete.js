@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, Fragment } from "react";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import SearchModal from "./SearchModal";
 
-const Autocomplete = ({ onChangeInput, selectedValue }) => {
+const Autocomplete = ({ onChangeInput, selectedValue, type, placeholder }) => {
   const [inputValue, setInputValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [modalShow, setModalShow] = useState(false);
@@ -16,16 +16,6 @@ const Autocomplete = ({ onChangeInput, selectedValue }) => {
   ]);
   const [filteredOptions, setFilteredOptions] = useState([]);
   const dropdownRef = useRef(null);
-
-  const handleSearchChange = (event) => {
-    const value = event.target.value;
-    setSearchValue(value);
-    setFilteredOptions(
-      options.filter((option) =>
-        option.toLowerCase().includes(value.toLowerCase())
-      )
-    );
-  };
 
   const handleSelect = (event) => {
     // Copy the select value
@@ -53,12 +43,6 @@ const Autocomplete = ({ onChangeInput, selectedValue }) => {
   return (
     <Fragment>
       <InputGroup>
-        <Form.Control
-          type="text"
-          value={searchValue}
-          onChange={handleSearchChange}
-          placeholder="Search"
-        />
         <Form.Select onChange={handleSelect} value={selectedValue}>
           <option>Open the options</option>
           {options.map((opt, index) => (
@@ -71,7 +55,7 @@ const Autocomplete = ({ onChangeInput, selectedValue }) => {
           <i className="bi bi-search"></i>
         </Button>
       </InputGroup>
-      <SearchModal show={modalShow} onHide={() => setModalShow(false)} />
+      <SearchModal show={modalShow} onHide={() => setModalShow(false)} type={type} placeholder={placeholder}/>
     </Fragment>
   );
 };

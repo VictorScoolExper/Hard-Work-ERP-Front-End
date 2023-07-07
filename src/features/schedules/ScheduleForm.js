@@ -139,7 +139,7 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
               <Col>
                 <Form.Group>
                   <Form.Label>Client</Form.Label>
-                  <Autocomplete />
+                  <Autocomplete type={"Client"} placeholder={"Enter the client name"} />
                 </Form.Group>
               </Col>
               <Col></Col>
