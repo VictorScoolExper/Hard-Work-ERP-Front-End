@@ -2,29 +2,39 @@ import React, { useState, useEffect, useRef, Fragment } from "react";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import SearchModal from "./SearchModal";
 
-const Autocomplete = ({ onChangeInput, selectedValue, type, placeholder }) => {
-  const [inputValue, setInputValue] = useState("");
-  const [searchValue, setSearchValue] = useState("");
+// helper function for handle dropdown menu options
+const dropdownOption = (opt, type, index) => {
+  switch (type) {
+    case "Client":
+      return (
+        <option key={index} value={opt.client_id}>
+          {opt.name} {opt.last_name}
+        </option>
+      );
+    default:
+      break;
+  }
+};
+
+const Autocomplete = ({
+  handleSelect,
+  selectedValue,
+  type,
+  nameInput,
+  placeholder,
+  incomingLists,
+}) => {
   const [modalShow, setModalShow] = useState(false);
 
-  const [options, setOptions] = useState([
-    "Apple",
-    "Banana",
-    "Cherry",
-    "Date",
-    "Elderberry",
-  ]);
   const [filteredOptions, setFilteredOptions] = useState([]);
   const dropdownRef = useRef(null);
 
-  const handleSelect = (event) => {
-    // Copy the select value
-    const inputValue = event.target.value;
-    // save it in state
-    setInputValue(inputValue);
-    // pass it to the parent
-    onChangeInput(inputValue);
-  };
+  const [options, setOptions] = useState([]);
+  useEffect(() => {
+    if (incomingLists !== undefined) {
+      setOptions(incomingLists);
+    }
+  }, []);
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -43,19 +53,31 @@ const Autocomplete = ({ onChangeInput, selectedValue, type, placeholder }) => {
   return (
     <Fragment>
       <InputGroup>
-        <Form.Select onChange={handleSelect} value={selectedValue}>
+        <Form.Select
+          onChange={handleSelect}
+          value={selectedValue}
+          name={nameInput}
+        >
           <option>Open the options</option>
           {options.map((opt, index) => (
-            <option key={index} value={opt}>
-              {opt}
+            <option key={index} value={opt.client_id}>
+              {opt.name} {opt.last_name}
             </option>
+            // (dropdownOption(opt, type, index))
           ))}
         </Form.Select>
         <Button variant="primary" onClick={() => setModalShow(true)}>
           <i className="bi bi-search"></i>
         </Button>
       </InputGroup>
-      <SearchModal show={modalShow} onHide={() => setModalShow(false)} type={type} placeholder={placeholder}/>
+      <SearchModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        type={type}
+        placeholder={placeholder}
+        dataList = {incomingLists}
+        propertyName = {'name'}
+      />
     </Fragment>
   );
 };

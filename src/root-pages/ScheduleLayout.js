@@ -5,8 +5,13 @@ import { fetchAllEmployees } from "../features/employees/employeeSlice";
 
 import { Outlet, Link } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import { fetchClients } from "../features/clients/clientSlice";
 
 const ScheduleLayout = () => {
+  const {loading: clientLoading, error: clientError } = useFetch(
+    fetchClients()
+  );
+
   const { loading: materialLoading, error: materialError } = useFetch(
     getMaterials()
   );
@@ -47,6 +52,7 @@ const ScheduleLayout = () => {
         </Container>
       </Navbar>
       {materialError !== null &&
+      clientError !== null &&
       serviceError !== null &&
       employeeError !== null ? (
         <div>

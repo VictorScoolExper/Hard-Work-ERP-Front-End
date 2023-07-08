@@ -129,7 +129,7 @@ export const {} = clientsSlice.actions;
 export default clientsSlice.reducer;
 
 // fast access vendor
-export const selectSortedEmployee = (state) =>{ 
+export const selectSortedClients = (state) =>{ 
     if(state.clients.clients != null){
         return state.clients.clients.slice().sort((a, b) => a.name.localeCompare(b.name))
     } else {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {getClientAddresses} from "../../util/api/clientAPI";
+import { getClientAddresses } from "../../util/api/clientAPI";
 import { Button, Form, Row, Col, Container } from "react-bootstrap";
 
 import MaterialListForm from "./MaterialListForm";
@@ -8,16 +8,18 @@ import ProjectForm from "./ProjectForm";
 import ProjectWidget from "./ProjectWidget";
 import DateWidget from "../../components/DateWidget";
 import ServiceListForm from "./ServiceListForm";
+import { useSelector } from "react-redux";
+import { selectSortedClients } from "../clients/clientSlice";
 
 const ScheduleForm = ({ selectedDate, addTask }) => {
   const [scheduledServices, setScheduledServices] = useState({
-    client: "",
+    client_id: "",
     address: "",
     date_scheduled: "",
     scheduled_time: "",
     schedule_type: "",
   });
-  const clientId = scheduledServices.client;
+  const clientId = scheduledServices.client_id;
   // TODO: delte task state
   const [task, setTask] = useState({ title: "", description: "" });
   // These are the address associated with the client
@@ -27,18 +29,20 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
     { materialId: "", quantity: "", subtotal: 0 },
   ]);
 
-  useEffect(()=>{
+  const clientList = useSelector(selectSortedClients);
+
+  useEffect(() => {
     (async () => {
-      if(clientId){
+      if (clientId) {
         try {
           const clientAddress = await getClientAddresses(clientId);
           setAddressOptions(clientAddress);
         } catch (err) {
           console.log(err);
         }
-      } 
+      }
     })();
-  }, [clientId])
+  }, [clientId]);
 
   const [projectFormStatus, setProjectFormStatus] = useState(false);
   const [materialFormStatus, setMaterialFormStatus] = useState(false);
@@ -115,6 +119,12 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
     }
   };
 
+  const handleServiceScheduleChange = (event) => {
+    const {name, value} = event.target;
+    setScheduledServices({...scheduledServices, [name]: value});
+    // console.log(name + " " + value);
+  }
+
   // TODO: Unneeded code
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -139,7 +149,14 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
               <Col>
                 <Form.Group>
                   <Form.Label>Client</Form.Label>
-                  <Autocomplete type={"Client"} placeholder={"Enter the client name"} />
+                  <Autocomplete
+                    type={"Client"}
+                    nameInput={"client_id"}
+                    placeholder={"Enter the client name"}
+                    incomingLists={clientList}
+                    selectedValue = {scheduledServices.client_id}
+                    handleSelect={handleServiceScheduleChange}
+                  />
                 </Form.Group>
               </Col>
               <Col></Col>
@@ -227,11 +244,11 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                 <Form.Label>Is it a Project?</Form.Label>
               </Col>
               <Col>
-                <Form.Check 
+                <Form.Check
                   type="switch"
                   id="custom-switch"
                   checked={projectFormStatus}
-                  onChange={()=>handleSwitchForm('projectForm')}
+                  onChange={() => handleSwitchForm("projectForm")}
                 />
               </Col>
             </Row>

@@ -3,7 +3,7 @@ import { Table, Button, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { fetchClients, selectSortedEmployee } from "./clientSlice";
+import { fetchClients, selectSortedClients } from "./clientSlice";
 
 const ClientTable = () => {
   const headers = ["Name", "Last_Name", "Cell_Number", "Email", "Life_Stage"];
@@ -14,7 +14,7 @@ const ClientTable = () => {
   const [lastname, setLastname] = useState("");
   const link = "/crm/client/";
 
-  const clientList = useSelector(selectSortedEmployee);
+  const clientList = useSelector(selectSortedClients);
 
   useEffect(() => {
     (async () => {

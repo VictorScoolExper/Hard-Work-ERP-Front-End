@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Modal, Form, Button, ListGroup } from "react-bootstrap";
 
 const SearchModal = (props) => {
-  const options = ["Apple", "Banana", "Cherry", "Durian", "Elderberry"];
+  const [options, setOptions] = useState(props.dataList);
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [isInputValid, setIsInputValid] = useState(true);
@@ -17,11 +17,14 @@ const SearchModal = (props) => {
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
+
     const filtered = options.filter((option) =>
-      option.toLowerCase().includes(value.toLowerCase())
+      option[props.propertyName].toLowerCase().includes(value.toLowerCase())
     );
+
     setFilteredOptions(filtered);
     setIsInputValid(true);
+    // console.log(inputValue);
   };
 
   const handleOptionClick = (option) => {
@@ -32,7 +35,7 @@ const SearchModal = (props) => {
 
   const validateInput = () => {
     const isValid = options.some(
-      (option) => option.toLowerCase() === inputValue.toLowerCase()
+      (option) => option[props.propertyName].toLowerCase() === inputValue.toLowerCase()
     );
     setIsInputValid(isValid);
   };
@@ -46,7 +49,7 @@ const SearchModal = (props) => {
   const close = () => {
     props.onHide();
     setInputValue("");
-  }
+  };
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -91,7 +94,7 @@ const SearchModal = (props) => {
                   onClick={() => handleOptionClick(option)}
                   style={{ cursor: "pointer" }}
                 >
-                  {option}
+                  {option.name} {option.last_name}
                 </ListGroup.Item>
               ))}
             </ListGroup>
@@ -104,10 +107,7 @@ const SearchModal = (props) => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={close}
-          >
+          <Button variant="secondary" onClick={close}>
             Close
           </Button>
           <Button variant="primary">Select</Button>
