@@ -3,11 +3,11 @@ import { Form, InputGroup, Button } from "react-bootstrap";
 import SearchModal from "./SearchModal";
 
 // helper function for handle dropdown menu options
-const dropdownOption = (opt, type, index) => {
+const dropdownOption = (opt, type, propertyValueName, index) => {
   switch (type) {
     case "Client":
       return (
-        <option key={index} value={opt.client_id}>
+        <option key={index} value={opt[propertyValueName]}>
           {opt.name} {opt.last_name}
         </option>
       );
@@ -17,15 +17,15 @@ const dropdownOption = (opt, type, index) => {
 };
 
 const Autocomplete = ({
-  handleSelect,
-  selectedValue,
   type,
   nameInput,
   placeholder,
   incomingLists,
+  updateState,
 }) => {
   const [modalShow, setModalShow] = useState(false);
 
+  const [selectValue, setSelectValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState([]);
   const dropdownRef = useRef(null);
 
@@ -35,6 +35,19 @@ const Autocomplete = ({
       setOptions(incomingLists);
     }
   }, []);
+
+  const handleSelect = (event) => {
+    const { name, value } = event.target;
+    // update value of form.control
+    setSelectValue(value);
+    // update the state in the previous prop
+    updateState(name, value);
+  };
+
+  const externalChange = (value) => {
+    setSelectValue(value);
+    updateState(nameInput, value);
+  };
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -55,15 +68,12 @@ const Autocomplete = ({
       <InputGroup>
         <Form.Select
           onChange={handleSelect}
-          value={selectedValue}
+          value={selectValue}
           name={nameInput}
         >
           <option>Open the options</option>
           {options.map((opt, index) => (
-            <option key={index} value={opt.client_id}>
-              {opt.name} {opt.last_name}
-            </option>
-            // (dropdownOption(opt, type, index))
+            (dropdownOption(opt, type, nameInput, index))
           ))}
         </Form.Select>
         <Button variant="primary" onClick={() => setModalShow(true)}>
@@ -75,10 +85,11 @@ const Autocomplete = ({
         onHide={() => setModalShow(false)}
         type={type}
         placeholder={placeholder}
-        datalist = { incomingLists }
-        inputobject = {{'client_id': null}}
-        propertynames = {['name', 'last_name']}
-        idname = {'client_id'}
+        datalist={incomingLists}
+        inputobject={{ client_id: null }}
+        propertynames={["name", "last_name"]}
+        setstate={externalChange}
+        propreturn={nameInput}
       />
     </Fragment>
   );

@@ -35,7 +35,7 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
     (async () => {
       if (clientId) {
         try {
-          const clientAddress = await getClientAddresses(clientId);
+          const clientAddress = await getClientAddresses(scheduledServices.client_id);
           setAddressOptions(clientAddress);
         } catch (err) {
           console.log(err);
@@ -119,17 +119,16 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
     }
   };
 
-  const handleServiceScheduleChange = (event) => {
-    const {name, value} = event.target;
+  const handleChange = (name, value) => {
     setScheduledServices({...scheduledServices, [name]: value});
-    // console.log(name + " " + value);
+    // console.log(value);
   }
 
   // TODO: Unneeded code
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setTask({ ...task, [name]: value });
-  };
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setTask({ ...task, [name]: value });
+  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -154,9 +153,9 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
                     nameInput={"client_id"}
                     placeholder={"Enter the client name"}
                     incomingLists={clientList}
-                    selectedValue = {scheduledServices.client_id}
-                    handleSelect={handleServiceScheduleChange}
+                    updateState={handleChange}
                   />
+                  <Button onClick={()=> console.log(scheduledServices)}>Click to see state</Button>
                 </Form.Group>
               </Col>
               <Col></Col>

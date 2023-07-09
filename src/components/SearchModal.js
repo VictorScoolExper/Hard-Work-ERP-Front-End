@@ -10,8 +10,13 @@ const SearchModal = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(isInputValid);
+    // TODO: validate if selected value is valid
+    // retrieve selected value
+    const value = inputValue[props.propreturn];
+    // send the value to previous prop
+    props.setstate(value)
+    // close modal
+    close();
   };
 
   const handleInputChange = (e) => {
@@ -24,7 +29,7 @@ const SearchModal = (props) => {
 
       for (const propertyName of propertyNames) {
         const propertyValue = option[propertyName];
-        console.log(propertyValue);
+      
         if (propertyValue.toLowerCase().includes(value.toLowerCase())) {
           matchingValues.push(propertyValue);
         }
@@ -59,11 +64,13 @@ const SearchModal = (props) => {
     if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
       setFilteredOptions([]);
     }
+    
   };
 
   const close = () => {
     props.onHide();
     setInputValue("");
+    setIsInputValid(true);
   };
 
   useEffect(() => {
@@ -82,7 +89,6 @@ const SearchModal = (props) => {
       backdrop="static"
       keyboard={false}
     >
-      <Form onSubmit={handleSubmit}>
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter">
             Search {props.type}
@@ -132,9 +138,8 @@ const SearchModal = (props) => {
           <Button variant="secondary" onClick={close}>
             Close
           </Button>
-          <Button variant="primary">Select</Button>
+          <Button variant="primary" onClick={handleSubmit}>Select</Button>
         </Modal.Footer>
-      </Form>
     </Modal>
   );
 };
