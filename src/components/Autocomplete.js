@@ -75,8 +75,10 @@ const Autocomplete = ({
         onHide={() => setModalShow(false)}
         type={type}
         placeholder={placeholder}
-        dataList = {incomingLists}
-        propertyName = {'name'}
+        datalist = { incomingLists }
+        inputobject = {{'client_id': null}}
+        propertynames = {['name', 'last_name']}
+        idname = {'client_id'}
       />
     </Fragment>
   );

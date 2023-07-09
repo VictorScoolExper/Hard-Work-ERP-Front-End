@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Modal, Form, Button, ListGroup } from "react-bootstrap";
 
 const SearchModal = (props) => {
-  const [options, setOptions] = useState(props.dataList);
+  const [options, setOptions] = useState(props.datalist);
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [isInputValid, setIsInputValid] = useState(true);
@@ -18,9 +18,24 @@ const SearchModal = (props) => {
     const value = e.target.value;
     setInputValue(value);
 
-    const filtered = options.filter((option) =>
-      option[props.propertyName].toLowerCase().includes(value.toLowerCase())
-    );
+    const filtered = options.filter((option) => {
+      const propertyNames = props.propertynames;
+      const matchingValues = [];
+
+      for (const propertyName of propertyNames) {
+        const propertyValue = option[propertyName];
+        console.log(propertyValue);
+        if (propertyValue.toLowerCase().includes(value.toLowerCase())) {
+          matchingValues.push(propertyValue);
+        }
+      }
+
+      return matchingValues.length > 0 ? { ...option, matchingValues } : null;
+    });
+
+    // const filtered = options.filter((option) =>
+    //   option['name'].toLowerCase().includes(value.toLowerCase())
+    // );
 
     setFilteredOptions(filtered);
     setIsInputValid(true);
@@ -35,7 +50,7 @@ const SearchModal = (props) => {
 
   const validateInput = () => {
     const isValid = options.some(
-      (option) => option[props.propertyName].toLowerCase() === inputValue.toLowerCase()
+      (option) => option["name"].toLowerCase() === inputValue.toLowerCase()
     );
     setIsInputValid(isValid);
   };
@@ -80,7 +95,14 @@ const SearchModal = (props) => {
           <Form.Control
             type="text"
             placeholder={props.placeholder}
-            value={inputValue}
+            value={
+              inputValue[props.propertynames[0]] &&
+              inputValue[props.propertynames[1]]
+                ? `${inputValue[props.propertynames[0]]} ${
+                    inputValue[props.propertynames[1]]
+                  }`
+                : inputValue
+            }
             onChange={handleInputChange}
             onBlur={validateInput}
             isInvalid={!isInputValid}
