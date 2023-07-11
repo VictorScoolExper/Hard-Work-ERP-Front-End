@@ -9,29 +9,38 @@ const SearchModal = ({
   datalist,
   propertynames,
   propreturn,
-  handleState
+  handleState,
+  index
 }) => {
   const [options, setOptions] = useState(datalist);
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [isInputValid, setIsInputValid] = useState(true);
   const dropdownRef = useRef(null);
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // validate if selected value is valid
-    if(isInputValid){
+    if (isInputValid) {
       // retrieve selected value
       const value = inputValue[propreturn];
-      // send the value to previous prop
-      handleState(propreturn, value);
-      // close modal
-      close();
-      console.log(`${propreturn} ${value}`)
+
+      if(index === undefined){
+        // send the value to previous prop
+        handleState(propreturn, value);
+        // close modal
+        close();
+        console.log(`${propreturn} ${value}`);
+      } 
+      if(typeof index === 'number'){
+        // send value to prop function
+        handleState(propreturn, value, index);
+        // close modal
+        close();
+      }
     } else {
-      alert('Invalid value, please select a valid value');
+      alert("Invalid value, please select a valid value");
     }
-    
   };
 
   const handleInputChange = (e) => {
@@ -44,7 +53,7 @@ const SearchModal = ({
 
       for (const propertyName of propertyNames) {
         const propertyValue = option[propertyName];
-      
+
         if (propertyValue.toLowerCase().includes(value.toLowerCase())) {
           matchingValues.push(propertyValue);
         }
@@ -55,7 +64,8 @@ const SearchModal = ({
 
     setFilteredOptions(filtered);
     setIsInputValid(true);
-    // console.log(inputValue);
+
+    console.log(value);
   };
 
   const handleOptionClick = (option) => {
@@ -66,7 +76,7 @@ const SearchModal = ({
 
   const validateInput = () => {
     const isValid = options.some(
-      (option) => option["name"].toLowerCase() === inputValue.toLowerCase()
+      (option) => option[propertynames[0]].toLowerCase() === inputValue.toLowerCase()
     );
     setIsInputValid(isValid);
   };
@@ -75,13 +85,28 @@ const SearchModal = ({
     if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
       setFilteredOptions([]);
     }
-    
   };
 
   const close = () => {
     onHide();
     setInputValue("");
     setIsInputValid(true);
+  };
+
+  const formControlValue = () => {
+    let returnedValue = "";
+
+    if(typeof inputValue === 'object'){
+      for(let i = 0; i < propertynames.length; i++){
+        returnedValue += `${inputValue[propertynames[i]]} `
+      }
+    }
+
+    if (typeof inputValue === "string") {
+      returnedValue = inputValue;
+    }
+   
+    return returnedValue;
   };
 
   useEffect(() => {
@@ -100,57 +125,52 @@ const SearchModal = ({
       backdrop="static"
       keyboard={false}
     >
-        <Modal.Header>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Search {type}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Label>
-            Please Enter characters in the input to search for {type}
-          </Form.Label>
-          <Form.Control
-            type="text"
-            placeholder={placeholder}
-            value={
-              inputValue[propertynames[0]] &&
-              inputValue[propertynames[1]]
-                ? `${inputValue[propertynames[0]]} ${
-                    inputValue[propertynames[1]]
-                  }`
-                : inputValue
-            }
-            onChange={handleInputChange}
-            onBlur={validateInput}
-            isInvalid={!isInputValid}
-          />
-          {/* Dropdown suggestions */}
-          {filteredOptions.length > 0 && (
-            <ListGroup ref={dropdownRef}>
-              {filteredOptions.map((option, index) => (
-                <ListGroup.Item
-                  key={index}
-                  onClick={() => handleOptionClick(option)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {option[propertynames[0]]} {option[propertynames[1]]}
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          )}
-          {/* If input is invalid */}
-          {!isInputValid && (
-            <Form.Control.Feedback type="invalid">
-              Invalid value entered.
-            </Form.Control.Feedback>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={close}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>Select</Button>
-        </Modal.Footer>
+      <Modal.Header>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Search {type}
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form.Label>
+          Please Enter characters in the input to search for {type}
+        </Form.Label>
+        <Form.Control
+          type="text"
+          placeholder={placeholder}
+          value={formControlValue()}
+          onChange={handleInputChange}
+          onBlur={validateInput}
+          isInvalid={!isInputValid}
+        />
+        {/* Dropdown suggestions */}
+        {filteredOptions.length > 0 && (
+          <ListGroup ref={dropdownRef}>
+            {filteredOptions.map((option, index) => (
+              <ListGroup.Item
+                key={index}
+                onClick={() => handleOptionClick(option)}
+                style={{ cursor: "pointer" }}
+              >
+                {option[propertynames[0]]} {option[propertynames[1]]}
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        )}
+        {/* If input is invalid */}
+        {!isInputValid && (
+          <Form.Control.Feedback type="invalid">
+            Invalid value entered.
+          </Form.Control.Feedback>
+        )}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={close}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleSubmit}>
+          Select
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 };

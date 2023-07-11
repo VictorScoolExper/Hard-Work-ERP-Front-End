@@ -10,6 +10,7 @@ import DateWidget from "../../components/DateWidget";
 import ServiceListForm from "./ServiceListForm";
 import { useSelector } from "react-redux";
 import { selectSortedClients } from "../clients/clientSlice";
+import { selectorSortedServices } from "../services/serviceSlice";
 
 const ScheduleForm = ({ selectedDate, addTask }) => {
   const [scheduledServices, setScheduledServices] = useState({
@@ -19,12 +20,12 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
     scheduled_time: "",
     schedule_type: "",
   });
-  const clientId = scheduledServices.client_id;
+
   // TODO: delte task state
   const [task, setTask] = useState({ title: "", description: "" });
   // These are the address associated with the client
   const [addressOptions, setAddressOptions] = useState([]);
-  const [services, setServices] = useState([{ service: "", quantity: "" }]);
+  const [services, setServices] = useState([{ service_id: "", quantity: "" }]);
   const [materials, setMaterials] = useState([
     { materialId: "", quantity: "", subtotal: 0 },
   ]);
@@ -33,11 +34,14 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
   const [clientModal, setClientModal] = useState(false);
   const [addressModal, setAddressModal] = useState(false);
 
+  // TODO: investigate if it would be better to have it saved in state
+  //  and to get those new update on useEffect
   const clientList = useSelector(selectSortedClients);
+  const serviceList = useSelector(selectorSortedServices);
 
   useEffect(() => {
     (async () => {
-      if (clientId) {
+      if (scheduledServices.client_id) {
         try {
           setLoading(true);
           const clientAddress = await getClientAddresses(
@@ -51,40 +55,11 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
         }
       }
     })();
-  }, [clientId]);
+  }, [scheduledServices.client_id]);
 
   const [projectFormStatus, setProjectFormStatus] = useState(false);
   const [materialFormStatus, setMaterialFormStatus] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
-
-  const handleServiceChange = (index, value, type) => {
-    // Copy service list
-    let copiedServices = [...services];
-
-    if (type === "quantity") {
-      // Change value
-      copiedServices[index].quantity = value;
-    }
-
-    if (type === "service") {
-      // we change the value
-      copiedServices[index].service = value;
-    }
-
-    if (type === "remove") {
-      copiedServices.splice(index, 1);
-    }
-
-    if (type === "new") {
-      // new service object
-      const newService = { service: "", quantity: "" };
-      // add to copied services
-      copiedServices = [...services, newService];
-    }
-
-    // we then overwrite the services
-    setServices(copiedServices);
-  };
 
   const handleMaterialChange = (index, value, type) => {
     let copiedMaterials = [...materials];
@@ -137,8 +112,7 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
     const { name, value } = event.target;
     // update value of form.control
     setScheduledServices({ ...scheduledServices, [name]: value });
-
-    console.log(`${name} ${value}`);
+    // console.log(`${name} ${value}`);
   };
 
   // TODO: Unneeded code
@@ -163,7 +137,10 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
           {!loading ? (
             <Form onSubmit={handleSubmit}>
               <Row style={{ marginTop: "10px" }}>
-              <Button onClick={() => console.log(scheduledServices)}>
+              <Button onClick={() => {
+                console.log(scheduledServices);
+                console.log(services);  
+              }}>
                       Click to see state
                     </Button>
                 <Col>
@@ -233,8 +210,9 @@ const ScheduleForm = ({ selectedDate, addTask }) => {
               {/* TODOL create a dynamic list of services */}
               <Row className="border rounded mt-3 mb-3">
                 <ServiceListForm
-                  handleServiceChange={handleServiceChange}
                   services={services}
+                  setServices = {setServices}
+                  serviceList = {serviceList}
                 />
               </Row>
               {/* End of add services list */}
