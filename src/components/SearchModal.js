@@ -1,22 +1,37 @@
 import { useState, useRef, useEffect } from "react";
 import { Modal, Form, Button, ListGroup } from "react-bootstrap";
 
-const SearchModal = (props) => {
-  const [options, setOptions] = useState(props.datalist);
+const SearchModal = ({
+  show,
+  onHide,
+  type,
+  placeholder,
+  datalist,
+  propertynames,
+  propreturn,
+  handleState
+}) => {
+  const [options, setOptions] = useState(datalist);
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [isInputValid, setIsInputValid] = useState(true);
   const dropdownRef = useRef(null);
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: validate if selected value is valid
-    // retrieve selected value
-    const value = inputValue[props.propreturn];
-    // send the value to previous prop
-    props.setstate(value)
-    // close modal
-    close();
+    // validate if selected value is valid
+    if(isInputValid){
+      // retrieve selected value
+      const value = inputValue[propreturn];
+      // send the value to previous prop
+      handleState(propreturn, value);
+      // close modal
+      close();
+      console.log(`${propreturn} ${value}`)
+    } else {
+      alert('Invalid value, please select a valid value');
+    }
+    
   };
 
   const handleInputChange = (e) => {
@@ -24,7 +39,7 @@ const SearchModal = (props) => {
     setInputValue(value);
 
     const filtered = options.filter((option) => {
-      const propertyNames = props.propertynames;
+      const propertyNames = propertynames;
       const matchingValues = [];
 
       for (const propertyName of propertyNames) {
@@ -37,10 +52,6 @@ const SearchModal = (props) => {
 
       return matchingValues.length > 0 ? { ...option, matchingValues } : null;
     });
-
-    // const filtered = options.filter((option) =>
-    //   option['name'].toLowerCase().includes(value.toLowerCase())
-    // );
 
     setFilteredOptions(filtered);
     setIsInputValid(true);
@@ -68,7 +79,7 @@ const SearchModal = (props) => {
   };
 
   const close = () => {
-    props.onHide();
+    onHide();
     setInputValue("");
     setIsInputValid(true);
   };
@@ -82,30 +93,30 @@ const SearchModal = (props) => {
 
   return (
     <Modal
-      {...props}
+      show={show}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
-      onHide={props.onHide}
+      onHide={onHide}
       backdrop="static"
       keyboard={false}
     >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter">
-            Search {props.type}
+            Search {type}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Label>
-            Please Enter characters in the input to search for {props.type}
+            Please Enter characters in the input to search for {type}
           </Form.Label>
           <Form.Control
             type="text"
-            placeholder={props.placeholder}
+            placeholder={placeholder}
             value={
-              inputValue[props.propertynames[0]] &&
-              inputValue[props.propertynames[1]]
-                ? `${inputValue[props.propertynames[0]]} ${
-                    inputValue[props.propertynames[1]]
+              inputValue[propertynames[0]] &&
+              inputValue[propertynames[1]]
+                ? `${inputValue[propertynames[0]]} ${
+                    inputValue[propertynames[1]]
                   }`
                 : inputValue
             }
@@ -122,7 +133,7 @@ const SearchModal = (props) => {
                   onClick={() => handleOptionClick(option)}
                   style={{ cursor: "pointer" }}
                 >
-                  {option.name} {option.last_name}
+                  {option[propertynames[0]]} {option[propertynames[1]]}
                 </ListGroup.Item>
               ))}
             </ListGroup>
