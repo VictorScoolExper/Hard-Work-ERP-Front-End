@@ -5,7 +5,6 @@ import { Button, Form, Row, Col, Container } from "react-bootstrap";
 import MaterialListForm from "./MaterialListForm";
 import SelectWidget from "../../components/SelectWidget";
 import SearchModal from "../../components/SearchModal";
-import ProjectWidget from "./ProjectWidget";
 import DateWidget from "../../components/DateWidget";
 import ServiceListForm from "./ServiceListForm";
 import { useSelector } from "react-redux";
@@ -18,8 +17,10 @@ const ScheduleForm = ({ type }) => {
     client_id: "",
     address_id: "",
     date_scheduled: "",
-    scheduled_time: "",
-    schedule_type: "",
+    start_time: "",
+    end_time: "",
+    schedule_type: type,
+    days_until_repeat: "",
   });
 
   // These are the address associated with the client
@@ -36,13 +37,12 @@ const ScheduleForm = ({ type }) => {
   const [clientModal, setClientModal] = useState(false);
   const [addressModal, setAddressModal] = useState(false);
 
-  // TODO: investigate if it would be better to have it saved in state
-  //  and to get those new update on useEffect
+  // Retrieve redux state need and if not available yet we set a blank array
+  const clientList = useSelector(selectSortedClients) || [];
+  const serviceList = useSelector(selectorSortedServices) || [];
+  const materialList = useSelector(selectorSortedMaterials) || [];
 
-  const clientList = useSelector(selectSortedClients);
-  const serviceList = useSelector(selectorSortedServices);
-  const materialList = useSelector(selectorSortedMaterials);
-
+  // Gets addresses associated with client
   useEffect(() => {
     (async () => {
       if (scheduledServices.client_id) {
@@ -61,21 +61,12 @@ const ScheduleForm = ({ type }) => {
     })();
   }, [scheduledServices.client_id]);
 
-  const [projectFormStatus, setProjectFormStatus] = useState(false);
   const [materialFormStatus, setMaterialFormStatus] = useState(false);
-  const [showStatus, setShowStatus] = useState(false);
 
   const handleSwitchForm = (type) => {
     switch (type) {
       case "materialForm":
         setMaterialFormStatus((materialFormStatus) => !materialFormStatus);
-        break;
-      case "projectForm":
-        setProjectFormStatus((projectFormStatus) => !projectFormStatus);
-        break;
-      // TODO: delete case or optimize
-      case "showFormStatus":
-        setShowStatus((showStatus) => !showStatus);
         break;
       default:
         break;
@@ -94,18 +85,29 @@ const ScheduleForm = ({ type }) => {
     // console.log(`${name} ${value}`);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // saved
+    setScheduledServices({ ...scheduledServices, ["services"]: services });
+
+    if (materialFormStatus) {
+      const copiedSchedules = scheduledServices;
+      setScheduledServices({ ...copiedSchedules, ["materials"]: materials });
+    }
+  };
+
   return (
     <div style={{ marginTop: "20px" }}>
       <h3>Register new {type} in schedule</h3>
       <Container>
         {!loading ? (
-          <Form onSubmit={() => {}}>
+          <Form onSubmit={handleSubmit}>
             <Row style={{ marginTop: "10px" }}>
               <Button
                 onClick={() => {
                   console.log(scheduledServices);
-                  console.log(services);
-                  console.log(materials);
+                  // console.log(services);
+                  // console.log(materials);
                 }}
               >
                 Click to see state
@@ -177,7 +179,6 @@ const ScheduleForm = ({ type }) => {
                 serviceList={serviceList}
               />
             </Row>
-            {/* End of add services list */}
             <Row className="justify-content-center mt-3">
               <Col xs="auto">
                 <Form.Label>Do you want to add materials?</Form.Label>
@@ -200,6 +201,23 @@ const ScheduleForm = ({ type }) => {
                 // handleMaterialChange={handleMaterialChange}
               />
             )}
+            {type === "routine" ? (
+              <Row style={{ marginTop: "10px" }}>
+                <Col className="col-4">
+                  <Form.Group>
+                    <Form.Label>Days until repeat routine</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name={"days_until_repeat"}
+                      value={scheduledServices.days_until_repeat}
+                      onChange={handleInput}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+            ) : (
+              <></>
+            )}
             <Row style={{ marginTop: "10px" }}>
               <Col>
                 <DateWidget
@@ -210,44 +228,40 @@ const ScheduleForm = ({ type }) => {
               </Col>
               <Col className="col-4">
                 <Form.Group>
-                  <Form.Label>Time Example</Form.Label>
+                  <Form.Label>Start Time</Form.Label>
                   <Form.Control
                     type="time"
-                    name="scheduled_time"
-                    value={scheduledServices.scheduled_time}
+                    name="start_time"
+                    value={scheduledServices.start_time}
+                    onChange={handleInput}
+                  />
+                </Form.Group>
+              </Col>
+              <Col className="col-4">
+                <Form.Group>
+                  <Form.Label>Finish Time</Form.Label>
+                  <Form.Control
+                    type="time"
+                    name="end_time"
+                    value={scheduledServices.end_time}
                     onChange={handleInput}
                   />
                 </Form.Group>
               </Col>
             </Row>
-            {/* TODO: add project section */}
-            {/* <Row className="align-items-center mt-3">
-              <Col xs="auto">
-                <Form.Label>Is it a Project?</Form.Label>
+            <Row style={{ marginTop: "10px", marginBottom: "50px" }}>
+              <Col className="d-flex justify-content-center">
+                <Button className="col-6" type="submit">
+                  Add To Schedule
+                </Button>
               </Col>
-              <Col>
-                <Form.Check
-                  type="switch"
-                  id="custom-switch"
-                  checked={projectFormStatus}
-                  onChange={() => handleSwitchForm("projectForm")}
-                />
-              </Col>
-            </Row> */}
-            {projectFormStatus && <ProjectWidget />}
+            </Row>
           </Form>
         ) : (
           <div>
             <h1>Loading!!</h1>
           </div>
         )}
-        <Row style={{ marginTop: "10px" }}>
-          <Col className="d-flex justify-content-center">
-            <Button className="col-6" type="submit">
-              Add To Schedule
-            </Button>
-          </Col>
-        </Row>
       </Container>
     </div>
   );
