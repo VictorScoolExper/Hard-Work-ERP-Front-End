@@ -4,7 +4,8 @@ import SearchModal from "../../components/SearchModal";
 
 const MaterialListForm = ({ materials, setMaterials, materialList }) => {
   const [materialModal, setMaterialModal] = useState(false);
-
+  
+  // TODO: Turn into a react custom hook
   const handleChange = (type, value, index) => {
     let copiedMaterials = [...materials];
     switch (type) {
