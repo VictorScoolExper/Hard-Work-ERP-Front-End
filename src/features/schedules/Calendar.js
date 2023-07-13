@@ -83,9 +83,9 @@ const Calendar = () => {
       <div className="calendar-grid">
         {renderCalendarGrid()}
       </div>
-      {selectedDate && (
+      {/* {selectedDate && (
         <ScheduleForm selectedDate={selectedDate} addTask={addTask} />
-      )}
+      )} */}
       {selectedDate && activities.length > 0 && (
         <div>
           <h3>Activities for {selectedDate.toDateString()}</h3>

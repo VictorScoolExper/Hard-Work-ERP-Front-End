@@ -43,14 +43,7 @@ const ServiceListForm = ({ services, setServices, serviceList }) => {
           <Col>
             <Form.Group>
               <Form.Label>Service</Form.Label>
-              {/* <Autocomplete
-                type={"Service"}
-                nameInput={"service_id"}
-                propValue={service.service_id}
-                handleSelect={handleSelect}
-                incomingLists={serviceList}
-                setModalShow={setServiceModal}
-              /> */}
+            
               <InputGroup>
                 <Form.Select
                   onChange={(e) =>
@@ -118,7 +111,7 @@ const ServiceListForm = ({ services, setServices, serviceList }) => {
           variant="primary"
           onClick={() => handleChange("new", null, null)}
         >
-          Add Task
+          Add Service
         </Button>
       </Row>
     </Fragment>

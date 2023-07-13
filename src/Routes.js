@@ -39,8 +39,10 @@ import SettingsPage from "./features/settings/SettingsPage";
 
 import InvoicePage from "./features/invoices/InvoicePage";
 import InvoiceForm from "./features/invoices/InvoiceForm";
+
 import ScheduleLayout from "./root-pages/ScheduleLayout";
 import SchedulePage from "./features/schedules/SchedulePage";
+import ScheduleController from "./features/schedules/ScheduleController";
 
 const router = createBrowserRouter([
   {
@@ -677,8 +679,25 @@ const router = createBrowserRouter([
             element: <SchedulePage />
           },
           {
-            path: 'add',
-            element: <h1>add schedule to calendar page</h1>
+            path: 'addSchedule',
+            element: <ScheduleController type={"single"} />
+          },
+          {
+            path: 'addRoutine',
+            element: <ScheduleController type={"routine"} />
+          },
+          {
+            path: ":scheduleId",
+            children: [
+              {
+                index: true,
+                element: <ScheduleController />
+              },
+              {
+                path: "edit",
+                element: <ScheduleController />
+              }
+            ]
           }
         ]
       },

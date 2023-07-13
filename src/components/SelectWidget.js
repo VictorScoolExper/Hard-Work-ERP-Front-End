@@ -22,7 +22,7 @@ const dropdownOption = (opt, type, propertyValueName, index) => {
   }
 };
 
-const Autocomplete = ({
+const SelectWidget = ({
   type,
   nameInput,
   incomingLists,
@@ -39,20 +39,6 @@ const Autocomplete = ({
       setOptions(incomingLists);
     }
   }, [incomingLists]);
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setFilteredOptions([]);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
 
   return (
     <Fragment>
@@ -76,4 +62,4 @@ const Autocomplete = ({
   );
 };
 
-export default Autocomplete;
+export default SelectWidget;

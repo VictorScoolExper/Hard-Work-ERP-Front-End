@@ -169,8 +169,11 @@ const SidebarMenu = () => {
             <MenuItem component={<Link to="/schedule" />}>
               Calendar
             </MenuItem>
-            <MenuItem component={<Link to="/schedule/add" />}>
+            <MenuItem component={<Link to="/schedule/addSchedule" />}>
               Schedule Service
+            </MenuItem>
+            <MenuItem component={<Link to="/schedule/addRoutine" />}>
+              Schedule Routine
             </MenuItem>
           </SubMenu>
           {/* This is the invoice section */}
