@@ -2,10 +2,11 @@ import useFetch from "../hooks/use-fetch";
 import { getMaterials } from "../features/materials/materialSlice";
 import { getServices } from "../features/services/serviceSlice";
 import { fetchAllEmployees } from "../features/employees/employeeSlice";
+import { fetchClients } from "../features/clients/clientSlice";
 
 import { Outlet, Link } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { fetchClients } from "../features/clients/clientSlice";
+
 
 const ScheduleLayout = () => {
   const {loading: clientLoading, error: clientError } = useFetch(
@@ -24,7 +25,6 @@ const ScheduleLayout = () => {
     fetchAllEmployees()
   );
 
-  const hello = "hello bitch";
 
   return (
     <>

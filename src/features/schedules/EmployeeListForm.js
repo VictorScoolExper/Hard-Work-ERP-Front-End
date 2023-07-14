@@ -10,7 +10,7 @@ const EmployeeListForm = ({ employees, setEmployees, employeeList }) => {
 
     switch (type) {
       case "employee_id":
-        copiedEmployees[index].material_id = value;
+        copiedEmployees[index].employee_id = value;
         break;
       case "add":
         const newEmployee = { employee_id: "" };
@@ -22,7 +22,6 @@ const EmployeeListForm = ({ employees, setEmployees, employeeList }) => {
       default:
         break;
     }
-
     setEmployees(copiedEmployees);
   };
 
@@ -34,7 +33,7 @@ const EmployeeListForm = ({ employees, setEmployees, employeeList }) => {
           <Row key={index} style={{ marginTop: "10px" }}>
             <Col>
               <Form.Group>
-                <Form.Label>Employee</Form.Label>
+                <Form.Label>Employee {index + 1}</Form.Label>
                 <InputGroup>
                   <Form.Select
                     onChange={(e) =>
@@ -63,16 +62,17 @@ const EmployeeListForm = ({ employees, setEmployees, employeeList }) => {
                   placeholder={"enter the employee name"}
                   datalist={employeeList}
                   propertynames={["name", "last_name"]}
+                  propreturn={"employee_id"}
                   handleState={handleChange}
                   index={index}
                 />
               </Form.Group>
             </Col>
-            {materials.length > 1 && index !== 0 ? (
+            {employees.length > 1 && index !== 0 ? (
               <Col className="d-flex align-items-center col-1">
                 <Button
                   variant="danger"
-                  style={{ height: "50%", marginTop: "10px" }}
+                  style={{ height: "50%", marginTop: "30px" }}
                   onClick={() => handleChange("remove", null, index)}
                 >
                   <i className="bi bi-trash"></i>
@@ -90,7 +90,7 @@ const EmployeeListForm = ({ employees, setEmployees, employeeList }) => {
             variant="primary"
             onClick={() => handleChange("add", null, null)}
           >
-            Add Material
+            Add Employee
           </Button>
         </Row>
       </Row>

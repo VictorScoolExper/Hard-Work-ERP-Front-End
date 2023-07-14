@@ -42,7 +42,7 @@ const ServiceListForm = ({ services, setServices, serviceList }) => {
         <Row key={index} style={{ marginTop: "10px" }}>
           <Col>
             <Form.Group>
-              <Form.Label>Service</Form.Label>
+              <Form.Label>Service {index + 1}</Form.Label>
             
               <InputGroup>
                 <Form.Select

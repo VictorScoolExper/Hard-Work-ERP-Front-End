@@ -12,7 +12,6 @@ const SearchModal = ({
   handleState,
   index
 }) => {
-  const [options, setOptions] = useState(datalist);
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [isInputValid, setIsInputValid] = useState(true);
@@ -47,7 +46,7 @@ const SearchModal = ({
     const value = e.target.value;
     setInputValue(value);
 
-    const filtered = options.filter((option) => {
+    const filtered = datalist.filter((option) => {
       const propertyNames = propertynames;
       const matchingValues = [];
 
@@ -61,11 +60,9 @@ const SearchModal = ({
 
       return matchingValues.length > 0 ? { ...option, matchingValues } : null;
     });
-
+    
     setFilteredOptions(filtered);
     setIsInputValid(true);
-
-    console.log(value);
   };
 
   const handleOptionClick = (option) => {
@@ -75,7 +72,7 @@ const SearchModal = ({
   };
 
   const validateInput = () => {
-    const isValid = options.some(
+    const isValid = datalist.some(
       (option) => option[propertynames[0]].toLowerCase() === inputValue.toLowerCase()
     );
     setIsInputValid(isValid);

@@ -152,6 +152,14 @@ export default employeesSlice.reducer;
 // fast access to employees
 export const selectEmployees = (state) => state.employees.employees;
 
+export const selectorSortedEmployee = (state) => {
+  if(state.employees.employees != null){
+    return state.employees.employees.slice().sort((a, b) => a.name.localeCompare(b.name))
+  } else {
+    return [];
+  }
+}
+
 export const selectEmployeeById = (state, employeeId) => 
   state.employees.employees.find((employee) => employee.employee_id === Number(employeeId));
 

@@ -9,7 +9,7 @@ const MaterialListForm = ({ materials, setMaterials, materialList }) => {
   const handleChange = (type, value, index) => {
     let copiedMaterials = [...materials];
     switch (type) {
-      case "material":
+      case "material_id":
         copiedMaterials[index].material_id = value;
         break;
       case "quantity":
@@ -39,11 +39,11 @@ const MaterialListForm = ({ materials, setMaterials, materialList }) => {
           <Row key={index} style={{ marginTop: "10px" }}>
             <Col>
               <Form.Group>
-                <Form.Label>Material</Form.Label>
+                <Form.Label>Material {index + 1}</Form.Label>
                 <InputGroup>
                   <Form.Select
                     onChange={(e) =>
-                      handleChange("material", e.target.value, index)
+                      handleChange("material_id", e.target.value, index)
                     }
                     value={material.material_id}
                   >

@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { selectSortedClients } from "../clients/clientSlice";
 import { selectorSortedServices } from "../services/serviceSlice";
 import { selectorSortedMaterials } from "../materials/materialSlice";
+import { selectorSortedEmployee } from "../employees/employeeSlice";
+import EmployeeListForm from "./EmployeeListForm";
 
 const ScheduleForm = ({ type }) => {
   const [scheduledServices, setScheduledServices] = useState({
@@ -29,6 +31,7 @@ const ScheduleForm = ({ type }) => {
   const [materials, setMaterials] = useState([
     { material_id: "", quantity: "", subtotal: 0 },
   ]);
+  const [employees, setEmployees] = useState([{employee_id: 0}]);
 
   // notifies user when loading
   const [loading, setLoading] = useState(false);
@@ -41,6 +44,7 @@ const ScheduleForm = ({ type }) => {
   const clientList = useSelector(selectSortedClients) || [];
   const serviceList = useSelector(selectorSortedServices) || [];
   const materialList = useSelector(selectorSortedMaterials) || [];
+  const employeeList = useSelector(selectorSortedEmployee) || [];
 
   // Gets addresses associated with client
   useEffect(() => {
@@ -61,13 +65,16 @@ const ScheduleForm = ({ type }) => {
     })();
   }, [scheduledServices.client_id]);
 
-  const [materialFormStatus, setMaterialFormStatus] = useState(false);
+  const [materialForm, setMaterialForm] = useState(false);
+  const [employeeForm, setEmployeeForm] = useState(false);
 
   const handleSwitchForm = (type) => {
     switch (type) {
       case "materialForm":
-        setMaterialFormStatus((materialFormStatus) => !materialFormStatus);
+        setMaterialForm((materialForm) => !materialForm);
         break;
+      case "employeeForm":
+        setEmployeeForm((employeeForm) => !employeeForm);
       default:
         break;
     }
@@ -90,9 +97,14 @@ const ScheduleForm = ({ type }) => {
     // saved
     setScheduledServices({ ...scheduledServices, ["services"]: services });
 
-    if (materialFormStatus) {
+    if (materialForm) {
       const copiedSchedules = scheduledServices;
       setScheduledServices({ ...copiedSchedules, ["materials"]: materials });
+    }
+
+    if(employeeForm){
+      const copiedSchedules = scheduledServices;
+      setScheduledServices({...copiedSchedules, ["employees"]: employees});
     }
   };
 
@@ -154,6 +166,7 @@ const ScheduleForm = ({ type }) => {
                         handleSelect={handleInput}
                         incomingLists={addressOptions}
                         setModalShow={setAddressModal}
+                        index={undefined}
                       />
                       {/* addressModal  */}
                       <SearchModal
@@ -188,12 +201,12 @@ const ScheduleForm = ({ type }) => {
                   type="switch"
                   id="custom-switch"
                   // label="Check this switch"
-                  checked={materialFormStatus}
+                  checked={materialForm}
                   onChange={() => handleSwitchForm("materialForm")}
                 />
               </Col>
             </Row>
-            {materialFormStatus && (
+            {materialForm && (
               <MaterialListForm
                 materials={materials}
                 setMaterials={setMaterials}
@@ -249,6 +262,27 @@ const ScheduleForm = ({ type }) => {
                 </Form.Group>
               </Col>
             </Row>
+            <Row className="justify-content-center mt-3">
+              <Col xs="auto">
+                <Form.Label>Do you want to add employees?</Form.Label>
+              </Col>
+              <Col>
+                <Form.Check // prettier-ignore
+                  type="switch"
+                  id="custom-switch"
+                  // label="Check this switch"
+                  checked={employeeForm}
+                  onChange={() => handleSwitchForm("employeeForm")}
+                />
+              </Col>
+            </Row>
+            {employeeForm && (
+              <EmployeeListForm
+                employees={employees}
+                setEmployees={setEmployees}
+                employeeList={employeeList}
+              />
+            )}
             <Row style={{ marginTop: "10px", marginBottom: "50px" }}>
               <Col className="d-flex justify-content-center">
                 <Button className="col-6" type="submit">
