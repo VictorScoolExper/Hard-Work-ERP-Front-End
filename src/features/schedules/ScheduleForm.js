@@ -75,6 +75,7 @@ const ScheduleForm = ({ type }) => {
         break;
       case "employeeForm":
         setEmployeeForm((employeeForm) => !employeeForm);
+        break;
       default:
         break;
     }
@@ -95,17 +96,25 @@ const ScheduleForm = ({ type }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // saved
-    setScheduledServices({ ...scheduledServices, ["services"]: services });
+    let copiedSchedule = { ...scheduledServices, ["services"]: services };
 
     if (materialForm) {
-      const copiedSchedules = scheduledServices;
-      setScheduledServices({ ...copiedSchedules, ["materials"]: materials });
+      copiedSchedule = { ...copiedSchedule, ["materials"]: materials };
+    } else {
+      copiedSchedule = { ...copiedSchedule, ["materials"] : null }
     }
 
     if(employeeForm){
-      const copiedSchedules = scheduledServices;
-      setScheduledServices({...copiedSchedules, ["employees"]: employees});
+      copiedSchedule = { ...copiedSchedule, ["employees"]: employees };
+    } else {
+      copiedSchedule = { ...copiedSchedule, ["employees"] : null }
     }
+
+    if(type === 'single'){
+      copiedSchedule.days_until_repeat = 0;
+    }
+
+    console.log(copiedSchedule)
   };
 
   return (

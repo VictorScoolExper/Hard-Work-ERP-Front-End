@@ -8,6 +8,7 @@ import companyReducer from "../features/companies/companySlice";
 import serviceReducer from "../features/services/serviceSlice";
 import materialReducer from "../features/materials/materialSlice";
 import settingReducer from "../features/settings/settingSlice";
+import scheduleReducer from "../features/schedules/scheduleSlice";
 
 const reducer = {
   auth: authReducer,
@@ -17,7 +18,8 @@ const reducer = {
   companies: companyReducer,
   services: serviceReducer,
   materials: materialReducer,
-  app_settings: settingReducer
+  app_settings: settingReducer,
+  schedules: scheduleReducer
 };
 
 const store = configureStore({
