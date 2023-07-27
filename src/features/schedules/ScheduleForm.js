@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getClientAddresses } from "../../util/api/clientAPI";
+import { useDispatch } from "react-redux";
 import { Button, Form, Row, Col, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 import MaterialListForm from "./MaterialListForm";
 import SelectWidget from "../../components/SelectWidget";
@@ -13,8 +15,12 @@ import { selectorSortedServices } from "../services/serviceSlice";
 import { selectorSortedMaterials } from "../materials/materialSlice";
 import { selectorSortedEmployee } from "../employees/employeeSlice";
 import EmployeeListForm from "./EmployeeListForm";
+import {createSchedule} from "./scheduleSlice"
 
 const ScheduleForm = ({ type }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [scheduledServices, setScheduledServices] = useState({
     client_id: "",
     address_id: "",
@@ -49,17 +55,17 @@ const ScheduleForm = ({ type }) => {
   // Gets addresses associated with client
   useEffect(() => {
     (async () => {
-      if (scheduledServices.client_id) {
+      if (scheduledServices.client_id && scheduledServices.client_id != 0) {
         try {
           setLoading(true);
           const clientAddress = await getClientAddresses(
             scheduledServices.client_id
           );
           setAddressOptions(clientAddress.listAddress);
-          console.log(clientAddress.listAddress);
           setLoading(false);
         } catch (err) {
-          console.log(err);
+          // console.log(err);
+          alert('Error when loading addresses');
         }
       }
     })();
@@ -88,12 +94,21 @@ const ScheduleForm = ({ type }) => {
 
   const handleInput = (event) => {
     const { name, value } = event.target;
-    // update value of form.control
-    handleChange(name, value);
-    // console.log(`${name} ${value}`);
+    switch (name) {
+      case 'client_id':
+        handleChange(name, parseInt(value));
+        break;
+      case 'address_id':
+        handleChange(name, parseInt(value));
+        break;
+      default:
+        handleChange(name, value);
+        break
+    }
+    // handleChange(name, parseInt(value));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // saved
     let copiedSchedule = { ...scheduledServices, ["services"]: services };
@@ -113,8 +128,17 @@ const ScheduleForm = ({ type }) => {
     if(type === 'single'){
       copiedSchedule.days_until_repeat = 0;
     }
-
-    console.log(copiedSchedule)
+   
+    try {
+      setLoading(true);
+      // unwrap has to be added or else it will not throw an error if it ocurres
+      await dispatch(createSchedule(copiedSchedule)).unwrap();
+      // navigate(-1);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      alert("Error when creating schedule");
+    }
   };
 
   return (

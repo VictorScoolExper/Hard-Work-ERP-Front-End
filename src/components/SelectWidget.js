@@ -30,8 +30,6 @@ const SelectWidget = ({
   propValue,
   setModalShow
 }) => {
-  const [filteredOptions, setFilteredOptions] = useState([]);
-  const dropdownRef = useRef(null);
 
   const [options, setOptions] = useState([]);
   useEffect(() => {

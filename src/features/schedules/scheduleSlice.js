@@ -4,7 +4,6 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { SCHEDULE_SERVICE_API_URL } from "../../api-routes";
-import materialSlice, { createMaterial } from "../materials/materialSlice";
 
 export const createSchedule = createAsyncThunk(
     "schedules/createSchedule",
@@ -36,10 +35,10 @@ const scheduleSlice = createSlice({
         .addCase(createSchedule.pending, (state, action)=>{
             state.status = "loading";
         })
-        .addCase(createMaterial.fulfilled, (state, action) => {
+        .addCase(createSchedule.fulfilled, (state, action) => {
             state.status = "succeeded";
         })
-        .addCase(createMaterial.rejected, (state, action) => {
+        .addCase(createSchedule.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.error.message;
         })
