@@ -11,12 +11,12 @@ const ServiceListForm = ({ services, setServices, serviceList }) => {
 
     if (type === "quantity") {
       // Change value
-      copiedServices[index].quantity = value;
+      copiedServices[index].quantity = parseInt(value);
     }
 
     if (type === "service_id") {
       // we change the value
-      copiedServices[index].service_id = value;
+      copiedServices[index].service_id = parseInt(value);
     }
 
     if (type === "remove") {

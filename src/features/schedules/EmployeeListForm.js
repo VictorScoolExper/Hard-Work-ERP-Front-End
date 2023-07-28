@@ -10,10 +10,10 @@ const EmployeeListForm = ({ employees, setEmployees, employeeList }) => {
 
     switch (type) {
       case "employee_id":
-        copiedEmployees[index].employee_id = value;
+        copiedEmployees[index].employee_id = parseInt(value);
         break;
       case "add":
-        const newEmployee = { employee_id: "" };
+        const newEmployee = { employee_id: 0 };
         copiedEmployees = [...employees, newEmployee];
         break;
       case "remove":

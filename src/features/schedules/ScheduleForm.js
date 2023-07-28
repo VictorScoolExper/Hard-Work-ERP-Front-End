@@ -35,7 +35,7 @@ const ScheduleForm = ({ type }) => {
   const [addressOptions, setAddressOptions] = useState([]);
   const [services, setServices] = useState([{ service_id: "", quantity: "" }]);
   const [materials, setMaterials] = useState([
-    { material_id: "", quantity: "", subtotal: 0 },
+    { material_id: "", quantity: 0, subtotal: 0 },
   ]);
   const [employees, setEmployees] = useState([{employee_id: 0}]);
 
@@ -73,6 +73,9 @@ const ScheduleForm = ({ type }) => {
 
   const [materialForm, setMaterialForm] = useState(false);
   const [employeeForm, setEmployeeForm] = useState(false);
+
+  // TODO: add function that checks that the times entered are in the hours that the company works
+
 
   const handleSwitchForm = (type) => {
     switch (type) {
@@ -112,6 +115,8 @@ const ScheduleForm = ({ type }) => {
     e.preventDefault();
     // saved
     let copiedSchedule = { ...scheduledServices, ["services"]: services };
+    copiedSchedule = {...copiedSchedule, ["status"]: "pending"};
+    copiedSchedule = {...copiedSchedule, ["type"]: type};
 
     if (materialForm) {
       copiedSchedule = { ...copiedSchedule, ["materials"]: materials };

@@ -10,16 +10,16 @@ const MaterialListForm = ({ materials, setMaterials, materialList }) => {
     let copiedMaterials = [...materials];
     switch (type) {
       case "material_id":
-        copiedMaterials[index].material_id = value;
+        copiedMaterials[index].material_id = parseInt(value);
         break;
       case "quantity":
-        copiedMaterials[index].quantity = value;
+        copiedMaterials[index].quantity = parseInt(value);
         break;
       case "subtotal":
-        copiedMaterials[index].subtotal = value;
+        copiedMaterials[index].subtotal = parseInt(value);
         break;
       case "add":
-        const newMaterial = { material_id: "", quantity: "", subtotal: 0 };
+        const newMaterial = { material_id: 0, quantity: 0, subtotal: 0 };
         copiedMaterials = [...materials, newMaterial];
         break;
       case "remove":
