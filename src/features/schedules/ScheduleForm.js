@@ -27,7 +27,7 @@ const ScheduleForm = ({ type }) => {
     date_scheduled: "",
     start_time: "",
     end_time: "",
-    schedule_type: type,
+    type,
     days_until_repeat: "",
   });
 
@@ -116,7 +116,6 @@ const ScheduleForm = ({ type }) => {
     // saved
     let copiedSchedule = { ...scheduledServices, ["services"]: services };
     copiedSchedule = {...copiedSchedule, ["status"]: "pending"};
-    copiedSchedule = {...copiedSchedule, ["type"]: type};
 
     if (materialForm) {
       copiedSchedule = { ...copiedSchedule, ["materials"]: materials };
@@ -131,8 +130,9 @@ const ScheduleForm = ({ type }) => {
     }
 
     if(type === 'single'){
-      copiedSchedule.days_until_repeat = 0;
+      copiedSchedule.days_until_repeat = null;
     }
+    // TODO: add else statement
    
     try {
       setLoading(true);
