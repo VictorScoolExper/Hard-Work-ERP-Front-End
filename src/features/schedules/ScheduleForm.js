@@ -16,10 +16,19 @@ import { selectorSortedMaterials } from "../materials/materialSlice";
 import { selectorSortedEmployee } from "../employees/employeeSlice";
 import EmployeeListForm from "./EmployeeListForm";
 import {createSchedule} from "./scheduleSlice"
+import CustomSelect from "../../components/CustomSelect";
 
 const ScheduleForm = ({ type }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const daysOptions = [
+    { label: "Every week", value: 7 },
+    { label: "Every 2 weeks", value: 14 },
+    { label: "Every 3 weeks", value: 21 },
+    { label: "Every month", value: 31 },
+    { label: "Every yearly", value: 365 }
+  ];
 
   const [scheduledServices, setScheduledServices] = useState({
     client_id: "",
@@ -257,12 +266,23 @@ const ScheduleForm = ({ type }) => {
                 <Col className="col-4">
                   <Form.Group>
                     <Form.Label>Days until repeat routine</Form.Label>
-                    <Form.Control
+                    {/* <Form.Control
                       type="number"
                       name={"days_until_repeat"}
                       value={scheduledServices.days_until_repeat}
                       onChange={handleInput}
+                    /> */}
+                    <CustomSelect
+                      label="Select an option:"
+                      options={""}
+                      value={scheduledServices.days_until_repeat}
+                      onChange={()=>{}}
                     />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group>
+                    <Form.Label></Form.Label>
                   </Form.Group>
                 </Col>
               </Row>
