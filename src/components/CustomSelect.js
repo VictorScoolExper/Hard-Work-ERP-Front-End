@@ -9,11 +9,14 @@ const CustomSelect = ({ label, options, value, onChange}) => {
                 onChange={onChange}
                 aria-label={label}    
             >
-                {options.map((option)=>{
+                <option>
+                    Select frequency of time:
+                </option>
+                {options.map((option)=>(
                     <option key={option.value} value={option.value}>
                         {option.label}
                     </option>
-                })}
+                ))}
             </Form.Select>
         </Form.Group>
     )

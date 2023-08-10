@@ -22,6 +22,7 @@ const ScheduleForm = ({ type }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Used for select menu for days til repear
   const daysOptions = [
     { label: "Every week", value: 7 },
     { label: "Every 2 weeks", value: 14 },
@@ -29,6 +30,22 @@ const ScheduleForm = ({ type }) => {
     { label: "Every month", value: 31 },
     { label: "Every yearly", value: 365 }
   ];
+
+  // Used for select menu for 
+  const monthsOptions = [
+    { label: "1 months", value: 1  },
+    { label: "2 months", value: 2 },
+    { label: "3 months", value: 3  },
+    { label: "4 months", value: 4 },
+    { label: "5 months", value: 5  },
+    { label: "6 months", value: 6 },
+    { label: "7 months", value: 7  },
+    { label: "8 months", value: 8 },
+    { label: "9 months", value: 9  },
+    { label: "10 months", value: 10 },
+    { label: "11 months", value: 11  },
+    { label: "12 months", value: 12 }
+  ]
 
   const [scheduledServices, setScheduledServices] = useState({
     client_id: "",
@@ -141,17 +158,22 @@ const ScheduleForm = ({ type }) => {
     if(type === 'single'){
       copiedSchedule.days_until_repeat = null;
     }
-    // TODO: add else statement
-   
-    try {
-      setLoading(true);
-      // unwrap has to be added or else it will not throw an error if it ocurres
-      await dispatch(createSchedule(copiedSchedule)).unwrap();
-      // navigate(-1);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      alert("Error when creating schedule");
+    
+   if(type === 'single'){
+      try {
+        setLoading(true);
+        // unwrap has to be added or else it will not throw an error if it ocurres
+        await dispatch(createSchedule(copiedSchedule)).unwrap();
+        // navigate(-1);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        alert("Error when creating schedule");
+      }
+    } 
+
+    if(type === 'routine'){
+      
     }
   };
 
@@ -265,7 +287,7 @@ const ScheduleForm = ({ type }) => {
               <Row style={{ marginTop: "10px" }}>
                 <Col className="col-4">
                   <Form.Group>
-                    <Form.Label>Days until repeat routine</Form.Label>
+                    <Form.Label>Repeat routine</Form.Label>
                     {/* <Form.Control
                       type="number"
                       name={"days_until_repeat"}
@@ -273,18 +295,25 @@ const ScheduleForm = ({ type }) => {
                       onChange={handleInput}
                     /> */}
                     <CustomSelect
-                      label="Select an option:"
-                      options={""}
+                      label="Select when to repeat:"
+                      options={daysOptions}
                       value={scheduledServices.days_until_repeat}
-                      onChange={()=>{}}
+                      onChange={(event)=>{handleChange('days_until_repeat', parseInt(event.target.value))}}
                     />
                   </Form.Group>
                 </Col>
                 <Col>
                   <Form.Group>
-                    <Form.Label></Form.Label>
+                    <Form.Label>Repeat For:</Form.Label>
+                    <CustomSelect
+                      label="Select the end of schedule:"
+                      options={monthsOptions}
+                      value={scheduledServices.month_amounts_routine}
+                      onChange={(event)=>{handleChange('month_amounts_routine', parseInt(event.target.value))}}
+                    />
                   </Form.Group>
                 </Col>
+                <Col></Col>
               </Row>
             ) : (
               <></>
