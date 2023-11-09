@@ -11,3 +11,6 @@ export const MATERIALS_API_URL = API_BASE_URL + "/material";
 export const APP_SETTING_API_URL = API_BASE_URL + "/app-setting";
 export const SCHEDULE_SERVICE_API_URL = API_BASE_URL + "/service-schedule";
 
+export const COMPANY_DEPARTMENT_API_URL = API_BASE_URL + "/company-department";
+export const COMPANY_ROLE_API_URL = API_BASE_URL + "/company-role";
+export const JOB_TITLE_API_URL = API_BASE_URL + "/job-title";
