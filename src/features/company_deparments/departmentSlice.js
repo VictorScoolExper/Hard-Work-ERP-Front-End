@@ -16,7 +16,7 @@ const initialState = {
   error: null,
 };
 
-export const fetchAllCompDepartment = createAsyncThunk(
+export const fetchAllDepartment = createAsyncThunk(
   "companyDepartment/getAll",
   async () => {
     const response = await axios(API_URL + "/", {
@@ -82,15 +82,15 @@ const departmentSlice = createSlice({
   extraReducers(builder) {
     builder
       // get company departments
-      .addCase(fetchAllCompDepartment.pending, (state, action) => {
+      .addCase(fetchAllDepartment.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(fetchAllCompDepartment.fulfilled, (state, action) => {
+      .addCase(fetchAllDepartment.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.departments = action.payload.company_department;
         state.total_departments = action.payload.total_departments;
       })
-      .addCase(fetchAllCompDepartment.rejected, (state, action) => {
+      .addCase(fetchAllDepartment.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
